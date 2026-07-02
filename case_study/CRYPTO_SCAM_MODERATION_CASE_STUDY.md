@@ -4,6 +4,8 @@
 
 I turned a Cornell Trust & Safety policy proposal and coursework labeler into an interactive crypto-scam moderation workbench for Bluesky-style platforms: model audit, reproducible baseline, eval suite, reviewer queue, calibration simulator, incident replay, fraud-intelligence graph, GenAI abuse lab, structured evidence extraction, appeals, and transparency reporting.
 
+[Open the live lab](https://crypto-scam-lab.vercel.app) | [Inspect the source and evaluation artifacts](https://github.com/AliHasan-786/crypto-scam-moderation-lab)
+
 ## Why This Project Exists
 
 The original coursework project was an automated Bluesky labeler for crypto-fraud posts. That was a good class artifact, but not enough for a serious portfolio project. A real Trust & Safety system needs more than a classifier:

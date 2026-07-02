@@ -2,6 +2,8 @@
 
 Interactive Trust & Safety workbench built from the CS 5342 Bluesky labeler project.
 
+**Live lab:** [crypto-scam-lab.vercel.app](https://crypto-scam-lab.vercel.app)
+
 ## What This Adds
 
 - Focused safety-console shell with routed workspaces, compact system status, and selected-case evidence rail.

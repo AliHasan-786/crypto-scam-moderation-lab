@@ -17,6 +17,8 @@ The project begins with a narrow policy question: how can a platform reduce inve
 
 The public demo is static and uses sanitized or synthetic examples. It cannot publish labels, report accounts, resolve live links, or take platform actions.
 
+**Live lab:** [crypto-scam-lab.vercel.app](https://crypto-scam-lab.vercel.app)
+
 ## System Shape
 
 ```mermaid
