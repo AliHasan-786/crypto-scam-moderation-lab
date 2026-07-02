@@ -3,7 +3,7 @@
   "suite": "crypto_scam_policy_eval_v1",
   "caveat": "This is an authored scenario and adversarial eval suite, not an untouched benchmark. It is designed to make policy boundaries, review-routing expectations, and false-positive risks inspectable.",
   "thresholds": {
-    "review": 0.38999999999999996,
+    "review": 0.4,
     "label": 0.5399999999999999,
     "high_confidence": 0.61
   },

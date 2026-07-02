@@ -1,5 +1,5 @@
 export const incidentResponse = {
-  "generatedAt": "2026-07-02T03:16:16.138531+00:00",
+  "generatedAt": "2026-07-02T03:21:54.044239+00:00",
   "scenarioCount": 3,
   "severityCounts": {
     "sev2": 1,

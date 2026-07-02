@@ -1,5 +1,5 @@
 export const qualityCalibration = {
-  "generatedAt": "2026-07-02T03:16:16.104115+00:00",
+  "generatedAt": "2026-07-02T03:21:54.008291+00:00",
   "caseCount": 12,
   "coverage": {
     "publicLabelCases": 5,

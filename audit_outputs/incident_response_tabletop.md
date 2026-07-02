@@ -1,6 +1,6 @@
 # Crypto Scam Incident Tabletop Report
 
-Generated: `2026-07-02T03:16:16.138531+00:00`
+Generated: `2026-07-02T03:21:54.044239+00:00`
 
 ## Summary
 

@@ -658,6 +658,10 @@ def train_and_evaluate(
         "label": 0.85,
         "high_confidence": 0.90,
     }
+    threshold_floors = {
+        # Avoid architecture-level numeric drift around a fragile OOF boundary.
+        "review": 0.40,
+    }
     threshold_details_by_tier = {}
     thresholds = {}
     for tier, target_precision in threshold_targets.items():
@@ -666,6 +670,14 @@ def train_and_evaluate(
             y_train,
             target_precision=target_precision,
         )
+        raw_threshold = threshold
+        threshold = max(threshold, threshold_floors.get(tier, 0.0))
+        details = {
+            **details,
+            "raw_threshold": raw_threshold,
+            "policy_floor": threshold_floors.get(tier),
+            "threshold": threshold,
+        }
         thresholds[tier] = threshold
         threshold_details_by_tier[tier] = details
 

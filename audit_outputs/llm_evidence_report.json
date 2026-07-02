@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-02T03:16:15.977157+00:00",
+  "generatedAt": "2026-07-02T03:21:53.889076+00:00",
   "suite": "structured_evidence_extractor_v1",
   "provider": "deterministic_rubric_v1",
   "caveat": "This is the local deterministic implementation of the LLM evidence contract. It tests schema, span faithfulness, and reviewer-action expectations before plugging in a hosted LLM.",

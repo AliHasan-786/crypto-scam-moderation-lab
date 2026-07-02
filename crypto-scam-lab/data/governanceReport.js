@@ -1,5 +1,5 @@
 export const governanceReport = {
-  "generatedAt": "2026-07-02T03:16:16.031268+00:00",
+  "generatedAt": "2026-07-02T03:21:53.936949+00:00",
   "suite": "governance_transparency_v1",
   "caveat": "Operational queue metrics come from the local SQLite review store. Appeal examples are authored, sanitized portfolio scenarios that exercise notice, appeal, and reversal flows without using live user data.",
   "queueMetrics": {

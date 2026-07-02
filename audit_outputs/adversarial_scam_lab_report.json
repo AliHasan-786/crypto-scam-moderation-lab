@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-07-02T03:16:15.866370+00:00",
+  "generatedAt": "2026-07-02T03:21:53.766554+00:00",
   "suite": "adversarial_scam_mutation_lab_v1",
   "caveat": "This is a controlled red-team suite over authored scam seeds. It measures model and policy sensitivity to realistic evasion patterns; it is not a live-abuse benchmark.",
   "casesPath": "evals/scenario_eval_cases.json",
   "modelPath": "audit_outputs/fraud_labeler_v2.joblib",
   "thresholds": {
-    "review": 0.38999999999999996,
+    "review": 0.4,
     "label": 0.5399999999999999,
     "high_confidence": 0.61
   },
