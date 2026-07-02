@@ -1,0 +1,21 @@
+{
+  "id": "crypto-scam-moderation-lab",
+  "title": "Crypto Scam Moderation Lab",
+  "course": "CS 5342 Trust & Safety",
+  "semester": "Fall 2025",
+  "oneLine": "Interactive Bluesky labeler workbench for crypto-fraud policy, evals, reviewer operations, QA calibration, incident response, appeals/transparency, red-team testing, and campaign intelligence.",
+  "themes": ["Trust & Safety", "fraud detection", "policy implementation", "model evaluation", "LLM eval", "appeals", "governance", "policy operations", "incident response", "reviewer quality", "red team", "fraud intelligence"],
+  "role": "Policy-to-code implementation, reviewer workflow, eval design, policy operations, product systems, portfolio expansion",
+  "status": "expanded-demo",
+  "primaryMetric": "0.938 operational public-label F1",
+  "demoUrl": "",
+  "repoUrl": "",
+  "writeupUrl": "",
+  "thumbnail": "../model_comparison.png",
+  "featured": true,
+  "problem": "Crypto investment scams exploit social-platform affordances such as reposts, DMs, impersonation, and urgent wallet-connection prompts.",
+  "method": "Combine a conservative annotation policy, explainable browser rubric, reproducible v2 model, scenario evals, production-hardening evals, deterministic URL evidence extraction, structured reviewer-evidence extraction, adversarial mutation testing, SQLite review store, ops analytics, reviewer calibration, incident tabletop scenarios, entity extraction, graph clustering, threshold analysis, human-review routing, appeals, notice copy, launch gates, and transparency reporting.",
+  "result": "The v2 model reaches 0.938 operational public-label F1 on the assignment test set, with a 40-case scenario/adversarial eval suite, a 12-case production-hardening eval suite, 12 reviewer calibration cases, 3 incident tabletop scenarios, 11 passing launch-gate checks, 100% span-faithful structured evidence extraction on 19 authored cases, 56 controlled red-team variants, a local persisted review queue, a synthetic shared-domain/shared-wallet campaign graph, and governance artifacts with four appeal scenarios and two reversals.",
+  "failureMode": "The dataset is small and English-centric, and over-labeling legitimate financial discussion remains the central operational risk.",
+  "extension": "Deploy the lab and case study publicly, add hosted LLM adapter gated by schema/eval tests, promote hardening/calibration/ops gates into CI, add live URL redirect resolution, OCR evidence handling, account-history enrichment, incident dashboards, near-duplicate clustering, active-learning reviewer loops, broader multilingual evaluation, and warning-design experiments."
+}

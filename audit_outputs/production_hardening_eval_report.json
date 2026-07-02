@@ -1,0 +1,1116 @@
+{
+  "generatedAt": "2026-07-02T03:16:15.085328+00:00",
+  "suite": "production_hardening_eval_v1",
+  "caveat": "This is an authored production-hardening suite. It is not an untouched benchmark; it probes known deployment risks such as canonicalization, URL evidence, OCR ambiguity, multilingual phrasing, and protected-context false positives.",
+  "thresholds": {
+    "review": 0.38999999999999996,
+    "label": 0.5399999999999999,
+    "high_confidence": 0.61
+  },
+  "caseCount": 12,
+  "expectationPassed": 12,
+  "expectationPassRate": 1.0,
+  "fraudPublicLabelRecall": 1.0,
+  "reviewOrLabelRecall": 1.0,
+  "legitimateNoPublicLabelRate": 1.0,
+  "ambiguousReviewRate": 1.0,
+  "canonicalizationAppliedCount": 9,
+  "actionCounts": {
+    "apply_potential_crypto_fraud_label": 2,
+    "high_confidence_escalation": 3,
+    "no_label": 4,
+    "send_to_human_review": 3
+  },
+  "failureCounts": {},
+  "dimensionSummary": {
+    "brand_impersonation": {
+      "count": 2,
+      "passed": 2,
+      "passRate": 1.0,
+      "publicLabels": 2,
+      "reviewOrLabel": 2
+    },
+    "canonicalization": {
+      "count": 2,
+      "passed": 2,
+      "passRate": 1.0,
+      "publicLabels": 2,
+      "reviewOrLabel": 2
+    },
+    "defanged_url": {
+      "count": 3,
+      "passed": 3,
+      "passRate": 1.0,
+      "publicLabels": 2,
+      "reviewOrLabel": 2
+    },
+    "developer_context": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabels": 0,
+      "reviewOrLabel": 0
+    },
+    "false_positive_control": {
+      "count": 4,
+      "passed": 4,
+      "passRate": 1.0,
+      "publicLabels": 0,
+      "reviewOrLabel": 0
+    },
+    "giveaway": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabels": 1,
+      "reviewOrLabel": 1
+    },
+    "leetspeak": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabels": 1,
+      "reviewOrLabel": 1
+    },
+    "market_news": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabels": 0,
+      "reviewOrLabel": 0
+    },
+    "missing_context": {
+      "count": 2,
+      "passed": 2,
+      "passRate": 1.0,
+      "publicLabels": 0,
+      "reviewOrLabel": 2
+    },
+    "multilingual": {
+      "count": 3,
+      "passed": 3,
+      "passRate": 1.0,
+      "publicLabels": 1,
+      "reviewOrLabel": 2
+    },
+    "ocr": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabels": 0,
+      "reviewOrLabel": 1
+    },
+    "protected_context": {
+      "count": 2,
+      "passed": 2,
+      "passRate": 1.0,
+      "publicLabels": 0,
+      "reviewOrLabel": 0
+    },
+    "redirect_mismatch": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabels": 0,
+      "reviewOrLabel": 1
+    },
+    "review_routing": {
+      "count": 3,
+      "passed": 3,
+      "passRate": 1.0,
+      "publicLabels": 0,
+      "reviewOrLabel": 3
+    },
+    "shortener": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabels": 1,
+      "reviewOrLabel": 1
+    },
+    "support_impersonation": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabels": 1,
+      "reviewOrLabel": 1
+    },
+    "url_evidence": {
+      "count": 4,
+      "passed": 4,
+      "passRate": 1.0,
+      "publicLabels": 2,
+      "reviewOrLabel": 3
+    },
+    "wallet_connection": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabels": 1,
+      "reviewOrLabel": 1
+    },
+    "wallet_drainer": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabels": 1,
+      "reviewOrLabel": 1
+    }
+  },
+  "standardSummary": {
+    "Cultural Competence": {
+      "count": 3,
+      "passed": 3,
+      "passRate": 1.0
+    },
+    "FTC Social Media Scam Pattern": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0
+    },
+    "MITRE ATLAS Social Engineering": {
+      "count": 2,
+      "passed": 2,
+      "passRate": 1.0
+    },
+    "NIST AI RMF Manage": {
+      "count": 5,
+      "passed": 5,
+      "passRate": 1.0
+    },
+    "NIST AI RMF Map": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0
+    },
+    "NIST AI RMF Measure": {
+      "count": 2,
+      "passed": 2,
+      "passRate": 1.0
+    },
+    "NIST CSF Detect": {
+      "count": 3,
+      "passed": 3,
+      "passRate": 1.0
+    },
+    "OWASP Multimodal Risk": {
+      "count": 2,
+      "passed": 2,
+      "passRate": 1.0
+    },
+    "Santa Clara Integrity": {
+      "count": 2,
+      "passed": 2,
+      "passRate": 1.0
+    },
+    "Santa Clara Understandable Rules": {
+      "count": 3,
+      "passed": 3,
+      "passRate": 1.0
+    }
+  },
+  "urlSummary": {
+    "caseCountWithUrls": 7,
+    "factorCounts": {
+      "brand_impersonation_domain": 2,
+      "campaign_keyword_domain": 3,
+      "defanged_url": 6,
+      "suspicious_tld": 5,
+      "url_shortener": 1,
+      "wallet_or_claim_path": 5
+    },
+    "topUrlEvidence": [
+      {
+        "caseId": "hardening_spaced_wallet_defanged_airdrop",
+        "domain": "secure-airdrop.xyz",
+        "riskWeight": 0.62,
+        "riskFactors": [
+          "campaign_keyword_domain",
+          "defanged_url",
+          "suspicious_tld",
+          "wallet_or_claim_path"
+        ]
+      },
+      {
+        "caseId": "hardening_defanged_research_warning",
+        "domain": "secure-airdrop.xyz",
+        "riskWeight": 0.62,
+        "riskFactors": [
+          "campaign_keyword_domain",
+          "defanged_url",
+          "suspicious_tld",
+          "wallet_or_claim_path"
+        ]
+      },
+      {
+        "caseId": "hardening_spanish_wallet_airdrop",
+        "domain": "metamask-bono.top",
+        "riskWeight": 0.56,
+        "riskFactors": [
+          "brand_impersonation_domain",
+          "defanged_url",
+          "suspicious_tld"
+        ]
+      },
+      {
+        "caseId": "hardening_brand_impersonation_domain",
+        "domain": "metamask-security.top",
+        "riskWeight": 0.56,
+        "riskFactors": [
+          "brand_impersonation_domain",
+          "defanged_url",
+          "suspicious_tld"
+        ]
+      },
+      {
+        "caseId": "hardening_developer_wallet_debug",
+        "domain": "dev-wallet.local",
+        "riskWeight": 0.5,
+        "riskFactors": [
+          "campaign_keyword_domain",
+          "defanged_url",
+          "wallet_or_claim_path"
+        ]
+      },
+      {
+        "caseId": "hardening_redirect_mismatch_review",
+        "domain": "project-update.click",
+        "riskWeight": 0.44,
+        "riskFactors": [
+          "defanged_url",
+          "suspicious_tld",
+          "wallet_or_claim_path"
+        ]
+      },
+      {
+        "caseId": "hardening_shortener_claim_lure",
+        "domain": "bit.ly",
+        "riskWeight": 0.33999999999999997,
+        "riskFactors": [
+          "url_shortener",
+          "wallet_or_claim_path"
+        ]
+      }
+    ]
+  },
+  "topFailures": [],
+  "results": [
+    {
+      "id": "hardening_spaced_wallet_defanged_airdrop",
+      "scenario": "canonicalization_spaced_keywords",
+      "ground_truth": "fraud",
+      "expected_public_label": true,
+      "expected_review_or_label": true,
+      "expected_min_action": "apply_potential_crypto_fraud_label",
+      "dimensions": [
+        "canonicalization",
+        "defanged_url",
+        "wallet_drainer"
+      ],
+      "tags": [
+        "spaced_keywords",
+        "defanged_url",
+        "wallet_connection"
+      ],
+      "standards": [
+        "NIST AI RMF Measure",
+        "OWASP Multimodal Risk"
+      ],
+      "text": "Final a i r d r o p window. c o n n e c t your w a l l e t at hxxps://secure-airdrop[.]xyz and c l a i m 5 ETH before it expires.",
+      "rationale": "Spaced keywords and defanged URL should not hide a wallet-drainer-style airdrop.",
+      "probability": 0.8095449967225453,
+      "action": "high_confidence_escalation",
+      "public_label": true,
+      "review_or_label": true,
+      "policy_score": 0.744,
+      "matched_rules": [
+        "crypto_transfer_request",
+        "suspicious_giveaway",
+        "urgency_or_scarcity",
+        "risky_link_surface"
+      ],
+      "public_label_rules": [
+        "crypto_transfer_request",
+        "suspicious_giveaway",
+        "urgency_or_scarcity",
+        "risky_link_surface"
+      ],
+      "contextual_safety_evidence": {
+        "protective_or_research_context": false,
+        "satire_context": false,
+        "developer_context": false,
+        "uncertain_review_context": false,
+        "public_label_suppressed": false,
+        "review_preferred": false
+      },
+      "passed_expectations": true,
+      "failures": [],
+      "canonicalization": {
+        "applied": true,
+        "canonicalizedText": "Final airdrop window. connect your wallet at https://secure-airdrop.xyz and claim 5 ETH before it expires."
+      },
+      "urlEvidence": {
+        "normalizedSurface": "Final a i r d r o p window. c o n n e c t your w a l l e t at https://secure-airdrop.xyz and c l a i m 5 ETH before it expires.",
+        "urlCount": 1,
+        "highestRisk": 0.62,
+        "factorCounts": {
+          "campaign_keyword_domain": 1,
+          "defanged_url": 1,
+          "suspicious_tld": 1,
+          "wallet_or_claim_path": 1
+        },
+        "urls": [
+          {
+            "normalizedUrl": "https://secure-airdrop.xyz",
+            "domain": "secure-airdrop.xyz",
+            "tld": "xyz",
+            "riskFactors": [
+              "campaign_keyword_domain",
+              "defanged_url",
+              "suspicious_tld",
+              "wallet_or_claim_path"
+            ],
+            "riskWeight": 0.62
+          }
+        ]
+      }
+    },
+    {
+      "id": "hardening_leetspeak_support_deposit",
+      "scenario": "canonicalization_leetspeak",
+      "ground_truth": "fraud",
+      "expected_public_label": true,
+      "expected_review_or_label": true,
+      "expected_min_action": "apply_potential_crypto_fraud_label",
+      "dimensions": [
+        "canonicalization",
+        "leetspeak",
+        "support_impersonation"
+      ],
+      "tags": [
+        "leetspeak",
+        "support",
+        "deposit"
+      ],
+      "standards": [
+        "MITRE ATLAS Social Engineering",
+        "NIST CSF Detect"
+      ],
+      "text": "C0inbase support escalation: c0nnect your w4llet and send a small ETH deposit so we can remove the account restriction.",
+      "rationale": "Leetspeak should normalize back to wallet/connect and preserve the support-scam transfer request.",
+      "probability": 0.5746713638857144,
+      "action": "apply_potential_crypto_fraud_label",
+      "public_label": true,
+      "review_or_label": true,
+      "policy_score": 0.456,
+      "matched_rules": [
+        "crypto_transfer_request",
+        "authority_misuse"
+      ],
+      "public_label_rules": [
+        "crypto_transfer_request"
+      ],
+      "contextual_safety_evidence": {
+        "protective_or_research_context": false,
+        "satire_context": false,
+        "developer_context": false,
+        "uncertain_review_context": false,
+        "public_label_suppressed": false,
+        "review_preferred": false
+      },
+      "passed_expectations": true,
+      "failures": [],
+      "canonicalization": {
+        "applied": true,
+        "canonicalizedText": "coinbase support escalation: connect your wallet and send a small ETH deposit so we can remove the account restriction."
+      },
+      "urlEvidence": {
+        "normalizedSurface": "C0inbase support escalation: c0nnect your w4llet and send a small ETH deposit so we can remove the account restriction.",
+        "urlCount": 0,
+        "highestRisk": 0.0,
+        "factorCounts": {},
+        "urls": []
+      }
+    },
+    {
+      "id": "hardening_spanish_wallet_airdrop",
+      "scenario": "multilingual_spanish_fraud",
+      "ground_truth": "fraud",
+      "expected_public_label": true,
+      "expected_review_or_label": true,
+      "expected_min_action": "apply_potential_crypto_fraud_label",
+      "dimensions": [
+        "multilingual",
+        "defanged_url",
+        "brand_impersonation"
+      ],
+      "tags": [
+        "spanish",
+        "wallet_connection",
+        "airdrop"
+      ],
+      "standards": [
+        "Cultural Competence",
+        "NIST AI RMF Measure"
+      ],
+      "text": "Airdrop oficial: conecta tu wallet en hxxps://metamask-bono[.]top para reclamar ETH gratis. Ultima oportunidad, expira ahora.",
+      "rationale": "Spanish-language wallet-drainer phrasing should still reach public-label candidacy.",
+      "probability": 0.7704903256394643,
+      "action": "high_confidence_escalation",
+      "public_label": true,
+      "review_or_label": true,
+      "policy_score": 0.8740000000000001,
+      "matched_rules": [
+        "crypto_transfer_request",
+        "suspicious_giveaway",
+        "authority_misuse",
+        "urgency_or_scarcity",
+        "risky_link_surface"
+      ],
+      "public_label_rules": [
+        "crypto_transfer_request",
+        "suspicious_giveaway",
+        "urgency_or_scarcity",
+        "risky_link_surface"
+      ],
+      "contextual_safety_evidence": {
+        "protective_or_research_context": false,
+        "satire_context": false,
+        "developer_context": false,
+        "uncertain_review_context": false,
+        "public_label_suppressed": false,
+        "review_preferred": false
+      },
+      "passed_expectations": true,
+      "failures": [],
+      "canonicalization": {
+        "applied": true,
+        "canonicalizedText": "airdrop oficial: conecta tu wallet en https://metamask-bono.top para reclamar ETH gratis. Ultima oportunidad, expira ahora."
+      },
+      "urlEvidence": {
+        "normalizedSurface": "Airdrop oficial: conecta tu wallet en https://metamask-bono.top para reclamar ETH gratis. Ultima oportunidad, expira ahora.",
+        "urlCount": 1,
+        "highestRisk": 0.56,
+        "factorCounts": {
+          "brand_impersonation_domain": 1,
+          "defanged_url": 1,
+          "suspicious_tld": 1
+        },
+        "urls": [
+          {
+            "normalizedUrl": "https://metamask-bono.top",
+            "domain": "metamask-bono.top",
+            "tld": "top",
+            "riskFactors": [
+              "brand_impersonation_domain",
+              "defanged_url",
+              "suspicious_tld"
+            ],
+            "riskWeight": 0.56
+          }
+        ]
+      }
+    },
+    {
+      "id": "hardening_shortener_claim_lure",
+      "scenario": "url_shortener_claim",
+      "ground_truth": "fraud",
+      "expected_public_label": true,
+      "expected_review_or_label": true,
+      "expected_min_action": "apply_potential_crypto_fraud_label",
+      "dimensions": [
+        "url_evidence",
+        "shortener",
+        "giveaway"
+      ],
+      "tags": [
+        "shortener",
+        "claim",
+        "giveaway"
+      ],
+      "standards": [
+        "NIST CSF Detect",
+        "FTC Social Media Scam Pattern"
+      ],
+      "text": "Congratulations, your wallet won 2 BTC. Claim now through bit.ly/free-btc-verify before the eligibility window closes.",
+      "rationale": "Shortener plus prize/claim language is a strong reviewer evidence signal.",
+      "probability": 0.647752731753169,
+      "action": "high_confidence_escalation",
+      "public_label": true,
+      "review_or_label": true,
+      "policy_score": 0.38599999999999995,
+      "matched_rules": [
+        "suspicious_giveaway",
+        "risky_link_surface"
+      ],
+      "public_label_rules": [
+        "suspicious_giveaway",
+        "risky_link_surface"
+      ],
+      "contextual_safety_evidence": {
+        "protective_or_research_context": false,
+        "satire_context": false,
+        "developer_context": false,
+        "uncertain_review_context": false,
+        "public_label_suppressed": false,
+        "review_preferred": false
+      },
+      "passed_expectations": true,
+      "failures": [],
+      "canonicalization": {
+        "applied": true,
+        "canonicalizedText": "Congratulations, your wallet won 2 BTC. claim now through bit.ly/free-btc-verify before the eligibility window closes."
+      },
+      "urlEvidence": {
+        "normalizedSurface": "Congratulations, your wallet won 2 BTC. Claim now through bit.ly/free-btc-verify before the eligibility window closes.",
+        "urlCount": 1,
+        "highestRisk": 0.33999999999999997,
+        "factorCounts": {
+          "url_shortener": 1,
+          "wallet_or_claim_path": 1
+        },
+        "urls": [
+          {
+            "normalizedUrl": "bit.ly/free-btc-verify",
+            "domain": "bit.ly",
+            "tld": "ly",
+            "riskFactors": [
+              "url_shortener",
+              "wallet_or_claim_path"
+            ],
+            "riskWeight": 0.33999999999999997
+          }
+        ]
+      }
+    },
+    {
+      "id": "hardening_brand_impersonation_domain",
+      "scenario": "brand_impersonation_domain",
+      "ground_truth": "fraud",
+      "expected_public_label": true,
+      "expected_review_or_label": true,
+      "expected_min_action": "apply_potential_crypto_fraud_label",
+      "dimensions": [
+        "url_evidence",
+        "brand_impersonation",
+        "wallet_connection"
+      ],
+      "tags": [
+        "metamask",
+        "defanged_url",
+        "wallet_connection"
+      ],
+      "standards": [
+        "MITRE ATLAS Social Engineering",
+        "Santa Clara Integrity"
+      ],
+      "text": "MetaMask security update: verify your wallet at metamask-security[.]top to keep access to your tokens.",
+      "rationale": "A brand-looking domain outside the official domain list should be surfaced as URL evidence.",
+      "probability": 0.5774608587038614,
+      "action": "apply_potential_crypto_fraud_label",
+      "public_label": true,
+      "review_or_label": true,
+      "policy_score": 0.556,
+      "matched_rules": [
+        "crypto_transfer_request",
+        "authority_misuse",
+        "risky_link_surface"
+      ],
+      "public_label_rules": [
+        "crypto_transfer_request",
+        "risky_link_surface"
+      ],
+      "contextual_safety_evidence": {
+        "protective_or_research_context": false,
+        "satire_context": false,
+        "developer_context": false,
+        "uncertain_review_context": false,
+        "public_label_suppressed": false,
+        "review_preferred": false
+      },
+      "passed_expectations": true,
+      "failures": [],
+      "canonicalization": {
+        "applied": true,
+        "canonicalizedText": "MetaMask security update: verify your wallet at metamask-security.top to keep access to your tokens."
+      },
+      "urlEvidence": {
+        "normalizedSurface": "MetaMask security update: verify your wallet at metamask-security.top to keep access to your tokens.",
+        "urlCount": 1,
+        "highestRisk": 0.56,
+        "factorCounts": {
+          "brand_impersonation_domain": 1,
+          "defanged_url": 1,
+          "suspicious_tld": 1
+        },
+        "urls": [
+          {
+            "normalizedUrl": "metamask-security.top",
+            "domain": "metamask-security.top",
+            "tld": "top",
+            "riskFactors": [
+              "brand_impersonation_domain",
+              "defanged_url",
+              "suspicious_tld"
+            ],
+            "riskWeight": 0.56
+          }
+        ]
+      }
+    },
+    {
+      "id": "hardening_ocr_cropped_qr_review",
+      "scenario": "ocr_source_ambiguity",
+      "ground_truth": "ambiguous",
+      "expected_public_label": false,
+      "expected_review_or_label": true,
+      "expected_min_action": "send_to_human_review",
+      "expected_max_action": "send_to_human_review",
+      "dimensions": [
+        "ocr",
+        "missing_context",
+        "review_routing"
+      ],
+      "tags": [
+        "ocr",
+        "qr",
+        "source_missing"
+      ],
+      "standards": [
+        "OWASP Multimodal Risk",
+        "NIST AI RMF Manage"
+      ],
+      "text": "[Image OCR] Claim your bonus token using the QR code. Wallet connect required. Link is cropped. Source account not visible.",
+      "rationale": "OCR/source ambiguity should route to review rather than trigger automatic public labeling.",
+      "probability": 0.6147957185006842,
+      "action": "send_to_human_review",
+      "public_label": false,
+      "review_or_label": true,
+      "policy_score": 0.286,
+      "matched_rules": [
+        "suspicious_giveaway"
+      ],
+      "public_label_rules": [
+        "suspicious_giveaway"
+      ],
+      "contextual_safety_evidence": {
+        "protective_or_research_context": false,
+        "satire_context": false,
+        "developer_context": false,
+        "uncertain_review_context": true,
+        "public_label_suppressed": false,
+        "review_preferred": true
+      },
+      "passed_expectations": true,
+      "failures": [],
+      "canonicalization": {
+        "applied": true,
+        "canonicalizedText": "[Image OCR] claim your bonus token using the QR code. wallet connect required. Link is cropped. Source account not visible."
+      },
+      "urlEvidence": {
+        "normalizedSurface": "[Image OCR] Claim your bonus token using the QR code. Wallet connect required. Link is cropped. Source account not visible.",
+        "urlCount": 0,
+        "highestRisk": 0.0,
+        "factorCounts": {},
+        "urls": []
+      }
+    },
+    {
+      "id": "hardening_spanish_airdrop_question_review",
+      "scenario": "multilingual_spanish_ambiguous",
+      "ground_truth": "ambiguous",
+      "expected_public_label": false,
+      "expected_review_or_label": true,
+      "expected_min_action": "send_to_human_review",
+      "expected_max_action": "send_to_human_review",
+      "dimensions": [
+        "multilingual",
+        "missing_context",
+        "review_routing"
+      ],
+      "tags": [
+        "spanish",
+        "airdrop",
+        "question"
+      ],
+      "standards": [
+        "Cultural Competence",
+        "NIST AI RMF Manage"
+      ],
+      "text": "Un grupo dice que puedo reclamar un airdrop si conecto mi billetera. No he verificado el enlace. Alguien sabe si es legitimo?",
+      "rationale": "Spanish help-seeking about an airdrop should route to review without a public label.",
+      "probability": 0.5968801788454944,
+      "action": "send_to_human_review",
+      "public_label": false,
+      "review_or_label": true,
+      "policy_score": 0.416,
+      "matched_rules": [
+        "suspicious_giveaway",
+        "authority_misuse"
+      ],
+      "public_label_rules": [
+        "suspicious_giveaway"
+      ],
+      "contextual_safety_evidence": {
+        "protective_or_research_context": false,
+        "satire_context": false,
+        "developer_context": false,
+        "uncertain_review_context": true,
+        "public_label_suppressed": false,
+        "review_preferred": true
+      },
+      "passed_expectations": true,
+      "failures": [],
+      "canonicalization": {
+        "applied": false,
+        "canonicalizedText": "Un grupo dice que puedo reclamar un airdrop si conecto mi billetera. No he verificado el enlace. Alguien sabe si es legitimo?"
+      },
+      "urlEvidence": {
+        "normalizedSurface": "Un grupo dice que puedo reclamar un airdrop si conecto mi billetera. No he verificado el enlace. Alguien sabe si es legitimo?",
+        "urlCount": 0,
+        "highestRisk": 0.0,
+        "factorCounts": {},
+        "urls": []
+      }
+    },
+    {
+      "id": "hardening_defanged_research_warning",
+      "scenario": "protected_context_defanged_url",
+      "ground_truth": "legitimate",
+      "expected_public_label": false,
+      "expected_review_or_label": false,
+      "expected_max_action": "no_label",
+      "dimensions": [
+        "protected_context",
+        "defanged_url",
+        "false_positive_control"
+      ],
+      "tags": [
+        "research",
+        "warning",
+        "defanged_url"
+      ],
+      "standards": [
+        "Santa Clara Understandable Rules",
+        "NIST AI RMF Manage"
+      ],
+      "text": "Fraud research note: scammers often use hxxps://secure-airdrop[.]xyz-style pages. Do not connect your wallet or send crypto to these sites.",
+      "rationale": "Defanged scam examples in research/warning context should suppress public labels.",
+      "probability": 0.7443352557170362,
+      "action": "no_label",
+      "public_label": false,
+      "review_or_label": false,
+      "policy_score": 0.6340000000000001,
+      "matched_rules": [
+        "crypto_transfer_request",
+        "suspicious_giveaway",
+        "risky_link_surface"
+      ],
+      "public_label_rules": [
+        "crypto_transfer_request",
+        "suspicious_giveaway",
+        "risky_link_surface"
+      ],
+      "contextual_safety_evidence": {
+        "protective_or_research_context": true,
+        "satire_context": false,
+        "developer_context": false,
+        "uncertain_review_context": false,
+        "public_label_suppressed": true,
+        "review_preferred": false
+      },
+      "passed_expectations": true,
+      "failures": [],
+      "canonicalization": {
+        "applied": true,
+        "canonicalizedText": "Fraud research note: scammers often use https://secure-airdrop.xyz-style pages. Do not connect your wallet or send crypto to these sites."
+      },
+      "urlEvidence": {
+        "normalizedSurface": "Fraud research note: scammers often use https://secure-airdrop.xyz-style pages. Do not connect your wallet or send crypto to these sites.",
+        "urlCount": 1,
+        "highestRisk": 0.62,
+        "factorCounts": {
+          "campaign_keyword_domain": 1,
+          "defanged_url": 1,
+          "suspicious_tld": 1,
+          "wallet_or_claim_path": 1
+        },
+        "urls": [
+          {
+            "normalizedUrl": "https://secure-airdrop.xyz",
+            "domain": "secure-airdrop.xyz",
+            "tld": "xyz",
+            "riskFactors": [
+              "campaign_keyword_domain",
+              "defanged_url",
+              "suspicious_tld",
+              "wallet_or_claim_path"
+            ],
+            "riskWeight": 0.62
+          }
+        ]
+      }
+    },
+    {
+      "id": "hardening_spanish_consumer_warning",
+      "scenario": "protected_context_spanish_warning",
+      "ground_truth": "legitimate",
+      "expected_public_label": false,
+      "expected_review_or_label": false,
+      "expected_max_action": "no_label",
+      "dimensions": [
+        "multilingual",
+        "protected_context",
+        "false_positive_control"
+      ],
+      "tags": [
+        "spanish",
+        "warning",
+        "consumer_protection"
+      ],
+      "standards": [
+        "Cultural Competence",
+        "Santa Clara Understandable Rules"
+      ],
+      "text": "Alerta de estafa: no envies BTC a personas que prometen ganancias garantizadas y no conectes tu wallet a enlaces de airdrop.",
+      "rationale": "A Spanish consumer warning names scam features but should not be treated as promotion.",
+      "probability": 0.7039302230071376,
+      "action": "no_label",
+      "public_label": false,
+      "review_or_label": false,
+      "policy_score": 0.544,
+      "matched_rules": [
+        "unrealistic_returns",
+        "suspicious_giveaway"
+      ],
+      "public_label_rules": [
+        "unrealistic_returns",
+        "suspicious_giveaway"
+      ],
+      "contextual_safety_evidence": {
+        "protective_or_research_context": true,
+        "satire_context": false,
+        "developer_context": false,
+        "uncertain_review_context": false,
+        "public_label_suppressed": true,
+        "review_preferred": false
+      },
+      "passed_expectations": true,
+      "failures": [],
+      "canonicalization": {
+        "applied": false,
+        "canonicalizedText": "Alerta de estafa: no envies BTC a personas que prometen ganancias garantizadas y no conectes tu wallet a enlaces de airdrop."
+      },
+      "urlEvidence": {
+        "normalizedSurface": "Alerta de estafa: no envies BTC a personas que prometen ganancias garantizadas y no conectes tu wallet a enlaces de airdrop.",
+        "urlCount": 0,
+        "highestRisk": 0.0,
+        "factorCounts": {},
+        "urls": []
+      }
+    },
+    {
+      "id": "hardening_developer_wallet_debug",
+      "scenario": "protected_context_developer_url",
+      "ground_truth": "legitimate",
+      "expected_public_label": false,
+      "expected_review_or_label": false,
+      "expected_max_action": "no_label",
+      "dimensions": [
+        "developer_context",
+        "url_evidence",
+        "false_positive_control"
+      ],
+      "tags": [
+        "developer",
+        "debugging",
+        "wallet_connection"
+      ],
+      "standards": [
+        "NIST AI RMF Manage",
+        "Santa Clara Integrity"
+      ],
+      "text": "Debugging a wallet connection bug in our testnet app at dev-wallet[.]local. The issue is a stale session token, not a user-facing security problem.",
+      "rationale": "Developer/debugging context should suppress public labeling even when wallet terms appear.",
+      "probability": 0.4259432380419285,
+      "action": "no_label",
+      "public_label": false,
+      "review_or_label": false,
+      "policy_score": 0.196,
+      "matched_rules": [
+        "risky_link_surface"
+      ],
+      "public_label_rules": [
+        "risky_link_surface"
+      ],
+      "contextual_safety_evidence": {
+        "protective_or_research_context": false,
+        "satire_context": false,
+        "developer_context": true,
+        "uncertain_review_context": false,
+        "public_label_suppressed": true,
+        "review_preferred": false
+      },
+      "passed_expectations": true,
+      "failures": [],
+      "canonicalization": {
+        "applied": true,
+        "canonicalizedText": "Debugging a wallet connection bug in our testnet app at dev-wallet.local. The issue is a stale session token, not a user-facing security problem."
+      },
+      "urlEvidence": {
+        "normalizedSurface": "Debugging a wallet connection bug in our testnet app at dev-wallet.local. The issue is a stale session token, not a user-facing security problem.",
+        "urlCount": 1,
+        "highestRisk": 0.5,
+        "factorCounts": {
+          "campaign_keyword_domain": 1,
+          "defanged_url": 1,
+          "wallet_or_claim_path": 1
+        },
+        "urls": [
+          {
+            "normalizedUrl": "dev-wallet.local",
+            "domain": "dev-wallet.local",
+            "tld": "local",
+            "riskFactors": [
+              "campaign_keyword_domain",
+              "defanged_url",
+              "wallet_or_claim_path"
+            ],
+            "riskWeight": 0.5
+          }
+        ]
+      }
+    },
+    {
+      "id": "hardening_market_news_airdrop",
+      "scenario": "protected_context_market_news",
+      "ground_truth": "legitimate",
+      "expected_public_label": false,
+      "expected_review_or_label": false,
+      "expected_max_action": "no_label",
+      "dimensions": [
+        "market_news",
+        "false_positive_control"
+      ],
+      "tags": [
+        "news",
+        "airdrop",
+        "no_solicitation"
+      ],
+      "standards": [
+        "Santa Clara Understandable Rules",
+        "NIST AI RMF Map"
+      ],
+      "text": "Uniswap governance discussed whether past users should receive an airdrop. No claim page is live yet and I am not sharing any wallet link.",
+      "rationale": "Market/governance commentary should not be treated as an airdrop solicitation.",
+      "probability": 0.5884631640861856,
+      "action": "no_label",
+      "public_label": false,
+      "review_or_label": false,
+      "policy_score": 0.304,
+      "matched_rules": [
+        "suspicious_giveaway"
+      ],
+      "public_label_rules": [
+        "suspicious_giveaway"
+      ],
+      "contextual_safety_evidence": {
+        "protective_or_research_context": true,
+        "satire_context": false,
+        "developer_context": false,
+        "uncertain_review_context": false,
+        "public_label_suppressed": true,
+        "review_preferred": false
+      },
+      "passed_expectations": true,
+      "failures": [],
+      "canonicalization": {
+        "applied": false,
+        "canonicalizedText": "Uniswap governance discussed whether past users should receive an airdrop. No claim page is live yet and I am not sharing any wallet link."
+      },
+      "urlEvidence": {
+        "normalizedSurface": "Uniswap governance discussed whether past users should receive an airdrop. No claim page is live yet and I am not sharing any wallet link.",
+        "urlCount": 0,
+        "highestRisk": 0.0,
+        "factorCounts": {},
+        "urls": []
+      }
+    },
+    {
+      "id": "hardening_redirect_mismatch_review",
+      "scenario": "redirect_mismatch_ambiguity",
+      "ground_truth": "ambiguous",
+      "expected_public_label": false,
+      "expected_review_or_label": true,
+      "expected_min_action": "send_to_human_review",
+      "expected_max_action": "send_to_human_review",
+      "dimensions": [
+        "url_evidence",
+        "redirect_mismatch",
+        "review_routing"
+      ],
+      "tags": [
+        "redirect",
+        "link_mismatch",
+        "review_needed"
+      ],
+      "standards": [
+        "NIST CSF Detect",
+        "NIST AI RMF Manage"
+      ],
+      "text": "The sender domain matches a legitimate project, but the link redirects to a different website: hxxps://project-update[.]click/claim. I have not verified it.",
+      "rationale": "Redirect mismatch and unverified claim URL should route to review, not automatic public enforcement.",
+      "probability": 0.4754410162452909,
+      "action": "send_to_human_review",
+      "public_label": false,
+      "review_or_label": true,
+      "policy_score": 0.48,
+      "matched_rules": [
+        "suspicious_giveaway",
+        "authority_misuse",
+        "risky_link_surface"
+      ],
+      "public_label_rules": [
+        "suspicious_giveaway",
+        "risky_link_surface"
+      ],
+      "contextual_safety_evidence": {
+        "protective_or_research_context": false,
+        "satire_context": false,
+        "developer_context": false,
+        "uncertain_review_context": true,
+        "public_label_suppressed": false,
+        "review_preferred": true
+      },
+      "passed_expectations": true,
+      "failures": [],
+      "canonicalization": {
+        "applied": true,
+        "canonicalizedText": "The sender domain matches a legitimate project, but the link redirects to a different website: https://project-update.click/claim. I have not verified it."
+      },
+      "urlEvidence": {
+        "normalizedSurface": "The sender domain matches a legitimate project, but the link redirects to a different website: https://project-update.click/claim. I have not verified it.",
+        "urlCount": 1,
+        "highestRisk": 0.44,
+        "factorCounts": {
+          "defanged_url": 1,
+          "suspicious_tld": 1,
+          "wallet_or_claim_path": 1
+        },
+        "urls": [
+          {
+            "normalizedUrl": "https://project-update.click/claim",
+            "domain": "project-update.click",
+            "tld": "click",
+            "riskFactors": [
+              "defanged_url",
+              "suspicious_tld",
+              "wallet_or_claim_path"
+            ],
+            "riskWeight": 0.44
+          }
+        ]
+      }
+    }
+  ]
+}

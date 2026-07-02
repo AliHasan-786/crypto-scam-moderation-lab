@@ -1,0 +1,2548 @@
+{
+  "generatedAt": "2026-07-02T03:16:15.977157+00:00",
+  "suite": "structured_evidence_extractor_v1",
+  "provider": "deterministic_rubric_v1",
+  "caveat": "This is the local deterministic implementation of the LLM evidence contract. It tests schema, span faithfulness, and reviewer-action expectations before plugging in a hosted LLM.",
+  "caseCount": 19,
+  "passCount": 19,
+  "passRate": 1.0,
+  "spanFaithfulnessRate": 1.0,
+  "fraudEvidenceRecall": 1.0,
+  "legitimateNoPublicLabelRate": 1.0,
+  "ambiguousReviewRate": 1.0,
+  "actionCounts": {
+    "human_review": 5,
+    "no_action": 6,
+    "public_label_candidate": 8
+  },
+  "failureCounts": {},
+  "scenarioSummary": {
+    "ambiguous_investment": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabelCandidates": 0,
+      "humanReview": 1,
+      "noAction": 0
+    },
+    "ambiguous_promotion": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabelCandidates": 0,
+      "humanReview": 1,
+      "noAction": 0
+    },
+    "ambiguous_recovery": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabelCandidates": 0,
+      "humanReview": 1,
+      "noAction": 0
+    },
+    "authority_misuse": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabelCandidates": 1,
+      "humanReview": 0,
+      "noAction": 0
+    },
+    "celebrity_impersonation": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabelCandidates": 1,
+      "humanReview": 0,
+      "noAction": 0
+    },
+    "consumer_warning": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabelCandidates": 0,
+      "humanReview": 0,
+      "noAction": 1
+    },
+    "developer_discussion": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabelCandidates": 0,
+      "humanReview": 0,
+      "noAction": 1
+    },
+    "fake_support": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabelCandidates": 1,
+      "humanReview": 0,
+      "noAction": 0
+    },
+    "giveaway_fee": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabelCandidates": 1,
+      "humanReview": 0,
+      "noAction": 0
+    },
+    "investment_scam": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabelCandidates": 1,
+      "humanReview": 0,
+      "noAction": 0
+    },
+    "market_commentary": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabelCandidates": 0,
+      "humanReview": 0,
+      "noAction": 1
+    },
+    "market_news": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabelCandidates": 0,
+      "humanReview": 0,
+      "noAction": 1
+    },
+    "multimodal_placeholder": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabelCandidates": 0,
+      "humanReview": 1,
+      "noAction": 0
+    },
+    "pig_butchering": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabelCandidates": 1,
+      "humanReview": 0,
+      "noAction": 0
+    },
+    "recovery_scam": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabelCandidates": 1,
+      "humanReview": 0,
+      "noAction": 0
+    },
+    "research_discussion": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabelCandidates": 0,
+      "humanReview": 0,
+      "noAction": 1
+    },
+    "satire": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabelCandidates": 0,
+      "humanReview": 0,
+      "noAction": 1
+    },
+    "technical_help": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabelCandidates": 0,
+      "humanReview": 1,
+      "noAction": 0
+    },
+    "wallet_drainer": {
+      "count": 1,
+      "passed": 1,
+      "passRate": 1.0,
+      "publicLabelCandidates": 1,
+      "humanReview": 0,
+      "noAction": 0
+    }
+  },
+  "groundTruthSummary": {
+    "ambiguous": {
+      "count": 4,
+      "passed": 4,
+      "passRate": 1.0,
+      "publicLabelCandidates": 0,
+      "humanReview": 4,
+      "noAction": 0
+    },
+    "fraud": {
+      "count": 8,
+      "passed": 8,
+      "passRate": 1.0,
+      "publicLabelCandidates": 8,
+      "humanReview": 0,
+      "noAction": 0
+    },
+    "legitimate": {
+      "count": 7,
+      "passed": 7,
+      "passRate": 1.0,
+      "publicLabelCandidates": 0,
+      "humanReview": 1,
+      "noAction": 6
+    }
+  },
+  "topFailures": [],
+  "results": [
+    {
+      "caseId": "fraud_elon_multiplier",
+      "scenario": "celebrity_impersonation",
+      "groundTruth": "fraud",
+      "expectedAction": "public_label_candidate",
+      "actualAction": "public_label_candidate",
+      "riskFactors": [
+        "promised_return",
+        "transfer_ask",
+        "impersonated_entity",
+        "urgency"
+      ],
+      "benignFactors": [],
+      "missingContext": [],
+      "confidence": 0.74,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "caseId": "fraud_wallet_drainer_airdrop",
+      "scenario": "wallet_drainer",
+      "groundTruth": "fraud",
+      "expectedAction": "public_label_candidate",
+      "actualAction": "public_label_candidate",
+      "riskFactors": [
+        "wallet_connection_ask",
+        "urgency",
+        "risky_link_or_wallet"
+      ],
+      "benignFactors": [],
+      "missingContext": [],
+      "confidence": 0.685,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "caseId": "fraud_recovery_fee_advance",
+      "scenario": "recovery_scam",
+      "groundTruth": "fraud",
+      "expectedAction": "public_label_candidate",
+      "actualAction": "public_label_candidate",
+      "riskFactors": [
+        "transfer_ask",
+        "impersonated_entity",
+        "recovery_claim"
+      ],
+      "benignFactors": [],
+      "missingContext": [],
+      "confidence": 0.685,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "caseId": "fraud_hyip_guaranteed_returns",
+      "scenario": "investment_scam",
+      "groundTruth": "fraud",
+      "expectedAction": "public_label_candidate",
+      "actualAction": "public_label_candidate",
+      "riskFactors": [
+        "promised_return",
+        "transfer_ask",
+        "urgency"
+      ],
+      "benignFactors": [],
+      "missingContext": [],
+      "confidence": 0.685,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "caseId": "fraud_fake_exchange_support",
+      "scenario": "fake_support",
+      "groundTruth": "fraud",
+      "expectedAction": "public_label_candidate",
+      "actualAction": "public_label_candidate",
+      "riskFactors": [
+        "transfer_ask",
+        "wallet_connection_ask",
+        "impersonated_entity"
+      ],
+      "benignFactors": [],
+      "missingContext": [],
+      "confidence": 0.685,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "caseId": "fraud_promo_code_fee",
+      "scenario": "giveaway_fee",
+      "groundTruth": "fraud",
+      "expectedAction": "public_label_candidate",
+      "actualAction": "public_label_candidate",
+      "riskFactors": [
+        "transfer_ask",
+        "wallet_connection_ask"
+      ],
+      "benignFactors": [],
+      "missingContext": [],
+      "confidence": 0.63,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "caseId": "fraud_fake_grant",
+      "scenario": "authority_misuse",
+      "groundTruth": "fraud",
+      "expectedAction": "public_label_candidate",
+      "actualAction": "public_label_candidate",
+      "riskFactors": [
+        "transfer_ask",
+        "impersonated_entity",
+        "urgency"
+      ],
+      "benignFactors": [],
+      "missingContext": [],
+      "confidence": 0.685,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "caseId": "fraud_dm_investment_mentor",
+      "scenario": "pig_butchering",
+      "groundTruth": "fraud",
+      "expectedAction": "public_label_candidate",
+      "actualAction": "public_label_candidate",
+      "riskFactors": [
+        "promised_return",
+        "transfer_ask",
+        "urgency",
+        "private_channel_or_signal"
+      ],
+      "benignFactors": [],
+      "missingContext": [],
+      "confidence": 0.74,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "caseId": "legit_coinbase_earnings",
+      "scenario": "market_news",
+      "groundTruth": "legitimate",
+      "expectedAction": "no_action",
+      "actualAction": "no_action",
+      "riskFactors": [],
+      "benignFactors": [],
+      "missingContext": [],
+      "confidence": 0.52,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "caseId": "legit_regulator_warning",
+      "scenario": "consumer_warning",
+      "groundTruth": "legitimate",
+      "expectedAction": "no_action",
+      "actualAction": "no_action",
+      "riskFactors": [
+        "promised_return",
+        "transfer_ask"
+      ],
+      "benignFactors": [
+        "benign_context"
+      ],
+      "missingContext": [],
+      "confidence": 0.77,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "caseId": "legit_academic_research",
+      "scenario": "research_discussion",
+      "groundTruth": "legitimate",
+      "expectedAction": "no_action",
+      "actualAction": "no_action",
+      "riskFactors": [],
+      "benignFactors": [
+        "benign_context"
+      ],
+      "missingContext": [],
+      "confidence": 0.66,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "caseId": "legit_wallet_help",
+      "scenario": "technical_help",
+      "groundTruth": "legitimate",
+      "expectedAction": "human_review",
+      "actualAction": "human_review",
+      "riskFactors": [],
+      "benignFactors": [
+        "benign_context"
+      ],
+      "missingContext": [
+        "missing_context"
+      ],
+      "confidence": 0.49,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "caseId": "legit_satire_bitcoin_ceo",
+      "scenario": "satire",
+      "groundTruth": "legitimate",
+      "expectedAction": "no_action",
+      "actualAction": "no_action",
+      "riskFactors": [
+        "transfer_ask"
+      ],
+      "benignFactors": [
+        "benign_context"
+      ],
+      "missingContext": [],
+      "confidence": 0.715,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "caseId": "legit_dev_wallet_bug",
+      "scenario": "developer_discussion",
+      "groundTruth": "legitimate",
+      "expectedAction": "no_action",
+      "actualAction": "no_action",
+      "riskFactors": [],
+      "benignFactors": [
+        "benign_context"
+      ],
+      "missingContext": [],
+      "confidence": 0.66,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "caseId": "legit_price_discussion",
+      "scenario": "market_commentary",
+      "groundTruth": "legitimate",
+      "expectedAction": "no_action",
+      "actualAction": "no_action",
+      "riskFactors": [],
+      "benignFactors": [
+        "benign_context"
+      ],
+      "missingContext": [],
+      "confidence": 0.66,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "caseId": "ambiguous_airdrop_announcement",
+      "scenario": "ambiguous_promotion",
+      "groundTruth": "ambiguous",
+      "expectedAction": "human_review",
+      "actualAction": "human_review",
+      "riskFactors": [
+        "risky_link_or_wallet"
+      ],
+      "benignFactors": [],
+      "missingContext": [
+        "missing_context"
+      ],
+      "confidence": 0.485,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "caseId": "ambiguous_recovery_service",
+      "scenario": "ambiguous_recovery",
+      "groundTruth": "ambiguous",
+      "expectedAction": "human_review",
+      "actualAction": "human_review",
+      "riskFactors": [
+        "recovery_claim"
+      ],
+      "benignFactors": [],
+      "missingContext": [
+        "missing_context"
+      ],
+      "confidence": 0.485,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "caseId": "ambiguous_influencer_signal",
+      "scenario": "ambiguous_investment",
+      "groundTruth": "ambiguous",
+      "expectedAction": "human_review",
+      "actualAction": "human_review",
+      "riskFactors": [
+        "private_channel_or_signal"
+      ],
+      "benignFactors": [],
+      "missingContext": [
+        "missing_context"
+      ],
+      "confidence": 0.485,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "caseId": "ambiguous_qr_image_ocr",
+      "scenario": "multimodal_placeholder",
+      "groundTruth": "ambiguous",
+      "expectedAction": "human_review",
+      "actualAction": "human_review",
+      "riskFactors": [
+        "wallet_connection_ask",
+        "risky_link_or_wallet"
+      ],
+      "benignFactors": [],
+      "missingContext": [
+        "missing_context"
+      ],
+      "confidence": 0.54,
+      "passed": true,
+      "failures": []
+    }
+  ],
+  "extractions": [
+    {
+      "caseId": "fraud_elon_multiplier",
+      "scenario": "celebrity_impersonation",
+      "groundTruth": "fraud",
+      "provider": "deterministic_rubric_v1",
+      "recommendedReviewerAction": "public_label_candidate",
+      "confidence": 0.74,
+      "riskFactors": [
+        "promised_return",
+        "transfer_ask",
+        "impersonated_entity",
+        "urgency"
+      ],
+      "benignFactors": [],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "receive 1 ETH back",
+              "start": 75,
+              "end": 93
+            },
+            {
+              "text": "instantly",
+              "start": 94,
+              "end": 103
+            }
+          ],
+          "summary": "Promises or implies guaranteed, doubled, unusually high, risk-free, or instant returns."
+        },
+        "transfer_ask": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Send 0.1 ETH",
+              "start": 29,
+              "end": 41
+            }
+          ],
+          "summary": "Requests that the user send crypto, deposit funds, or pay an upfront/processing/activation fee."
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "official giveaway",
+              "start": 10,
+              "end": 27
+            },
+            {
+              "text": "verified wallet",
+              "start": 49,
+              "end": 64
+            },
+            {
+              "text": "Elon Musk official giveaway. Send",
+              "start": 0,
+              "end": 33
+            }
+          ],
+          "summary": "Claims official, verified, support, foundation, celebrity, exchange, or brand authority."
+        },
+        "urgency": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Limited time",
+              "start": 105,
+              "end": 117
+            }
+          ],
+          "summary": "Applies time pressure or scarcity."
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "Concrete scam evidence is present (promised_return, transfer_ask, impersonated_entity, urgency) with no benign-context field; this is a candidate for reviewer-confirmed public labeling.",
+      "faithfulness": {
+        "spanCount": 7,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      },
+      "text": "Elon Musk official giveaway. Send 0.1 ETH to the verified wallet below and receive 1 ETH back instantly. Limited time."
+    },
+    {
+      "caseId": "fraud_wallet_drainer_airdrop",
+      "scenario": "wallet_drainer",
+      "groundTruth": "fraud",
+      "provider": "deterministic_rubric_v1",
+      "recommendedReviewerAction": "public_label_candidate",
+      "confidence": 0.685,
+      "riskFactors": [
+        "wallet_connection_ask",
+        "urgency",
+        "risky_link_or_wallet"
+      ],
+      "benignFactors": [],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "wallet_connection_ask": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Connect your wallet",
+              "start": 30,
+              "end": 49
+            }
+          ],
+          "summary": "Asks the user to connect, verify, sync, or provide a wallet."
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Final airdrop window",
+              "start": 0,
+              "end": 20
+            },
+            {
+              "text": "window is open",
+              "start": 14,
+              "end": 28
+            },
+            {
+              "text": "before eligibility expires",
+              "start": 98,
+              "end": 124
+            },
+            {
+              "text": "expires",
+              "start": 117,
+              "end": 124
+            }
+          ],
+          "summary": "Applies time pressure or scarcity."
+        },
+        "risky_link_or_wallet": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "secure-eth-airdrop.xyz",
+              "start": 53,
+              "end": 75
+            }
+          ],
+          "summary": "Contains a URL, defanged URL, suspicious domain, QR/link mention, wallet address, or wallet-like string."
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "Concrete scam evidence is present (wallet_connection_ask, urgency, risky_link_or_wallet) with no benign-context field; this is a candidate for reviewer-confirmed public labeling.",
+      "faithfulness": {
+        "spanCount": 6,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      },
+      "text": "Final airdrop window is open. Connect your wallet at secure-eth-airdrop.xyz now to claim free ETH before eligibility expires."
+    },
+    {
+      "caseId": "fraud_recovery_fee_advance",
+      "scenario": "recovery_scam",
+      "groundTruth": "fraud",
+      "provider": "deterministic_rubric_v1",
+      "recommendedReviewerAction": "public_label_candidate",
+      "confidence": 0.685,
+      "riskFactors": [
+        "transfer_ask",
+        "impersonated_entity",
+        "recovery_claim"
+      ],
+      "benignFactors": [],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Pay the processing fee",
+              "start": 64,
+              "end": 86
+            },
+            {
+              "text": "processing fee",
+              "start": 72,
+              "end": 86
+            },
+            {
+              "text": "upfront",
+              "start": 94,
+              "end": 101
+            }
+          ],
+          "summary": "Requests that the user send crypto, deposit funds, or pay an upfront/processing/activation fee."
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "verified recovery",
+              "start": 17,
+              "end": 34
+            }
+          ],
+          "summary": "Claims official, verified, support, foundation, celebrity, exchange, or brand authority."
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "recovery team",
+              "start": 26,
+              "end": 39
+            },
+            {
+              "text": "restore any wallet",
+              "start": 44,
+              "end": 62
+            },
+            {
+              "text": "funds unlock",
+              "start": 111,
+              "end": 123
+            }
+          ],
+          "summary": "Claims to recover, restore, or unlock lost funds or wallets."
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "Concrete scam evidence is present (transfer_ask, impersonated_entity, recovery_claim) with no benign-context field; this is a candidate for reviewer-confirmed public labeling.",
+      "faithfulness": {
+        "spanCount": 7,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      },
+      "text": "Lost crypto? Our verified recovery team can restore any wallet. Pay the processing fee in BTC upfront and your funds unlock today."
+    },
+    {
+      "caseId": "fraud_hyip_guaranteed_returns",
+      "scenario": "investment_scam",
+      "groundTruth": "fraud",
+      "provider": "deterministic_rubric_v1",
+      "recommendedReviewerAction": "public_label_candidate",
+      "confidence": 0.685,
+      "riskFactors": [
+        "promised_return",
+        "transfer_ask",
+        "urgency"
+      ],
+      "benignFactors": [],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "risk-free",
+              "start": 63,
+              "end": 72
+            },
+            {
+              "text": "300% monthly returns",
+              "start": 41,
+              "end": 61
+            }
+          ],
+          "summary": "Promises or implies guaranteed, doubled, unusually high, risk-free, or instant returns."
+        },
+        "transfer_ask": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Deposit USDT",
+              "start": 96,
+              "end": 108
+            }
+          ],
+          "summary": "Requests that the user send crypto, deposit funds, or pay an upfront/processing/activation fee."
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "before midnight",
+              "start": 109,
+              "end": 124
+            },
+            {
+              "text": "now",
+              "start": 20,
+              "end": 23
+            }
+          ],
+          "summary": "Applies time pressure or scarcity."
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "Concrete scam evidence is present (promised_return, transfer_ask, urgency) with no benign-context field; this is a candidate for reviewer-confirmed public labeling.",
+      "faithfulness": {
+        "spanCount": 5,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      },
+      "text": "Private crypto pool now open. Guaranteed 300% monthly returns, risk-free, automated AI trading. Deposit USDT before midnight."
+    },
+    {
+      "caseId": "fraud_fake_exchange_support",
+      "scenario": "fake_support",
+      "groundTruth": "fraud",
+      "provider": "deterministic_rubric_v1",
+      "recommendedReviewerAction": "public_label_candidate",
+      "confidence": 0.685,
+      "riskFactors": [
+        "transfer_ask",
+        "wallet_connection_ask",
+        "impersonated_entity"
+      ],
+      "benignFactors": [],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "send ",
+              "start": 60,
+              "end": 65
+            },
+            {
+              "text": "deposit ",
+              "start": 77,
+              "end": 85
+            }
+          ],
+          "summary": "Requests that the user send crypto, deposit funds, or pay an upfront/processing/activation fee."
+        },
+        "wallet_connection_ask": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "verify your wallet",
+              "start": 29,
+              "end": 47
+            },
+            {
+              "text": "wallet address",
+              "start": 41,
+              "end": 55
+            }
+          ],
+          "summary": "Asks the user to connect, verify, sync, or provide a wallet."
+        },
+        "impersonated_entity": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "support escalation",
+              "start": 9,
+              "end": 27
+            },
+            {
+              "text": "Coinbase support",
+              "start": 0,
+              "end": 16
+            }
+          ],
+          "summary": "Claims official, verified, support, foundation, celebrity, exchange, or brand authority."
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "Concrete scam evidence is present (transfer_ask, wallet_connection_ask, impersonated_entity) with no benign-context field; this is a candidate for reviewer-confirmed public labeling.",
+      "faithfulness": {
+        "spanCount": 6,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      },
+      "text": "Coinbase support escalation: verify your wallet address and send a small ETH deposit so we can remove the account restriction."
+    },
+    {
+      "caseId": "fraud_promo_code_fee",
+      "scenario": "giveaway_fee",
+      "groundTruth": "fraud",
+      "provider": "deterministic_rubric_v1",
+      "recommendedReviewerAction": "public_label_candidate",
+      "confidence": 0.63,
+      "riskFactors": [
+        "transfer_ask",
+        "wallet_connection_ask"
+      ],
+      "benignFactors": [],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Send the small activation fee ",
+              "start": 49,
+              "end": 79
+            },
+            {
+              "text": "activation fee",
+              "start": 64,
+              "end": 78
+            }
+          ],
+          "summary": "Requests that the user send crypto, deposit funds, or pay an upfront/processing/activation fee."
+        },
+        "wallet_connection_ask": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "wallet address",
+              "start": 86,
+              "end": 100
+            }
+          ],
+          "summary": "Asks the user to connect, verify, sync, or provide a wallet."
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "Concrete scam evidence is present (transfer_ask, wallet_connection_ask) with no benign-context field; this is a candidate for reviewer-confirmed public labeling.",
+      "faithfulness": {
+        "spanCount": 3,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      },
+      "text": "Congratulations, your promo code unlocked 2 BTC. Send the small activation fee to the wallet address and claim your prize."
+    },
+    {
+      "caseId": "fraud_fake_grant",
+      "scenario": "authority_misuse",
+      "groundTruth": "fraud",
+      "provider": "deterministic_rubric_v1",
+      "recommendedReviewerAction": "public_label_candidate",
+      "confidence": 0.685,
+      "riskFactors": [
+        "transfer_ask",
+        "impersonated_entity",
+        "urgency"
+      ],
+      "benignFactors": [],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Send 0.05 BTC",
+              "start": 52,
+              "end": 65
+            }
+          ],
+          "summary": "Requests that the user send crypto, deposit funds, or pay an upfront/processing/activation fee."
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Official Microsoft crypto grant for verified users",
+              "start": 0,
+              "end": 50
+            },
+            {
+              "text": "verified users",
+              "start": 36,
+              "end": 50
+            },
+            {
+              "text": "Microsoft crypto grant",
+              "start": 9,
+              "end": 31
+            },
+            {
+              "text": "Microsoft crypto grant for verified",
+              "start": 9,
+              "end": 44
+            }
+          ],
+          "summary": "Claims official, verified, support, foundation, celebrity, exchange, or brand authority."
+        },
+        "urgency": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "immediately",
+              "start": 116,
+              "end": 127
+            }
+          ],
+          "summary": "Applies time pressure or scarcity."
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "Concrete scam evidence is present (transfer_ask, impersonated_entity, urgency) with no benign-context field; this is a candidate for reviewer-confirmed public labeling.",
+      "faithfulness": {
+        "spanCount": 6,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      },
+      "text": "Official Microsoft crypto grant for verified users. Send 0.05 BTC to validate identity and receive your bonus grant immediately."
+    },
+    {
+      "caseId": "fraud_dm_investment_mentor",
+      "scenario": "pig_butchering",
+      "groundTruth": "fraud",
+      "provider": "deterministic_rubric_v1",
+      "recommendedReviewerAction": "public_label_candidate",
+      "confidence": 0.74,
+      "riskFactors": [
+        "promised_return",
+        "transfer_ask",
+        "urgency",
+        "private_channel_or_signal"
+      ],
+      "benignFactors": [],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "profits",
+              "start": 35,
+              "end": 42
+            }
+          ],
+          "summary": "Promises or implies guaranteed, doubled, unusually high, risk-free, or instant returns."
+        },
+        "transfer_ask": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "deposit ",
+              "start": 114,
+              "end": 122
+            }
+          ],
+          "summary": "Requests that the user send crypto, deposit funds, or pay an upfront/processing/activation fee."
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "now",
+              "start": 81,
+              "end": 84
+            }
+          ],
+          "summary": "Applies time pressure or scarcity."
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "DM me",
+              "start": 75,
+              "end": 80
+            },
+            {
+              "text": "private trading method",
+              "start": 51,
+              "end": 73
+            },
+            {
+              "text": "where to deposit first",
+              "start": 105,
+              "end": 127
+            }
+          ],
+          "summary": "Pushes a private DM, mentor, premium signal, or trading-group funnel."
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "Concrete scam evidence is present (promised_return, transfer_ask, urgency, private_channel_or_signal) with no benign-context field; this is a candidate for reviewer-confirmed public labeling.",
+      "faithfulness": {
+        "spanCount": 6,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      },
+      "text": "I help beginners earn daily crypto profits with my private trading method. DM me now and I will show you where to deposit first."
+    },
+    {
+      "caseId": "legit_coinbase_earnings",
+      "scenario": "market_news",
+      "groundTruth": "legitimate",
+      "provider": "deterministic_rubric_v1",
+      "recommendedReviewerAction": "no_action",
+      "confidence": 0.52,
+      "riskFactors": [],
+      "benignFactors": [],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "No action recommended because the text shows no benign-context field and lacks enough concrete scam evidence.",
+      "faithfulness": {
+        "spanCount": 0,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      },
+      "text": "Coinbase earnings are out. Revenue was up this quarter, but analysts still disagree about long-term exchange volume."
+    },
+    {
+      "caseId": "legit_regulator_warning",
+      "scenario": "consumer_warning",
+      "groundTruth": "legitimate",
+      "provider": "deterministic_rubric_v1",
+      "recommendedReviewerAction": "no_action",
+      "confidence": 0.77,
+      "riskFactors": [
+        "promised_return",
+        "transfer_ask"
+      ],
+      "benignFactors": [
+        "benign_context"
+      ],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": true,
+          "stance": "warning",
+          "spans": [
+            {
+              "text": "guaranteed returns",
+              "start": 49,
+              "end": 67
+            }
+          ],
+          "summary": "Promises or implies guaranteed, doubled, unusually high, risk-free, or instant returns."
+        },
+        "transfer_ask": {
+          "present": true,
+          "stance": "warning",
+          "spans": [
+            {
+              "text": "send crypto",
+              "start": 17,
+              "end": 28
+            }
+          ],
+          "summary": "Requests that the user send crypto, deposit funds, or pay an upfront/processing/activation fee."
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": true,
+          "stance": "warning",
+          "spans": [
+            {
+              "text": "do not send",
+              "start": 10,
+              "end": 21
+            },
+            {
+              "text": "warned",
+              "start": 92,
+              "end": 98
+            },
+            {
+              "text": "scams",
+              "start": 129,
+              "end": 134
+            }
+          ],
+          "summary": "Warning, research, satire, developer/debugging, market commentary, or skeptical help-seeking context."
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "No action recommended because the text shows benign_context and lacks enough concrete scam evidence.",
+      "faithfulness": {
+        "spanCount": 5,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      },
+      "text": "Reminder: do not send crypto to people promising guaranteed returns. The FTC has repeatedly warned about social media investment scams."
+    },
+    {
+      "caseId": "legit_academic_research",
+      "scenario": "research_discussion",
+      "groundTruth": "legitimate",
+      "provider": "deterministic_rubric_v1",
+      "recommendedReviewerAction": "no_action",
+      "confidence": 0.66,
+      "riskFactors": [],
+      "benignFactors": [
+        "benign_context"
+      ],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": true,
+          "stance": "research",
+          "spans": [
+            {
+              "text": "scams",
+              "start": 38,
+              "end": 43
+            },
+            {
+              "text": "paper",
+              "start": 4,
+              "end": 9
+            },
+            {
+              "text": "studies",
+              "start": 10,
+              "end": 17
+            }
+          ],
+          "summary": "Warning, research, satire, developer/debugging, market commentary, or skeptical help-seeking context."
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "No action recommended because the text shows benign_context and lacks enough concrete scam evidence.",
+      "faithfulness": {
+        "spanCount": 3,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      },
+      "text": "Our paper studies how crypto giveaway scams reuse celebrity names, wallet requests, and urgency cues across social platforms."
+    },
+    {
+      "caseId": "legit_wallet_help",
+      "scenario": "technical_help",
+      "groundTruth": "legitimate",
+      "provider": "deterministic_rubric_v1",
+      "recommendedReviewerAction": "human_review",
+      "confidence": 0.49,
+      "riskFactors": [],
+      "benignFactors": [
+        "benign_context"
+      ],
+      "missingContext": [
+        "missing_context"
+      ],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": true,
+          "stance": "question",
+          "spans": [
+            {
+              "text": "without getting scammed",
+              "start": 93,
+              "end": 116
+            }
+          ],
+          "summary": "Warning, research, satire, developer/debugging, market commentary, or skeptical help-seeking context."
+        },
+        "missing_context": {
+          "present": true,
+          "stance": "missing_context",
+          "spans": [
+            {
+              "text": "Does anyone know",
+              "start": 42,
+              "end": 58
+            }
+          ],
+          "summary": "The text signals uncertainty, missing source/link context, OCR, or skeptical review need."
+        }
+      },
+      "reviewerSummary": "Risk evidence or uncertainty requires review (no concrete scam-risk field; missing_context).",
+      "faithfulness": {
+        "spanCount": 2,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      },
+      "text": "I lost access to an old wallet from 2016. Does anyone know how to evaluate recovery services without getting scammed?"
+    },
+    {
+      "caseId": "legit_satire_bitcoin_ceo",
+      "scenario": "satire",
+      "groundTruth": "legitimate",
+      "provider": "deterministic_rubric_v1",
+      "recommendedReviewerAction": "no_action",
+      "confidence": 0.715,
+      "riskFactors": [
+        "transfer_ask"
+      ],
+      "benignFactors": [
+        "benign_context"
+      ],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": true,
+          "stance": "satire",
+          "spans": [
+            {
+              "text": "send ",
+              "start": 50,
+              "end": 55
+            },
+            {
+              "text": "send ",
+              "start": 84,
+              "end": 89
+            }
+          ],
+          "summary": "Requests that the user send crypto, deposit funds, or pay an upfront/processing/activation fee."
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": true,
+          "stance": "satire",
+          "spans": [
+            {
+              "text": "obviously not",
+              "start": 5,
+              "end": 18
+            },
+            {
+              "text": "imaginary",
+              "start": 62,
+              "end": 71
+            },
+            {
+              "text": "imaginary",
+              "start": 98,
+              "end": 107
+            }
+          ],
+          "summary": "Warning, research, satire, developer/debugging, market commentary, or skeptical help-seeking context."
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "No action recommended because the text shows benign_context and lacks enough concrete scam evidence.",
+      "faithfulness": {
+        "spanCount": 5,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      },
+      "text": "I am obviously not the CEO of Bitcoin, but if you send me one imaginary coin I will send back two imaginary coins."
+    },
+    {
+      "caseId": "legit_dev_wallet_bug",
+      "scenario": "developer_discussion",
+      "groundTruth": "legitimate",
+      "provider": "deterministic_rubric_v1",
+      "recommendedReviewerAction": "no_action",
+      "confidence": 0.66,
+      "riskFactors": [],
+      "benignFactors": [
+        "benign_context"
+      ],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": true,
+          "stance": "technical",
+          "spans": [
+            {
+              "text": "Debugging",
+              "start": 0,
+              "end": 9
+            },
+            {
+              "text": "testnet",
+              "start": 41,
+              "end": 48
+            },
+            {
+              "text": "bug",
+              "start": 30,
+              "end": 33
+            }
+          ],
+          "summary": "Warning, research, satire, developer/debugging, market commentary, or skeptical help-seeking context."
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "No action recommended because the text shows benign_context and lacks enough concrete scam evidence.",
+      "faithfulness": {
+        "spanCount": 3,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      },
+      "text": "Debugging a wallet connection bug in our testnet app. The issue is a stale session token, not a user-facing security problem."
+    },
+    {
+      "caseId": "legit_price_discussion",
+      "scenario": "market_commentary",
+      "groundTruth": "legitimate",
+      "provider": "deterministic_rubric_v1",
+      "recommendedReviewerAction": "no_action",
+      "confidence": 0.66,
+      "riskFactors": [],
+      "benignFactors": [
+        "benign_context"
+      ],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": true,
+          "stance": "unknown",
+          "spans": [
+            {
+              "text": "I am still not treating this as investment advice",
+              "start": 63,
+              "end": 112
+            }
+          ],
+          "summary": "Warning, research, satire, developer/debugging, market commentary, or skeptical help-seeking context."
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "No action recommended because the text shows benign_context and lacks enough concrete scam evidence.",
+      "faithfulness": {
+        "spanCount": 1,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      },
+      "text": "Bitcoin rallied after macro data came in cooler than expected. I am still not treating this as investment advice."
+    },
+    {
+      "caseId": "ambiguous_airdrop_announcement",
+      "scenario": "ambiguous_promotion",
+      "groundTruth": "ambiguous",
+      "provider": "deterministic_rubric_v1",
+      "recommendedReviewerAction": "human_review",
+      "confidence": 0.485,
+      "riskFactors": [
+        "risky_link_or_wallet"
+      ],
+      "benignFactors": [],
+      "missingContext": [
+        "missing_context"
+      ],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "link",
+              "start": 93,
+              "end": 97
+            }
+          ],
+          "summary": "Contains a URL, defanged URL, suspicious domain, QR/link mention, wallet address, or wallet-like string."
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": true,
+          "stance": "missing_context",
+          "spans": [
+            {
+              "text": "not verified",
+              "start": 76,
+              "end": 88
+            }
+          ],
+          "summary": "The text signals uncertainty, missing source/link context, OCR, or skeptical review need."
+        }
+      },
+      "reviewerSummary": "Risk evidence or uncertainty requires review (risky_link_or_wallet; missing_context).",
+      "faithfulness": {
+        "spanCount": 2,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      },
+      "text": "A new token project says early users can claim an airdrop next week. I have not verified the link yet."
+    },
+    {
+      "caseId": "ambiguous_recovery_service",
+      "scenario": "ambiguous_recovery",
+      "groundTruth": "ambiguous",
+      "provider": "deterministic_rubric_v1",
+      "recommendedReviewerAction": "human_review",
+      "confidence": 0.485,
+      "riskFactors": [
+        "recovery_claim"
+      ],
+      "benignFactors": [],
+      "missingContext": [
+        "missing_context"
+      ],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": true,
+          "stance": "question",
+          "spans": [
+            {
+              "text": "recovery service",
+              "start": 2,
+              "end": 18
+            },
+            {
+              "text": "funds are recovered",
+              "start": 47,
+              "end": 66
+            }
+          ],
+          "summary": "Claims to recover, restore, or unlock lost funds or wallets."
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": true,
+          "stance": "missing_context",
+          "spans": [
+            {
+              "text": "Has anyone",
+              "start": 68,
+              "end": 78
+            },
+            {
+              "text": "safely",
+              "start": 89,
+              "end": 95
+            }
+          ],
+          "summary": "The text signals uncertainty, missing source/link context, OCR, or skeptical review need."
+        }
+      },
+      "reviewerSummary": "Risk evidence or uncertainty requires review (recovery_claim; missing_context).",
+      "faithfulness": {
+        "spanCount": 4,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      },
+      "text": "A recovery service says they charge only after funds are recovered. Has anyone used them safely?"
+    },
+    {
+      "caseId": "ambiguous_influencer_signal",
+      "scenario": "ambiguous_investment",
+      "groundTruth": "ambiguous",
+      "provider": "deterministic_rubric_v1",
+      "recommendedReviewerAction": "human_review",
+      "confidence": 0.485,
+      "riskFactors": [
+        "private_channel_or_signal"
+      ],
+      "benignFactors": [],
+      "missingContext": [
+        "missing_context"
+      ],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": true,
+          "stance": "question",
+          "spans": [
+            {
+              "text": "premium members",
+              "start": 26,
+              "end": 41
+            },
+            {
+              "text": "early signals",
+              "start": 46,
+              "end": 59
+            }
+          ],
+          "summary": "Pushes a private DM, mentor, premium signal, or trading-group funnel."
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": true,
+          "stance": "missing_context",
+          "spans": [
+            {
+              "text": "cannot tell",
+              "start": 87,
+              "end": 98
+            }
+          ],
+          "summary": "The text signals uncertainty, missing source/link context, OCR, or skeptical review need."
+        }
+      },
+      "reviewerSummary": "Risk evidence or uncertainty requires review (private_channel_or_signal; missing_context).",
+      "faithfulness": {
+        "spanCount": 3,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      },
+      "text": "This trading group claims premium members get early signals and better entry prices. I cannot tell if it is legit."
+    },
+    {
+      "caseId": "ambiguous_qr_image_ocr",
+      "scenario": "multimodal_placeholder",
+      "groundTruth": "ambiguous",
+      "provider": "deterministic_rubric_v1",
+      "recommendedReviewerAction": "human_review",
+      "confidence": 0.54,
+      "riskFactors": [
+        "wallet_connection_ask",
+        "risky_link_or_wallet"
+      ],
+      "benignFactors": [],
+      "missingContext": [
+        "missing_context"
+      ],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "wallet_connection_ask": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Wallet connect required",
+              "start": 54,
+              "end": 77
+            }
+          ],
+          "summary": "Asks the user to connect, verify, sync, or provide a wallet."
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "QR code",
+              "start": 45,
+              "end": 52
+            }
+          ],
+          "summary": "Contains a URL, defanged URL, suspicious domain, QR/link mention, wallet address, or wallet-like string."
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": true,
+          "stance": "missing_context",
+          "spans": [
+            {
+              "text": "No visible source",
+              "start": 79,
+              "end": 96
+            },
+            {
+              "text": "Image OCR",
+              "start": 1,
+              "end": 10
+            },
+            {
+              "text": "[Image OCR]",
+              "start": 0,
+              "end": 11
+            }
+          ],
+          "summary": "The text signals uncertainty, missing source/link context, OCR, or skeptical review need."
+        }
+      },
+      "reviewerSummary": "Risk evidence or uncertainty requires review (wallet_connection_ask, risky_link_or_wallet; missing_context).",
+      "faithfulness": {
+        "spanCount": 5,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      },
+      "text": "[Image OCR] Claim your bonus token using the QR code. Wallet connect required. No visible source account."
+    }
+  ]
+}

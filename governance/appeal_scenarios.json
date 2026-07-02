@@ -1,0 +1,78 @@
+[
+  {
+    "id": "consumer_warning_reversed",
+    "title": "Consumer warning false positive",
+    "sourceText": "Reminder: do not send crypto to people promising guaranteed returns. Social media investment scams are common.",
+    "initialAction": "Potential Crypto Fraud label",
+    "appealSubmitted": true,
+    "appealClaim": "The post is warning people about scams, not promoting one.",
+    "reviewerChecks": [
+      "Checked for direct transfer request from the speaker.",
+      "Confirmed the post uses protective language.",
+      "Verified there is no risky link, wallet address, or solicitation."
+    ],
+    "finalOutcome": "reversed",
+    "reversed": true,
+    "falsePositiveCategory": "consumer_warning",
+    "noticeType": "reversal_notice",
+    "transparencyBucket": "protective_speech",
+    "userNotice": "We removed the Potential Crypto Fraud label after review. Your post appears to warn others about scam behavior rather than request funds."
+  },
+  {
+    "id": "satire_multiplier_reversed",
+    "title": "Satire mistaken for solicitation",
+    "sourceText": "I am obviously not the CEO of Bitcoin, but if you send me one imaginary coin I will send back two imaginary coins.",
+    "initialAction": "Potential Crypto Fraud label",
+    "appealSubmitted": true,
+    "appealClaim": "The post is an obvious joke using imaginary assets.",
+    "reviewerChecks": [
+      "Checked whether the post asks for real funds.",
+      "Confirmed satire markers and imaginary-asset language.",
+      "Confirmed no wallet, link, QR code, or off-platform funnel is present."
+    ],
+    "finalOutcome": "reversed",
+    "reversed": true,
+    "falsePositiveCategory": "satire",
+    "noticeType": "reversal_notice",
+    "transparencyBucket": "satire",
+    "userNotice": "We removed the label because the post is clear satire and does not request real funds."
+  },
+  {
+    "id": "wallet_drainer_airdrop_upheld",
+    "title": "Wallet-drainer airdrop appeal",
+    "sourceText": "Final airdrop window is open. Connect your wallet at secure-eth-airdrop.xyz now to claim free ETH before eligibility expires.",
+    "initialAction": "Potential Crypto Fraud label",
+    "appealSubmitted": true,
+    "appealClaim": "The claim page is a legitimate promotion.",
+    "reviewerChecks": [
+      "Checked the post for wallet-connection pressure.",
+      "Checked urgency and free-token claim language.",
+      "Confirmed the domain pattern is campaign-like and not an established official domain."
+    ],
+    "finalOutcome": "upheld",
+    "reversed": false,
+    "falsePositiveCategory": null,
+    "noticeType": "appeal_upheld_notice",
+    "transparencyBucket": "wallet_drainer",
+    "userNotice": "After review, the label remains because the post asks users to connect a wallet through an unverified airdrop claim."
+  },
+  {
+    "id": "recovery_service_context_needed",
+    "title": "Recovery-service ambiguity",
+    "sourceText": "A recovery service says they charge only after funds are recovered. Has anyone used them safely?",
+    "initialAction": "Sent to human review",
+    "appealSubmitted": true,
+    "appealClaim": "The post asks for advice and should not be publicly labeled.",
+    "reviewerChecks": [
+      "Checked whether the speaker is advertising the service.",
+      "Confirmed the post is help-seeking.",
+      "Kept the item in review because recovery-service scams are high-risk but context-dependent."
+    ],
+    "finalOutcome": "clarification_sent",
+    "reversed": false,
+    "falsePositiveCategory": "help_seeking",
+    "noticeType": "review_explanation",
+    "transparencyBucket": "ambiguous_recovery",
+    "userNotice": "No public label was applied. We routed the post to review because recovery-service claims can be high-risk and context-dependent."
+  }
+]

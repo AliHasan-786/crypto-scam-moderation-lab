@@ -1,0 +1,220 @@
+{
+  "generatedAt": "2026-07-02T03:16:16.068523+00:00",
+  "dbPath": "audit_outputs/live_review_queue.sqlite",
+  "summary": {
+    "totalItems": 5,
+    "reviewedItems": 3,
+    "unreviewedItems": 2,
+    "actionedItems": 1,
+    "dismissedItems": 1,
+    "totalObservations": 8,
+    "avgProbability": 0.6533,
+    "reviewCoverage": 0.6,
+    "backlogRate": 0.4,
+    "actionRate": 0.2,
+    "dismissalRateAmongReviewed": 0.3333
+  },
+  "statusCounts": [
+    {
+      "status": "new",
+      "count": 2
+    },
+    {
+      "status": "dismissed",
+      "count": 1
+    },
+    {
+      "status": "escalated",
+      "count": 1
+    },
+    {
+      "status": "review",
+      "count": 1
+    }
+  ],
+  "actionCounts": [
+    {
+      "action": "high_confidence_escalation",
+      "count": 3,
+      "avg_probability": 0.754
+    },
+    {
+      "action": "no_label",
+      "count": 1,
+      "avg_probability": 0.7467
+    },
+    {
+      "action": "send_to_human_review",
+      "count": 1,
+      "avg_probability": 0.2579
+    }
+  ],
+  "decisionCounts": [
+    {
+      "decision": "unreviewed",
+      "count": 2
+    },
+    {
+      "decision": "fraud",
+      "count": 1
+    },
+    {
+      "decision": "needs_more_context",
+      "count": 1
+    },
+    {
+      "decision": "not_fraud",
+      "count": 1
+    }
+  ],
+  "sourceCounts": [
+    {
+      "source": "demo",
+      "count": 5
+    }
+  ],
+  "eventCounts": [
+    {
+      "event_type": "ingested",
+      "count": 5
+    },
+    {
+      "event_type": "review_decision",
+      "count": 3
+    },
+    {
+      "event_type": "upsert_duplicate",
+      "count": 3
+    }
+  ],
+  "falsePositiveCandidates": [
+    {
+      "uri": "demo://crypto-scam-lab/consumer-warning",
+      "author_handle": "consumer-safety-demo.bsky.social",
+      "probability": 0.7467,
+      "action": "no_label",
+      "status": "dismissed",
+      "reviewer_decision": "not_fraud",
+      "reviewer_notes": "Educational warning; no public label.",
+      "text_preview": "Reminder: do not send crypto to people promising guaranteed returns. Social media investment scams are common."
+    }
+  ],
+  "backlogItems": [
+    {
+      "uri": "demo://crypto-scam-lab/reused-wallet",
+      "author_handle": "token-support-demo.bsky.social",
+      "probability": 0.7593,
+      "action": "high_confidence_escalation",
+      "status": "new",
+      "duplicate_count": 1,
+      "text_preview": "Tesla crypto event support says deposits to 0x5afe00000000000000000000000000000000feed are required before the bonus release fee clears."
+    },
+    {
+      "uri": "demo://crypto-scam-lab/mirror-airdrop",
+      "author_handle": "btc-claims-demo.bsky.social",
+      "probability": 0.6254,
+      "action": "high_confidence_escalation",
+      "status": "new",
+      "duplicate_count": 1,
+      "text_preview": "Verified BTC rewards round is closing. Claim at secure-btc-airdrop[.]xyz and connect wallet before the final warning."
+    }
+  ],
+  "topEntities": [
+    {
+      "entity_type": "wallet",
+      "value": "0x5afe00000000000000000000000000000000feed",
+      "observation_count": 2,
+      "max_risk_weight": 0.92,
+      "linked_items": 2
+    },
+    {
+      "entity_type": "risk_phrase",
+      "value": "connect_wallet",
+      "observation_count": 2,
+      "max_risk_weight": 0.9,
+      "linked_items": 2
+    },
+    {
+      "entity_type": "risk_phrase",
+      "value": "airdrop_claim",
+      "observation_count": 2,
+      "max_risk_weight": 0.76,
+      "linked_items": 2
+    },
+    {
+      "entity_type": "risk_phrase",
+      "value": "limited_time",
+      "observation_count": 2,
+      "max_risk_weight": 0.68,
+      "linked_items": 2
+    },
+    {
+      "entity_type": "domain",
+      "value": "secure-btc-airdrop.xyz",
+      "observation_count": 2,
+      "max_risk_weight": 0.58,
+      "linked_items": 2
+    },
+    {
+      "entity_type": "brand",
+      "value": "bitcoin",
+      "observation_count": 2,
+      "max_risk_weight": 0.18,
+      "linked_items": 2
+    },
+    {
+      "entity_type": "risk_phrase",
+      "value": "send_crypto",
+      "observation_count": 1,
+      "max_risk_weight": 0.82,
+      "linked_items": 1
+    },
+    {
+      "entity_type": "risk_phrase",
+      "value": "guaranteed_returns",
+      "observation_count": 1,
+      "max_risk_weight": 0.78,
+      "linked_items": 1
+    },
+    {
+      "entity_type": "risk_phrase",
+      "value": "processing_fee",
+      "observation_count": 1,
+      "max_risk_weight": 0.74,
+      "linked_items": 1
+    },
+    {
+      "entity_type": "risk_phrase",
+      "value": "recovery_service",
+      "observation_count": 1,
+      "max_risk_weight": 0.7,
+      "linked_items": 1
+    },
+    {
+      "entity_type": "actor",
+      "value": "btc-claims-demo.bsky.social",
+      "observation_count": 1,
+      "max_risk_weight": 0.2,
+      "linked_items": 1
+    },
+    {
+      "entity_type": "actor",
+      "value": "btc-rewards-demo.bsky.social",
+      "observation_count": 1,
+      "max_risk_weight": 0.2,
+      "linked_items": 1
+    }
+  ],
+  "riskNotes": [
+    "Backlog exists; prioritize unresolved items by action tier, probability, duplicate count, and shared entities.",
+    "Dismissed/not-fraud cases should feed policy clarification and false-positive evals.",
+    "Repeated entities are useful campaign leads, but should not trigger enforcement without content and context review.",
+    "Reviewer decisions create an active-learning and QA feedback loop."
+  ],
+  "operationalQuestions": [
+    "SQL-readable queue health and reviewer decision metrics.",
+    "False-positive and backlog examples for policy review.",
+    "Entity leaderboard for fraud-intelligence and campaign triage.",
+    "Event history for auditability and process improvement."
+  ]
+}

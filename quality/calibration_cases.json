@@ -1,0 +1,110 @@
+[
+  {
+    "id": "calib_clear_wallet_drainer",
+    "text": "Final airdrop window. Connect your wallet at secure-eth-airdrop.xyz and claim 5 ETH before eligibility expires.",
+    "expected_action": "public_label",
+    "expected_decision": "fraud",
+    "policy_focus": "wallet_drainer",
+    "severity": "high",
+    "rationale": "Airdrop lure, wallet connection request, suspicious domain, and urgency justify a public Potential Crypto Fraud label."
+  },
+  {
+    "id": "calib_recovery_fee",
+    "text": "Lost crypto? Our verified recovery team can restore any wallet. Pay the processing fee in BTC upfront and your funds unlock today.",
+    "expected_action": "public_label",
+    "expected_decision": "fraud",
+    "policy_focus": "recovery_scam",
+    "severity": "high",
+    "rationale": "Recovery service plus upfront crypto fee and certainty claims are classic fraud indicators."
+  },
+  {
+    "id": "calib_consumer_warning",
+    "text": "Fraud warning: do not send BTC to people promising guaranteed returns, and never connect your wallet to random airdrop links.",
+    "expected_action": "no_label",
+    "expected_decision": "not_fraud",
+    "policy_focus": "consumer_warning",
+    "severity": "low",
+    "rationale": "The post discusses scam indicators in a protective warning context and should not be labeled as promotion."
+  },
+  {
+    "id": "calib_market_news",
+    "text": "Uniswap governance is discussing a possible airdrop for past users. No claim page is live and I am not sharing a wallet link.",
+    "expected_action": "no_label",
+    "expected_decision": "not_fraud",
+    "policy_focus": "market_news",
+    "severity": "low",
+    "rationale": "Market/governance commentary with explicit no-link/no-claim context should suppress public enforcement."
+  },
+  {
+    "id": "calib_spanish_wallet_lure",
+    "text": "Airdrop oficial: conecta tu wallet en metamask-bono.top para reclamar ETH gratis. Ultima oportunidad.",
+    "expected_action": "public_label",
+    "expected_decision": "fraud",
+    "policy_focus": "multilingual_wallet_drainer",
+    "severity": "high",
+    "rationale": "Spanish-language wallet-connection lure with suspicious brand/domain and urgency should be handled consistently."
+  },
+  {
+    "id": "calib_spanish_help_seeking",
+    "text": "Un grupo dice que puedo reclamar un airdrop si conecto mi billetera. No he verificado el enlace. Alguien sabe si es legitimo?",
+    "expected_action": "human_review",
+    "expected_decision": "needs_more_context",
+    "policy_focus": "multilingual_help_seeking",
+    "severity": "medium",
+    "rationale": "Suspicious details are present, but the speaker appears to be asking for help rather than promoting the link."
+  },
+  {
+    "id": "calib_fake_support_deposit",
+    "text": "Coinbase support escalation: verify your wallet address and send a small ETH deposit so we can remove the account restriction.",
+    "expected_action": "public_label",
+    "expected_decision": "fraud",
+    "policy_focus": "support_impersonation",
+    "severity": "high",
+    "rationale": "Exchange support impersonation plus deposit request is strong enforcement evidence."
+  },
+  {
+    "id": "calib_developer_debugging",
+    "text": "Debugging a wallet connection bug in our testnet app. The issue is a stale session token, not a user-facing security problem.",
+    "expected_action": "no_label",
+    "expected_decision": "not_fraud",
+    "policy_focus": "developer_context",
+    "severity": "low",
+    "rationale": "Developer/debugging context should suppress a public crypto-fraud label."
+  },
+  {
+    "id": "calib_ocr_cropped_qr",
+    "text": "[Image OCR] Claim your bonus token using the QR code. Wallet connect required. Link is cropped. Source account not visible.",
+    "expected_action": "human_review",
+    "expected_decision": "needs_more_context",
+    "policy_focus": "ocr_source_ambiguity",
+    "severity": "medium",
+    "rationale": "The content is suspicious, but missing source/link context makes human review safer than automatic public labeling."
+  },
+  {
+    "id": "calib_shortener_prize",
+    "text": "Congratulations, your wallet won 2 BTC. Claim now through bit.ly/free-btc-verify before the eligibility window closes.",
+    "expected_action": "public_label",
+    "expected_decision": "fraud",
+    "policy_focus": "shortener_giveaway",
+    "severity": "high",
+    "rationale": "Prize claim, wallet language, shortener, and urgency together justify enforcement."
+  },
+  {
+    "id": "calib_satire",
+    "text": "I am definitely the CEO of Bitcoin. Send one imaginary coin and I will send back two imaginary coins. This is a joke.",
+    "expected_action": "no_label",
+    "expected_decision": "not_fraud",
+    "policy_focus": "satire",
+    "severity": "low",
+    "rationale": "The post uses scam-like language but clearly marks itself as satire."
+  },
+  {
+    "id": "calib_redirect_mismatch",
+    "text": "The sender domain matches a legitimate project, but the link redirects to project-update.click/claim. I have not verified it.",
+    "expected_action": "human_review",
+    "expected_decision": "needs_more_context",
+    "policy_focus": "redirect_mismatch",
+    "severity": "medium",
+    "rationale": "Redirect mismatch and unverified claim path should trigger review, not automatic public enforcement."
+  }
+]

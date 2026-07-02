@@ -1,0 +1,109 @@
+{
+  "original_file": "policy_proposal_labeler.py",
+  "dependencies_available": {
+    "pandas": false,
+    "numpy": true,
+    "sklearn": true,
+    "sentence_transformers": false,
+    "xgboost": false,
+    "joblib": true,
+    "matplotlib": false,
+    "nltk": false
+  },
+  "data": {
+    "train": {
+      "rows": 147,
+      "label_counts": {
+        "0": 59,
+        "1": 88
+      },
+      "empty_text_rows": 0,
+      "duplicates_within_file": 0,
+      "word_count": {
+        "min": 7,
+        "mean": 30.16,
+        "max": 105
+      }
+    },
+    "test": {
+      "rows": 168,
+      "label_counts": {
+        "1": 60,
+        "0": 108
+      },
+      "empty_text_rows": 0,
+      "duplicates_within_file": 0,
+      "word_count": {
+        "min": 6,
+        "mean": 22.23,
+        "max": 32
+      }
+    },
+    "exact_train_test_overlap": 0
+  },
+  "static_findings": [
+    {
+      "severity": "high",
+      "title": "Original script cannot run in a minimal environment without XGBoost",
+      "line": 19,
+      "evidence": "import xgboost as xgb",
+      "implication": "The dependency is imported unconditionally, so even lightweight feature or rule tests fail when xgboost is unavailable."
+    },
+    {
+      "severity": "high",
+      "title": "Test set is used during model development and model selection",
+      "line": 507,
+      "evidence": "df_test = pd.read_csv(test_csv_path)",
+      "implication": "The training function repeatedly evaluates models on test.csv and then chooses the final model, making the final test metrics optimistic."
+    },
+    {
+      "severity": "high",
+      "title": "Prediction API changes behavior when probabilities are requested",
+      "line": 894,
+      "evidence": "if return_probability and _LOADED_NGRAM_MODEL is not None",
+      "implication": "predict_post(text) uses the saved base classifier, while predict_post(text, return_probability=True) combines in the n-gram model and can return a different label."
+    },
+    {
+      "severity": "medium",
+      "title": "Warnings are globally suppressed",
+      "line": 8,
+      "evidence": "warnings.filterwarnings('ignore')",
+      "implication": "Convergence warnings and data warnings are hidden, which matters because some models are configured with very low iteration limits."
+    },
+    {
+      "severity": "medium",
+      "title": "Reported Logistic Regression baseline is artificially weak",
+      "line": 572,
+      "evidence": "max_iter=10",
+      "implication": "The baseline uses tiny max_iter, extreme regularization, and loose tolerance. This can make the ensemble comparison look stronger than it is."
+    },
+    {
+      "severity": "medium",
+      "title": "Baseline Random Forest and ensemble Random Forest are not comparable",
+      "line": 603,
+      "evidence": "n_estimators=10",
+      "implication": "The standalone RF is shallow and unbalanced, while the ensemble RF later uses 200 trees, deeper depth, and balanced class weights."
+    },
+    {
+      "severity": "medium",
+      "title": "N-gram ensemble is evaluated but not saved as final model",
+      "line": 714,
+      "evidence": "clf = base_ensemble",
+      "implication": "The report discusses a final/enhanced ensemble, but the saved classifier is the traditional ensemble; later probability calls silently mix n-grams back in."
+    },
+    {
+      "severity": "medium",
+      "title": "Hard-coded test.csv path limits reproducibility",
+      "line": 503,
+      "evidence": "test_csv_path = \"test.csv\"",
+      "implication": "The function cannot cleanly evaluate alternate splits or cross-validation folds without editing code or overwriting files."
+    },
+    {
+      "severity": "low",
+      "title": "Unused imports suggest iterative code drift",
+      "line": 10,
+      "evidence": "train_test_split, cross_val_score, StratifiedKFold",
+      "implication": "This is not harmful by itself, but it supports a cleanup pass before presenting the project publicly."
+    }
+  ]
+}

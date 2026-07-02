@@ -1,0 +1,539 @@
+{
+  "generatedAt": "2026-07-02T03:16:16.186885+00:00",
+  "dbPath": "audit_outputs/live_review_queue.sqlite",
+  "itemCount": 5,
+  "linkedItemCount": 5,
+  "entityCount": 21,
+  "sharedEntityCount": 6,
+  "campaignCount": 1,
+  "entityTypeCounts": {
+    "actor": 10,
+    "brand": 2,
+    "domain": 1,
+    "risk_phrase": 7,
+    "wallet": 1
+  },
+  "sharedEntityTypeCounts": {
+    "brand": 1,
+    "domain": 1,
+    "risk_phrase": 3,
+    "wallet": 1
+  },
+  "topEntities": [
+    {
+      "id": "e27ebc40f517bc83e17695d9",
+      "type": "wallet",
+      "value": "0x5afe00000000000000000000000000000000feed",
+      "label": "0x5afe00000000000000000000000000000000feed",
+      "riskWeight": 0.92,
+      "rawExamples": [
+        "0x5afe00000000000000000000000000000000feed"
+      ],
+      "sources": [
+        "ethereum_address"
+      ],
+      "itemCount": 2,
+      "shared": true
+    },
+    {
+      "id": "369ad28ce164c1f46098ee17",
+      "type": "risk_phrase",
+      "value": "connect_wallet",
+      "label": "connect wallet",
+      "riskWeight": 0.9,
+      "rawExamples": [
+        "connect your wallet",
+        "connect wallet"
+      ],
+      "sources": [
+        "policy_phrase"
+      ],
+      "itemCount": 2,
+      "shared": true
+    },
+    {
+      "id": "6183f85ed949f6bc08d56067",
+      "type": "risk_phrase",
+      "value": "airdrop_claim",
+      "label": "airdrop claim",
+      "riskWeight": 0.76,
+      "rawExamples": [
+        "airdrop"
+      ],
+      "sources": [
+        "policy_phrase"
+      ],
+      "itemCount": 2,
+      "shared": true
+    },
+    {
+      "id": "7e33162b472be211f94218cc",
+      "type": "risk_phrase",
+      "value": "limited_time",
+      "label": "limited time",
+      "riskWeight": 0.68,
+      "rawExamples": [
+        "window closes",
+        "final warning"
+      ],
+      "sources": [
+        "policy_phrase"
+      ],
+      "itemCount": 2,
+      "shared": true
+    },
+    {
+      "id": "ad2942dc24e97c86e747490c",
+      "type": "domain",
+      "value": "secure-btc-airdrop.xyz",
+      "label": "secure-btc-airdrop.xyz",
+      "riskWeight": 0.58,
+      "rawExamples": [
+        "secure-btc-airdrop.xyz"
+      ],
+      "sources": [
+        "text"
+      ],
+      "itemCount": 2,
+      "shared": true
+    },
+    {
+      "id": "75c0403b7442935ccd8c7889",
+      "type": "brand",
+      "value": "bitcoin",
+      "label": "bitcoin",
+      "riskWeight": 0.18,
+      "rawExamples": [
+        "Bitcoin",
+        "BTC"
+      ],
+      "sources": [
+        "brand_mention"
+      ],
+      "itemCount": 2,
+      "shared": true
+    },
+    {
+      "id": "3be5b9e417af4da7528c1b08",
+      "type": "risk_phrase",
+      "value": "send_crypto",
+      "label": "send crypto",
+      "riskWeight": 0.82,
+      "rawExamples": [
+        "send crypto"
+      ],
+      "sources": [
+        "policy_phrase"
+      ],
+      "itemCount": 1,
+      "shared": false
+    },
+    {
+      "id": "fbc8ae918612c81c123a2994",
+      "type": "risk_phrase",
+      "value": "guaranteed_returns",
+      "label": "guaranteed returns",
+      "riskWeight": 0.78,
+      "rawExamples": [
+        "guaranteed returns"
+      ],
+      "sources": [
+        "policy_phrase"
+      ],
+      "itemCount": 1,
+      "shared": false
+    },
+    {
+      "id": "a9ddee36ebaab1bcd241adb8",
+      "type": "risk_phrase",
+      "value": "processing_fee",
+      "label": "processing fee",
+      "riskWeight": 0.74,
+      "rawExamples": [
+        "release fee"
+      ],
+      "sources": [
+        "policy_phrase"
+      ],
+      "itemCount": 1,
+      "shared": false
+    },
+    {
+      "id": "a55696623c7d4a908a76e143",
+      "type": "risk_phrase",
+      "value": "recovery_service",
+      "label": "recovery service",
+      "riskWeight": 0.7,
+      "rawExamples": [
+        "recovery service"
+      ],
+      "sources": [
+        "policy_phrase"
+      ],
+      "itemCount": 1,
+      "shared": false
+    },
+    {
+      "id": "88a656b5ca59db20a836b017",
+      "type": "actor",
+      "value": "wallet-help-demo.bsky.social",
+      "label": "wallet-help-demo.bsky.social",
+      "riskWeight": 0.2,
+      "rawExamples": [
+        "wallet-help-demo.bsky.social"
+      ],
+      "sources": [
+        "author_handle"
+      ],
+      "itemCount": 1,
+      "shared": false
+    },
+    {
+      "id": "39710b7285f7126df391b097",
+      "type": "actor",
+      "value": "token-support-demo.bsky.social",
+      "label": "token-support-demo.bsky.social",
+      "riskWeight": 0.2,
+      "rawExamples": [
+        "token-support-demo.bsky.social"
+      ],
+      "sources": [
+        "author_handle"
+      ],
+      "itemCount": 1,
+      "shared": false
+    },
+    {
+      "id": "856497870d9009de12365b9e",
+      "type": "actor",
+      "value": "did:example:demo-warning",
+      "label": "did:example:demo-warning",
+      "riskWeight": 0.2,
+      "rawExamples": [
+        "did:example:demo-warning"
+      ],
+      "sources": [
+        "author_did"
+      ],
+      "itemCount": 1,
+      "shared": false
+    },
+    {
+      "id": "fa8489c9d014e11deefc0009",
+      "type": "actor",
+      "value": "did:example:demo-reused-wallet",
+      "label": "did:example:demo-reused-wallet",
+      "riskWeight": 0.2,
+      "rawExamples": [
+        "did:example:demo-reused-wallet"
+      ],
+      "sources": [
+        "author_did"
+      ],
+      "itemCount": 1,
+      "shared": false
+    }
+  ],
+  "sharedEntities": [
+    {
+      "id": "e27ebc40f517bc83e17695d9",
+      "type": "wallet",
+      "value": "0x5afe00000000000000000000000000000000feed",
+      "label": "0x5afe00000000000000000000000000000000feed",
+      "riskWeight": 0.92,
+      "rawExamples": [
+        "0x5afe00000000000000000000000000000000feed"
+      ],
+      "sources": [
+        "ethereum_address"
+      ],
+      "itemCount": 2,
+      "shared": true
+    },
+    {
+      "id": "369ad28ce164c1f46098ee17",
+      "type": "risk_phrase",
+      "value": "connect_wallet",
+      "label": "connect wallet",
+      "riskWeight": 0.9,
+      "rawExamples": [
+        "connect your wallet",
+        "connect wallet"
+      ],
+      "sources": [
+        "policy_phrase"
+      ],
+      "itemCount": 2,
+      "shared": true
+    },
+    {
+      "id": "6183f85ed949f6bc08d56067",
+      "type": "risk_phrase",
+      "value": "airdrop_claim",
+      "label": "airdrop claim",
+      "riskWeight": 0.76,
+      "rawExamples": [
+        "airdrop"
+      ],
+      "sources": [
+        "policy_phrase"
+      ],
+      "itemCount": 2,
+      "shared": true
+    },
+    {
+      "id": "7e33162b472be211f94218cc",
+      "type": "risk_phrase",
+      "value": "limited_time",
+      "label": "limited time",
+      "riskWeight": 0.68,
+      "rawExamples": [
+        "window closes",
+        "final warning"
+      ],
+      "sources": [
+        "policy_phrase"
+      ],
+      "itemCount": 2,
+      "shared": true
+    },
+    {
+      "id": "ad2942dc24e97c86e747490c",
+      "type": "domain",
+      "value": "secure-btc-airdrop.xyz",
+      "label": "secure-btc-airdrop.xyz",
+      "riskWeight": 0.58,
+      "rawExamples": [
+        "secure-btc-airdrop.xyz"
+      ],
+      "sources": [
+        "text"
+      ],
+      "itemCount": 2,
+      "shared": true
+    },
+    {
+      "id": "75c0403b7442935ccd8c7889",
+      "type": "brand",
+      "value": "bitcoin",
+      "label": "bitcoin",
+      "riskWeight": 0.18,
+      "rawExamples": [
+        "Bitcoin",
+        "BTC"
+      ],
+      "sources": [
+        "brand_mention"
+      ],
+      "itemCount": 2,
+      "shared": true
+    }
+  ],
+  "campaigns": [
+    {
+      "id": "campaign-1",
+      "itemCount": 3,
+      "avgProbability": 0.754,
+      "riskScore": 0.777,
+      "statusCounts": {
+        "escalated": 1,
+        "new": 2
+      },
+      "topEntities": [
+        {
+          "id": "e27ebc40f517bc83e17695d9",
+          "type": "wallet",
+          "value": "0x5afe00000000000000000000000000000000feed",
+          "label": "0x5afe00000000000000000000000000000000feed",
+          "riskWeight": 0.92,
+          "rawExamples": [
+            "0x5afe00000000000000000000000000000000feed"
+          ],
+          "sources": [
+            "ethereum_address"
+          ],
+          "itemCount": 2,
+          "shared": true
+        },
+        {
+          "id": "ad2942dc24e97c86e747490c",
+          "type": "domain",
+          "value": "secure-btc-airdrop.xyz",
+          "label": "secure-btc-airdrop.xyz",
+          "riskWeight": 0.58,
+          "rawExamples": [
+            "secure-btc-airdrop.xyz"
+          ],
+          "sources": [
+            "text"
+          ],
+          "itemCount": 2,
+          "shared": true
+        },
+        {
+          "id": "369ad28ce164c1f46098ee17",
+          "type": "risk_phrase",
+          "value": "connect_wallet",
+          "label": "connect wallet",
+          "riskWeight": 0.9,
+          "rawExamples": [
+            "connect your wallet",
+            "connect wallet"
+          ],
+          "sources": [
+            "policy_phrase"
+          ],
+          "itemCount": 2,
+          "shared": true
+        },
+        {
+          "id": "6183f85ed949f6bc08d56067",
+          "type": "risk_phrase",
+          "value": "airdrop_claim",
+          "label": "airdrop claim",
+          "riskWeight": 0.76,
+          "rawExamples": [
+            "airdrop"
+          ],
+          "sources": [
+            "policy_phrase"
+          ],
+          "itemCount": 2,
+          "shared": true
+        },
+        {
+          "id": "7e33162b472be211f94218cc",
+          "type": "risk_phrase",
+          "value": "limited_time",
+          "label": "limited time",
+          "riskWeight": 0.68,
+          "rawExamples": [
+            "window closes",
+            "final warning"
+          ],
+          "sources": [
+            "policy_phrase"
+          ],
+          "itemCount": 2,
+          "shared": true
+        },
+        {
+          "id": "75c0403b7442935ccd8c7889",
+          "type": "brand",
+          "value": "bitcoin",
+          "label": "bitcoin",
+          "riskWeight": 0.18,
+          "rawExamples": [
+            "Bitcoin",
+            "BTC"
+          ],
+          "sources": [
+            "brand_mention"
+          ],
+          "itemCount": 2,
+          "shared": true
+        }
+      ],
+      "sampleItems": [
+        {
+          "uri": "demo://crypto-scam-lab/high-confidence-airdrop",
+          "author": {
+            "handle": "btc-rewards-demo.bsky.social",
+            "did": "did:example:demo-airdrop",
+            "displayName": null
+          },
+          "status": "escalated",
+          "probability": 0.8773451180253073,
+          "action": "high_confidence_escalation",
+          "text": "Official Bitcoin airdrop: connect your wallet at secure-btc-airdrop[.]xyz to claim free BTC before the window closes. Support wallet: 0x5afe00000000000000000000000000000000feed."
+        },
+        {
+          "uri": "demo://crypto-scam-lab/reused-wallet",
+          "author": {
+            "handle": "token-support-demo.bsky.social",
+            "did": "did:example:demo-reused-wallet",
+            "displayName": null
+          },
+          "status": "new",
+          "probability": 0.7593006830592476,
+          "action": "high_confidence_escalation",
+          "text": "Tesla crypto event support says deposits to 0x5afe00000000000000000000000000000000feed are required before the bonus release fee clears."
+        },
+        {
+          "uri": "demo://crypto-scam-lab/mirror-airdrop",
+          "author": {
+            "handle": "btc-claims-demo.bsky.social",
+            "did": "did:example:demo-mirror-airdrop",
+            "displayName": null
+          },
+          "status": "new",
+          "probability": 0.6254492944325228,
+          "action": "high_confidence_escalation",
+          "text": "Verified BTC rewards round is closing. Claim at secure-btc-airdrop[.]xyz and connect wallet before the final warning."
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "source": "e27ebc40f517bc83e17695d9",
+      "target": "demo://crypto-scam-lab/high-confidence-airdrop",
+      "type": "entity_observed_in_item"
+    },
+    {
+      "source": "e27ebc40f517bc83e17695d9",
+      "target": "demo://crypto-scam-lab/reused-wallet",
+      "type": "entity_observed_in_item"
+    },
+    {
+      "source": "369ad28ce164c1f46098ee17",
+      "target": "demo://crypto-scam-lab/high-confidence-airdrop",
+      "type": "entity_observed_in_item"
+    },
+    {
+      "source": "369ad28ce164c1f46098ee17",
+      "target": "demo://crypto-scam-lab/mirror-airdrop",
+      "type": "entity_observed_in_item"
+    },
+    {
+      "source": "6183f85ed949f6bc08d56067",
+      "target": "demo://crypto-scam-lab/high-confidence-airdrop",
+      "type": "entity_observed_in_item"
+    },
+    {
+      "source": "6183f85ed949f6bc08d56067",
+      "target": "demo://crypto-scam-lab/mirror-airdrop",
+      "type": "entity_observed_in_item"
+    },
+    {
+      "source": "7e33162b472be211f94218cc",
+      "target": "demo://crypto-scam-lab/high-confidence-airdrop",
+      "type": "entity_observed_in_item"
+    },
+    {
+      "source": "7e33162b472be211f94218cc",
+      "target": "demo://crypto-scam-lab/mirror-airdrop",
+      "type": "entity_observed_in_item"
+    },
+    {
+      "source": "ad2942dc24e97c86e747490c",
+      "target": "demo://crypto-scam-lab/high-confidence-airdrop",
+      "type": "entity_observed_in_item"
+    },
+    {
+      "source": "ad2942dc24e97c86e747490c",
+      "target": "demo://crypto-scam-lab/mirror-airdrop",
+      "type": "entity_observed_in_item"
+    },
+    {
+      "source": "75c0403b7442935ccd8c7889",
+      "target": "demo://crypto-scam-lab/high-confidence-airdrop",
+      "type": "entity_observed_in_item"
+    },
+    {
+      "source": "75c0403b7442935ccd8c7889",
+      "target": "demo://crypto-scam-lab/mirror-airdrop",
+      "type": "entity_observed_in_item"
+    }
+  ]
+}

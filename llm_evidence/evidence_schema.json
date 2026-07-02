@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Crypto Scam Reviewer Evidence",
+  "type": "object",
+  "required": [
+    "caseId",
+    "provider",
+    "recommendedReviewerAction",
+    "confidence",
+    "riskFactors",
+    "benignFactors",
+    "missingContext",
+    "fields",
+    "reviewerSummary",
+    "faithfulness"
+  ],
+  "properties": {
+    "caseId": { "type": "string" },
+    "provider": { "type": "string" },
+    "recommendedReviewerAction": {
+      "type": "string",
+      "enum": ["public_label_candidate", "human_review", "no_action"]
+    },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "riskFactors": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "benignFactors": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "missingContext": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "fields": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["present", "stance", "spans", "summary"],
+        "properties": {
+          "present": { "type": "boolean" },
+          "stance": {
+            "type": "string",
+            "enum": ["claim", "warning", "question", "research", "technical", "satire", "missing_context", "unknown"]
+          },
+          "summary": { "type": "string" },
+          "spans": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["text", "start", "end"],
+              "properties": {
+                "text": { "type": "string" },
+                "start": { "type": "integer", "minimum": 0 },
+                "end": { "type": "integer", "minimum": 0 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "reviewerSummary": { "type": "string" },
+    "faithfulness": {
+      "type": "object",
+      "required": ["spanCount", "allSpansFoundInSource", "unsupportedFields"],
+      "properties": {
+        "spanCount": { "type": "integer", "minimum": 0 },
+        "allSpansFoundInSource": { "type": "boolean" },
+        "unsupportedFields": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

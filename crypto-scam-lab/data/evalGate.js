@@ -1,0 +1,87 @@
+export const evalGate = {
+  "generatedAt": "2026-07-02T03:16:16.224240+00:00",
+  "passed": true,
+  "checkCount": 11,
+  "failedCount": 0,
+  "checks": [
+    {
+      "name": "scenario expectation pass rate",
+      "value": 1.0,
+      "threshold": 1.0,
+      "comparator": ">=",
+      "passed": true
+    },
+    {
+      "name": "scenario public-label precision",
+      "value": 1.0,
+      "threshold": 0.95,
+      "comparator": ">=",
+      "passed": true
+    },
+    {
+      "name": "scenario review-or-label recall",
+      "value": 1.0,
+      "threshold": 1.0,
+      "comparator": ">=",
+      "passed": true
+    },
+    {
+      "name": "hardening expectation pass rate",
+      "value": 1.0,
+      "threshold": 1.0,
+      "comparator": ">=",
+      "passed": true
+    },
+    {
+      "name": "hardening legitimate no-public-label rate",
+      "value": 1.0,
+      "threshold": 1.0,
+      "comparator": ">=",
+      "passed": true
+    },
+    {
+      "name": "adversarial review-or-label retention",
+      "value": 1.0,
+      "threshold": 1.0,
+      "comparator": ">=",
+      "passed": true
+    },
+    {
+      "name": "adversarial escape rate",
+      "value": 0.0,
+      "threshold": 0.0,
+      "comparator": "<=",
+      "passed": true
+    },
+    {
+      "name": "evidence span faithfulness",
+      "value": 1.0,
+      "threshold": 1.0,
+      "comparator": ">=",
+      "passed": true
+    },
+    {
+      "name": "ops review coverage demo floor",
+      "value": 0.6,
+      "threshold": 0.5,
+      "comparator": ">=",
+      "passed": true
+    },
+    {
+      "name": "calibration case count",
+      "value": 12.0,
+      "threshold": 12,
+      "comparator": ">=",
+      "passed": true
+    },
+    {
+      "name": "incident tabletop scenario count",
+      "value": 3.0,
+      "threshold": 3,
+      "comparator": ">=",
+      "passed": true
+    }
+  ],
+  "failedChecks": [],
+  "purpose": "This gate protects false-positive control, review routing, evidence faithfulness, calibration coverage, and incident readiness."
+};

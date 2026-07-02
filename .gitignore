@@ -1,0 +1,20 @@
+.DS_Store
+.env
+.env.*
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.playwright-cli/
+.vercel/
+node_modules/
+
+# Local-only ingestion and database sidecars.
+audit_outputs/live_bsky_*.jsonl
+audit_outputs/live_bsky_*.json
+audit_outputs/*.sqlite-shm
+audit_outputs/*.sqlite-wal
+
