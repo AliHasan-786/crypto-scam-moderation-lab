@@ -12,6 +12,35 @@ export const llmComparison = {
     "llmLatencyPerPost": "1-4 s per call vs <1 ms baseline",
     "operationalNote": "At 1M posts/day the LLM cannot be the first-pass filter on cost alone. The defensible architecture is baseline-first triage with LLM evidence extraction only on the review-queue slice (~5-20% of volume), which is exactly how this lab wires it."
   },
+  "stanceShowdown": [
+    {
+      "caseId": "test-fp-045",
+      "text": "\"A trading platform is offering 8% monthly returns on stablecoin deposits. They claim to be registered in Singapore, but I haven't verified the license.\"",
+      "baselineAction": "high_confidence_escalation",
+      "baselineScore": 0.7525,
+      "llmStance": "Skeptical third-party report",
+      "llmVerdict": "human_review",
+      "llmAnalysis": "Every risk phrase here is quoted from the platform being doubted ('they claim to be registered', 'I haven't verified'). Punishing the doubter teaches users to stop reporting suspicious platforms. The correct object of review is the platform, not the post."
+    },
+    {
+      "caseId": "test-fp-144",
+      "text": "\"A platform claims to offer 'insured' crypto deposits with 10% monthly returns. The insurance provider is mentioned but I can't find their official website.\"",
+      "baselineAction": "high_confidence_escalation",
+      "baselineScore": 0.773,
+      "llmStance": "Skeptical third-party report",
+      "llmVerdict": "human_review",
+      "llmAnalysis": "The speaker is evaluating a platform's claims, not making them: 'claims to offer', 'I can't find their official website'. The scam being described may well deserve investigation - the person describing it does not. Route the DESCRIBED platform to review; take no action against the poster."
+    },
+    {
+      "caseId": "test-fp-146",
+      "text": "\"A crypto investment fund is accepting new investors with a $10K minimum. They claim 80% annual returns and have a professional website, but no regulatory filings visible.\"",
+      "baselineAction": "high_confidence_escalation",
+      "baselineScore": 0.7034,
+      "llmStance": "Skeptical third-party report",
+      "llmVerdict": "human_review",
+      "llmAnalysis": "An 80% annual return claim is being relayed with explicit doubt ('no regulatory filings visible'). The stance markers - hedging, absence of any ask from the speaker - separate reportage from promotion. A keyword system cannot see this; stance reading can."
+    }
+  ],
   "perCase": [
     {
       "caseId": "fraud_elon_multiplier",

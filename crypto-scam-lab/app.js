@@ -29,6 +29,7 @@ const state = {
   heroText:
     "Elon Musk is giving away 1000 ETH to celebrate. Send 0.1 ETH to our verified wallet and get 0.5 ETH back instantly.",
   tourStep: null,
+  subTabs: { assurance: "evals", intel: "campaigns", operations: "ops", govern: "governance" },
   agentStrategy: "airdrop-funnel",
   incidentId: "ir_wallet_drainer_campaign",
   incidentChoice: "route_review",
@@ -112,148 +113,104 @@ const consoleModules = [
   {
     id: "welcome",
     label: "Start Here",
-    subtitle: "The story, a live demo, and where to go next",
+    subtitle: "Story, live demo, where to go",
     group: "Start",
     title: "Start here",
-    description:
-      "What this project is, why it exists, and a live demo you can try without reading anything else.",
+    description: "What this project is, why it exists, and a live demo you can try without reading anything else.",
   },
   {
     id: "overview",
     label: "Project Overview",
-    subtitle: "The policy foundation behind the product",
+    subtitle: "The policy behind the product",
     group: "Start",
     title: "Crypto Scam Moderation Lab",
-    description:
-      "A browser-based safety product for deciding when crypto-related posts should be labeled, reviewed, escalated, or left alone.",
+    description: "A browser-based safety product for deciding when crypto-related posts should be labeled, reviewed, escalated, or left alone.",
   },
   {
     id: "queue",
     label: "Review Queue",
-    subtitle: "Ranked cases with the evidence shown",
-    group: "Review",
+    subtitle: "Ranked cases, evidence shown",
+    group: "Console",
     title: "Review queue",
-    description:
-      "Inspect ranked cases, evidence, ground truth, prediction errors, and the decision boundary used by the labeler.",
+    description: "Inspect ranked cases, evidence, ground truth, prediction errors, and the decision boundary used by the labeler.",
   },
   {
     id: "tester",
     label: "Test Post",
-    subtitle: "Paste anything, attack it, watch it decide",
-    group: "Review",
+    subtitle: "Attack it, watch it decide",
+    group: "Console",
     title: "Test a post",
-    description:
-      "Try clean examples, borderline cases, and obfuscated variants against the same policy rubric and risk scorer.",
+    description: "Try clean examples, borderline cases, and obfuscated variants against the same policy rubric and risk scorer.",
   },
   {
-    id: "evals",
-    label: "Evals",
-    subtitle: "Does it protect speech, not just catch scams?",
-    group: "Assurance",
-    title: "Evaluation suite",
-    description:
-      "Check whether the system preserves legitimate speech, catches scam patterns, and blocks regressions before launch.",
+    id: "assurance",
+    label: "Evals & Failures",
+    subtitle: "Proof, and published mistakes",
+    group: "Console",
+    title: "Assurance",
+    description: "The eval suites, the release gate, the published error analysis, the LLM comparison, and the GenAI abuse lab - together, because green checks mean nothing without visible failures.",
   },
   {
-    id: "failures",
-    label: "Error Analysis",
-    subtitle: "Real mistakes, published on purpose",
-    group: "Assurance",
-    title: "What this system gets wrong",
-    description:
-      "The live false positives, the unsolved hard cases, and the tradeoff behind each one. Kept public deliberately.",
+    id: "intel",
+    label: "Intelligence",
+    subtitle: "Campaigns and real-world fraud",
+    group: "Console",
+    title: "Intelligence",
+    description: "Campaign infrastructure graphing across posts, and the documented fraud landscape this system models.",
   },
   {
-    id: "llm",
-    label: "LLM vs Baseline",
-    subtitle: "Where a language model earns its cost",
-    group: "Assurance",
-    title: "LLM evidence adapter",
-    description:
-      "A hosted-LLM assistant compared honestly against the cheap baseline: accuracy, cost, latency, and one open disagreement.",
+    id: "operations",
+    label: "Operations",
+    subtitle: "Queues, staffing, incidents",
+    group: "Console",
+    title: "Operations",
+    description: "Queue health, reviewer calibration, incident response, and what every threshold costs at 50,000 posts a day.",
   },
   {
-    id: "agentic",
-    label: "GenAI Abuse Lab",
-    subtitle: "Can AI tools here be tricked or misused?",
-    group: "Assurance",
-    title: "GenAI and agentic abuse lab",
-    description:
-      "Generate bounded synthetic scam variants, test reviewer-assistant guardrails, and inspect where automation must stop.",
-  },
-  {
-    id: "campaigns",
-    label: "Campaign Graph",
-    subtitle: "Following the wallets, domains, and phrasing",
-    group: "Intelligence",
-    title: "Campaign graph",
-    description:
-      "Follow shared domains, wallet-like strings, repeated handles, and high-risk phrases across local review candidates.",
-  },
-  {
-    id: "threat",
-    label: "Threat Landscape",
-    subtitle: "The real-world fraud this models",
-    group: "Intelligence",
-    title: "Threat landscape",
-    description:
-      "IC3 and Chainalysis-documented scam typologies mapped to what this system detects - and what it cannot see.",
-  },
-  {
-    id: "ops",
-    label: "Ops Analytics",
-    subtitle: "Queue health, backlog, and tradeoffs",
-    group: "Operations",
-    title: "Operations analytics",
-    description:
-      "Tune thresholds while watching review coverage, backlog, precision, recall, and repeated-entity leads.",
-  },
-  {
-    id: "scale",
-    label: "Scale & Capacity",
-    subtitle: "What every threshold costs in payroll",
-    group: "Operations",
-    title: "Scale and capacity",
-    description:
-      "A 50,000-post day: queue load, reviewers required, cost per caught scam, and twelve weeks with two campaign waves.",
-  },
-  {
-    id: "qa",
-    label: "QA Calibration",
-    subtitle: "Do reviewers agree on the hard cases?",
-    group: "Operations",
-    title: "QA calibration",
-    description:
-      "Translate policy into reviewer consistency checks, evidence quality standards, and protected-context safeguards.",
-  },
-  {
-    id: "incidents",
-    label: "Incident Response",
-    subtitle: "When a scam wave hits at 2am",
-    group: "Operations",
-    title: "Incident response",
-    description:
-      "Review tabletop scenarios for fast-moving scam waves, false-positive spikes, and ambiguous visual evidence.",
-  },
-  {
-    id: "governance",
-    label: "Appeals / Transparency",
-    subtitle: "Notices, appeals, reversals, reports",
-    group: "Governance",
-    title: "Appeals and transparency",
-    description:
-      "See notice templates, appeal paths, reversal scenarios, and public-safe transparency controls.",
-  },
-  {
-    id: "model",
-    label: "Model Audit",
-    subtitle: "The browser sim vs the real baseline",
-    group: "Governance",
-    title: "Model audit",
-    description:
-      "Compare the browser scoring simulator with the reproducible baseline and inspect the operating threshold.",
+    id: "govern",
+    label: "Governance",
+    subtitle: "Appeals, audits, transparency",
+    group: "Console",
+    title: "Governance",
+    description: "Notices, appeals, reversals, transparency reporting, and the model audit trail.",
   },
 ];
+
+const SUBTAB_DEFS = {
+  assurance: [
+    { id: "evals", label: "Eval Suite" },
+    { id: "failures", label: "Error Analysis" },
+    { id: "llm", label: "LLM vs Baseline" },
+    { id: "agentic", label: "GenAI Abuse" },
+  ],
+  intel: [
+    { id: "campaigns", label: "Campaign Graph" },
+    { id: "threat", label: "Threat Landscape" },
+  ],
+  operations: [
+    { id: "ops", label: "Ops Analytics" },
+    { id: "scale", label: "Scale & Capacity" },
+    { id: "qa", label: "QA Calibration" },
+    { id: "incidents", label: "Incident Response" },
+  ],
+  govern: [
+    { id: "governance", label: "Appeals & Transparency" },
+    { id: "model", label: "Model Audit" },
+  ],
+};
+
+function resolveTarget(rawId) {
+  const id = moduleHashAliases[rawId] || rawId;
+  if (consoleModules.some((module) => module.id === id)) {
+    return { module: id, subtab: null };
+  }
+  for (const [parent, tabs] of Object.entries(SUBTAB_DEFS)) {
+    if (tabs.some((tab) => tab.id === id)) {
+      return { module: parent, subtab: id };
+    }
+  }
+  return { module: "welcome", subtab: null };
+}
 
 const moduleHashAliases = {
   "case-review": "queue",
@@ -613,10 +570,16 @@ function compactEntity(value) {
   return `${text.slice(0, 14)}...${text.slice(-10)}`;
 }
 
-function moduleFromHash(hash = window.location.hash) {
+function targetFromHash(hash = window.location.hash) {
   const key = String(hash || "#welcome").replace(/^#/, "") || "welcome";
-  const moduleId = moduleHashAliases[key] || key;
-  return consoleModules.some((module) => module.id === moduleId) ? moduleId : "welcome";
+  return resolveTarget(key);
+}
+
+function applyTarget(target) {
+  state.activeModule = target.module;
+  if (target.subtab) {
+    state.subTabs[target.module] = target.subtab;
+  }
 }
 
 function activeModule() {
@@ -629,11 +592,11 @@ function scrollToConsoleTop() {
   window.setTimeout(() => window.scrollTo(0, 0), 80);
 }
 
-function activateModule(moduleId, updateHash = true) {
-  if (!consoleModules.some((module) => module.id === moduleId)) return;
-  state.activeModule = moduleId;
-  if (updateHash && window.location.hash !== `#${moduleId}`) {
-    window.history.pushState(null, "", `#${moduleId}`);
+function activateModule(rawId, updateHash = true) {
+  const target = resolveTarget(rawId);
+  applyTarget(target);
+  if (updateHash) {
+    window.history.replaceState(null, "", `#${rawId}`);
   }
   render();
   scrollToConsoleTop();
@@ -2188,10 +2151,77 @@ const heroPresets = [
   },
 ];
 
-function renderWelcome() {
-  const heroResult = scoreText(state.heroText);
-  const explain = PLAIN_ACTION_EXPLAINER[heroResult.action] || { tone: "warn", plain: "" };
+const HERO_STANCES = {
+  satire: {
+    chip: "Stance: joke / satire",
+    decision: "No label",
+    tone: "good",
+    explain:
+      "The doubling structure is there, but the assets are imaginary and the authority claim negates itself. Satire is a protected context: no real funds are solicited, so the system leaves it alone.",
+  },
+  helpseek: {
+    chip: "Stance: asking for help",
+    decision: "No label",
+    tone: "good",
+    explain:
+      "This is a victim (or potential victim) asking for help. Enforcing here would silence exactly the people the policy protects - the system routes them to support, never to enforcement.",
+  },
+  protective: {
+    chip: "Stance: warning others",
+    decision: "No label",
+    tone: "good",
+    explain:
+      "Scam vocabulary, protective intent. The speaker is warning people, not soliciting them. Warnings are the platform's allies - punishing them is the worst failure this system can make.",
+  },
+  reportage: {
+    chip: "Stance: describing, not promoting",
+    decision: "Human review queue",
+    tone: "warn",
+    explain:
+      "Here is the honest part: the lexical risk score is HIGH, because this post quotes a scam's own claims. A keyword system would label it. Stance analysis notices the speaker is describing and doubting - so it goes to a human, never straight to a public label. This is the system's hardest class; see Error Analysis for the real false positives it produces.",
+  },
+};
+
+function heroStance(text) {
+  const lower = text.toLowerCase();
+  if (/imaginary|obviously not the|obviously a joke|trust me bro/.test(lower)) return "satire";
+  if (/what do i (even )?do|did i (just )?get scammed|how do i report|i think i got scammed|i feel so stupid|he won'?t listen/.test(lower)) return "helpseek";
+  if (/\bpsa\b|do not send|do not connect|don'?t send|don'?t connect|beware|report and move on|these .{0,40}are scams|stay safe/.test(lower)) return "protective";
+  if (/can'?t verify|cannot verify|haven'?t verified|claims? to be licensed|they claim|not sure if|is it legit|anyone (else )?(used|tried)|i saw an ad|no idea if/.test(lower)) return "reportage";
+  return null;
+}
+
+function renderHeroResult(text) {
+  const heroResult = scoreText(text);
+  const stanceKey = heroStance(text);
+  const stance = stanceKey ? HERO_STANCES[stanceKey] : null;
+  const decision = stance ? stance.decision : heroResult.action;
+  const tone = stance ? stance.tone : (PLAIN_ACTION_EXPLAINER[heroResult.action] || { tone: "warn" }).tone;
+  const explain = stance ? stance.explain : (PLAIN_ACTION_EXPLAINER[heroResult.action] || { plain: "" }).plain;
   const matched = heroResult.ruleResults.filter((rule) => rule.matched).slice(0, 4);
+  return `
+    <div class="hero-result hero-result-${tone}">
+      <div class="hero-result-head">
+        <span class="hero-decision">${escapeHtml(decision)}</span>
+        <span class="hero-risk" title="Raw keyword-evidence score, before stance and context are considered">lexical risk ${percentage(heroResult.score)}</span>
+      </div>
+      ${stance ? `<span class="stance-chip stance-${tone}">${escapeHtml(stance.chip)}</span>` : ""}
+      <p>${escapeHtml(explain)}</p>
+      ${
+        matched.length
+          ? `<div class="hero-evidence">${matched
+              .map(
+                (rule) =>
+                  `<span class="hero-evidence-chip">${escapeHtml(rule.label)} +${Math.round(rule.weight * 100)}</span>`,
+              )
+              .join("")}</div>`
+          : `<div class="hero-evidence"><span class="hero-evidence-chip neutral">No policy evidence matched</span></div>`
+      }
+    </div>
+  `;
+}
+
+function renderWelcome() {
   const sim = scaleSimulation || {};
   const opPoint = sim.operatingPoint || {};
   const errSummary = (errorAnalysis && errorAnalysis.summary) || {};
@@ -2239,8 +2269,8 @@ function renderWelcome() {
 
       <section class="panel welcome-tester" id="hero-tester">
         <div class="section-label">Try it yourself</div>
-        <h2>Paste any post. Watch the system decide - and explain itself.</h2>
-        <p class="welcome-hint">The same words appear in a scam and in a warning about that scam. Try both:</p>
+        <h2>Paste any post. The verdict updates as you type.</h2>
+        <p class="welcome-hint">The same words appear in a scam and in a warning about that scam. The score alone can't tell them apart - stance can. Try all four:</p>
         <div class="hero-presets">
           ${heroPresets
             .map(
@@ -2253,24 +2283,7 @@ function renderWelcome() {
             .join("")}
         </div>
         <textarea id="hero-text" rows="3" aria-label="Post text to evaluate">${escapeHtml(state.heroText)}</textarea>
-        <button type="button" id="hero-evaluate" class="hero-evaluate">Evaluate this post</button>
-        <div class="hero-result hero-result-${explain.tone}">
-          <div class="hero-result-head">
-            <span class="hero-decision">${escapeHtml(heroResult.action)}</span>
-            <strong>${percentage(heroResult.score)} risk</strong>
-          </div>
-          <p>${escapeHtml(explain.plain)}</p>
-          ${
-            matched.length
-              ? `<div class="hero-evidence">${matched
-                  .map(
-                    (rule) =>
-                      `<span class="hero-evidence-chip">${escapeHtml(rule.label)} +${Math.round(rule.weight * 100)}</span>`,
-                  )
-                  .join("")}</div>`
-              : `<div class="hero-evidence"><span class="hero-evidence-chip neutral">No policy evidence matched</span></div>`
-          }
-        </div>
+        <div id="hero-result">${renderHeroResult(state.heroText)}</div>
       </section>
 
       <section class="panel welcome-how">
@@ -2369,29 +2382,45 @@ function renderErrorAnalysisPanel() {
 function renderLlmComparisonPanel() {
   const rows = llmComparison.perCase || [];
   const disagreements = rows.filter((row) => !row.agree);
+  const showdown = llmComparison.stanceShowdown || [];
   return `
     <section class="panel llm-panel" id="llm-comparison">
-      <div class="section-label">LLM vs baseline</div>
-      <p class="panel-intro">
-        A hosted-LLM evidence adapter runs against the same cases, the same policy prompt, and the
-        <em>same span-faithfulness gate</em> as the deterministic extractor. Outputs below are cached
-        (<b>${escapeHtml(llmComparison.provider || "")}</b>) so this demo stays static and key-less;
-        a regeneration script reruns them against a live API.
+      <div class="section-label">Where a language model earns its cost</div>
+      <p class="panel-intro showdown-intro">
+        The cheap baseline's worst real failure mode is <b>stance blindness</b>: people describing
+        scams get scored like people running them. Below are actual false positives from the held-out
+        test set - the baseline's real verdict on the left, a language model's stance reading on the
+        right. This one distinction is the argument for LLM assistance; everything else on this page
+        is supporting detail.
       </p>
-      <div class="stat-grid">
-        <div class="stat-card"><strong>${percentage(llmComparison.baselineExpectationPassRate || 0)}</strong><span>baseline pass rate</span></div>
-        <div class="stat-card"><strong>${percentage(llmComparison.llmExpectationPassRate || 0)}</strong><span>LLM pass rate</span></div>
-        <div class="stat-card"><strong>${percentage(llmComparison.actionAgreementRate || 0)}</strong><span>action agreement</span></div>
-        <div class="stat-card ${llmComparison.spanFaithfulnessRate === 1 ? "good" : "bad"}"><strong>${percentage(llmComparison.spanFaithfulnessRate || 0)}</strong><span>span faithfulness</span></div>
-      </div>
-      <h3>The economics</h3>
+      ${showdown
+        .map(
+          (item) => `
+            <div class="showdown-card">
+              <blockquote>${escapeHtml(item.text)}</blockquote>
+              <div class="showdown-verdicts">
+                <div class="verdict bad">
+                  <span>Baseline (keywords) - real verdict</span>
+                  <strong>${escapeHtml(humanize(item.baselineAction))} at ${percentage(item.baselineScore)} risk</strong>
+                </div>
+                <div class="verdict good">
+                  <span>LLM (stance reading)</span>
+                  <strong>${escapeHtml(item.llmStance)} &rarr; ${escapeHtml(humanize(item.llmVerdict))}</strong>
+                </div>
+              </div>
+              <p class="showdown-note">${escapeHtml(item.llmAnalysis)}</p>
+            </div>
+          `,
+        )
+        .join("")}
+      <h3>So why not use the LLM for everything?</h3>
       <div class="cost-grid">
         <div><span>Baseline</span><strong>${escapeHtml((llmComparison.costModel || {}).baselinePer1kPosts || "")}</strong></div>
         <div><span>Hosted LLM</span><strong>${escapeHtml((llmComparison.costModel || {}).llmPer1kPosts || "")}</strong></div>
         <div><span>Latency</span><strong>${escapeHtml((llmComparison.costModel || {}).llmLatencyPerPost || "")}</strong></div>
       </div>
-      <p>${escapeHtml((llmComparison.costModel || {}).operationalNote || "")}</p>
-      <h3>Where they disagree${disagreements.length ? ` (${disagreements.length})` : ""}</h3>
+      <p class="panel-intro">${escapeHtml((llmComparison.costModel || {}).operationalNote || "")}</p>
+      <h3>An unresolved disagreement, kept on purpose</h3>
       ${
         disagreements.length
           ? disagreements
@@ -2400,20 +2429,31 @@ function renderLlmComparisonPanel() {
                   <div class="disagreement-card">
                     <strong>${escapeHtml(row.caseId)}</strong>
                     <div class="unsolved-actions">
-                      <span>expected: <b>${escapeHtml(humanize(row.expected))}</b></span>
+                      <span>suite expects: <b>${escapeHtml(humanize(row.expected))}</b></span>
                       <span>baseline: <b>${escapeHtml(humanize(row.baseline))}</b></span>
                       <span>LLM: <b>${escapeHtml(humanize(row.llm))}</b></span>
                     </div>
                     <p>${escapeHtml(row.reviewerSummary || "")}</p>
+                    <p class="showdown-note">The eval suite says route this help-seeker to review; the model declined to burden a likely victim. Both positions are defensible - it is a live policy question, so the disagreement stays visible instead of being tuned away.</p>
                   </div>
                 `,
               )
               .join("")
-          : "<p>Full agreement on this suite.</p>"
+          : "<p>Full agreement on the current suite.</p>"
       }
-      <p class="panel-intro">${escapeHtml(llmComparison.interpretation || "")}</p>
       <details class="llm-table-details">
-        <summary>All ${rows.length} cases</summary>
+        <summary>Boundary-suite agreement detail (${rows.length} authored cases - encodes policy, not a benchmark)</summary>
+        <p class="panel-intro">
+          Provider: ${escapeHtml(llmComparison.provider || "")}. Both systems are checked against the
+          authored boundary suite; high agreement here means both respect the encoded policy line.
+          It is deliberately NOT presented as a performance benchmark - for real failures, see Error Analysis.
+        </p>
+        <div class="stat-grid">
+          <div class="stat-card"><strong>${percentage(llmComparison.baselineExpectationPassRate || 0)}</strong><span>baseline boundary conformance</span></div>
+          <div class="stat-card"><strong>${percentage(llmComparison.llmExpectationPassRate || 0)}</strong><span>LLM boundary conformance</span></div>
+          <div class="stat-card"><strong>${percentage(llmComparison.actionAgreementRate || 0)}</strong><span>action agreement</span></div>
+          <div class="stat-card"><strong>${percentage(llmComparison.spanFaithfulnessRate || 0)}</strong><span>span faithfulness (hard gate: every claim must quote the source)</span></div>
+        </div>
         <div class="table-scroll">
           <table>
             <thead><tr><th>Case</th><th>Expected</th><th>Baseline</th><th>LLM</th></tr></thead>
@@ -2938,53 +2978,133 @@ function renderEvidenceRail(selected, metrics, queue) {
   `;
 }
 
-function renderModuleContent({ metrics, curvePoints, queue, selected }) {
+function renderSubtabContent(tabId, { metrics, curvePoints, queue, selected }) {
+  switch (tabId) {
+    case "evals":
+      return `
+        <div class="caveat-banner">
+          <strong>Read these numbers correctly:</strong> the suites below are authored - they encode the
+          policy boundary, so passing them means the boundary holds, nothing more. 100% here is table
+          stakes. Real performance lives in <button type="button" class="inline-link" data-subtab="failures">Error Analysis</button>,
+          where the system's actual mistakes are published.
+        </div>
+        <div class="module-grid two-column">
+          <div class="module-stack">
+            ${renderEvalSuite()}
+            ${renderHardeningEvals()}
+          </div>
+          <div class="module-stack">
+            ${renderEvalGate()}
+            ${renderAdversarialLab()}
+            ${renderEvidenceExtractor()}
+          </div>
+        </div>
+      `;
+    case "failures":
+      return `<div class="module-grid single-column">${renderErrorAnalysisPanel()}</div>`;
+    case "llm":
+      return `<div class="module-grid single-column">${renderLlmComparisonPanel()}</div>`;
+    case "agentic":
+      return `
+        <div class="module-grid two-column">
+          ${renderAgenticAbuseLab()}
+          <div class="module-stack">
+            ${renderEvidenceExtractor()}
+            ${renderEvalGate()}
+          </div>
+        </div>
+      `;
+    case "campaigns":
+      return `
+        <div class="module-grid two-column">
+          <div class="module-stack">
+            ${renderCampaignNetwork()}
+            ${renderCampaignGraph()}
+            ${renderCampaignGallery()}
+          </div>
+          <div class="module-stack">
+            ${renderLiveStore()}
+            ${renderOpsAnalytics()}
+          </div>
+        </div>
+      `;
+    case "threat":
+      return `<div class="module-grid single-column">${renderThreatPanel()}</div>`;
+    case "ops":
+      return `
+        <div class="module-grid two-column">
+          ${renderMetrics(metrics, curvePoints)}
+          ${renderOpsAnalytics()}
+        </div>
+      `;
+    case "scale":
+      return `<div class="module-grid single-column">${renderScalePanel()}</div>`;
+    case "qa":
+      return `
+        <div class="module-grid two-column">
+          <div class="module-stack">
+            ${renderCalibrationSimulator()}
+            ${renderQualityCalibration()}
+          </div>
+          <div class="module-stack">
+            ${renderPolicyCard()}
+            ${renderEvidenceExtractor()}
+          </div>
+        </div>
+      `;
+    case "incidents":
+      return `
+        <div class="module-grid two-column">
+          <div class="module-stack">
+            ${renderIncidentReplay()}
+            ${renderIncidentResponse()}
+          </div>
+          <div class="module-stack">
+            ${renderEvalGate()}
+            ${renderOpsAnalytics()}
+          </div>
+        </div>
+      `;
+    case "governance":
+      return `
+        <div class="module-grid two-column">
+          ${renderGovernanceReport()}
+          <div class="module-stack">
+            ${renderPolicyCard()}
+            ${renderQualityCalibration()}
+          </div>
+        </div>
+      `;
+    case "model":
+      return `
+        <div class="module-grid two-column">
+          ${renderReportedModel()}
+          <div class="module-stack">
+            ${renderMetrics(metrics, curvePoints)}
+            ${renderEvalSuite()}
+          </div>
+        </div>
+      `;
+    default:
+      return "";
+  }
+}
+
+function renderModuleContent(context) {
   if (state.activeModule === "welcome") {
     return renderWelcome();
   }
 
   if (state.activeModule === "overview") {
-    return renderProjectPrimer(metrics);
-  }
-
-  if (state.activeModule === "failures") {
-    return `
-      <div class="module-grid single-column">
-        ${renderErrorAnalysisPanel()}
-      </div>
-    `;
-  }
-
-  if (state.activeModule === "llm") {
-    return `
-      <div class="module-grid single-column">
-        ${renderLlmComparisonPanel()}
-      </div>
-    `;
-  }
-
-  if (state.activeModule === "scale") {
-    return `
-      <div class="module-grid single-column">
-        ${renderScalePanel()}
-      </div>
-    `;
-  }
-
-  if (state.activeModule === "threat") {
-    return `
-      <div class="module-grid single-column">
-        ${renderThreatPanel()}
-      </div>
-    `;
+    return renderProjectPrimer(context.metrics);
   }
 
   if (state.activeModule === "queue") {
     return `
       <div class="module-grid review-grid">
-        ${renderQueue(queue, selected)}
+        ${renderQueue(context.queue, context.selected)}
         <div class="module-stack">
-          ${renderSelected(selected)}
+          ${renderSelected(context.selected)}
           ${renderPolicyCard()}
         </div>
       </div>
@@ -2996,7 +3116,7 @@ function renderModuleContent({ metrics, curvePoints, queue, selected }) {
       <div class="module-grid two-column">
         <div class="module-stack">
           ${renderTester()}
-          ${renderSelected(selected)}
+          ${renderSelected(context.selected)}
         </div>
         <div class="module-stack">
           ${renderEvidenceExtractor()}
@@ -3006,115 +3126,30 @@ function renderModuleContent({ metrics, curvePoints, queue, selected }) {
     `;
   }
 
-  if (state.activeModule === "evals") {
+  const tabs = SUBTAB_DEFS[state.activeModule];
+  if (tabs) {
+    const active = state.subTabs[state.activeModule] || tabs[0].id;
     return `
-      <div class="module-grid two-column">
-        <div class="module-stack">
-          ${renderEvalSuite()}
-          ${renderHardeningEvals()}
-        </div>
-        <div class="module-stack">
-          ${renderEvalGate()}
-          ${renderAgenticAbuseLab()}
-          ${renderAdversarialLab()}
-          ${renderEvidenceExtractor()}
-        </div>
+      <div class="subtab-bar" role="tablist" aria-label="Sections">
+        ${tabs
+          .map(
+            (tab) => `
+              <button type="button" role="tab" class="subtab ${tab.id === active ? "active" : ""}" data-subtab="${escapeHtml(tab.id)}" aria-selected="${tab.id === active}">
+                ${escapeHtml(tab.label)}
+              </button>
+            `,
+          )
+          .join("")}
       </div>
+      ${renderSubtabContent(active, context)}
     `;
   }
 
-  if (state.activeModule === "agentic") {
-    return `
-      <div class="module-grid two-column">
-        ${renderAgenticAbuseLab()}
-        <div class="module-stack">
-          ${renderEvidenceExtractor()}
-          ${renderEvalGate()}
-        </div>
-      </div>
-    `;
-  }
-
-  if (state.activeModule === "campaigns") {
-    return `
-      <div class="module-grid two-column">
-        <div class="module-stack">
-          ${renderCampaignNetwork()}
-          ${renderCampaignGraph()}
-          ${renderCampaignGallery()}
-        </div>
-        <div class="module-stack">
-          ${renderLiveStore()}
-          ${renderOpsAnalytics()}
-        </div>
-      </div>
-    `;
-  }
-
-  if (state.activeModule === "ops") {
-    return `
-      <div class="module-grid two-column">
-        ${renderMetrics(metrics, curvePoints)}
-        ${renderOpsAnalytics()}
-      </div>
-    `;
-  }
-
-  if (state.activeModule === "qa") {
-    return `
-      <div class="module-grid two-column">
-        <div class="module-stack">
-          ${renderCalibrationSimulator()}
-          ${renderQualityCalibration()}
-        </div>
-        <div class="module-stack">
-          ${renderPolicyCard()}
-          ${renderEvidenceExtractor()}
-        </div>
-      </div>
-    `;
-  }
-
-  if (state.activeModule === "incidents") {
-    return `
-      <div class="module-grid two-column">
-        <div class="module-stack">
-          ${renderIncidentReplay()}
-          ${renderIncidentResponse()}
-        </div>
-        <div class="module-stack">
-          ${renderEvalGate()}
-          ${renderOpsAnalytics()}
-        </div>
-      </div>
-    `;
-  }
-
-  if (state.activeModule === "governance") {
-    return `
-      <div class="module-grid two-column">
-        ${renderGovernanceReport()}
-        <div class="module-stack">
-          ${renderPolicyCard()}
-          ${renderQualityCalibration()}
-        </div>
-      </div>
-    `;
-  }
-
-  return `
-    <div class="module-grid two-column">
-      ${renderReportedModel()}
-      <div class="module-stack">
-        ${renderMetrics(metrics, curvePoints)}
-        ${renderEvalSuite()}
-      </div>
-    </div>
-  `;
+  return renderWelcome();
 }
 
-const RAIL_MODULES = new Set(["queue", "tester", "model"]);
-const SYSTEM_BAR_MODULES = new Set(["queue", "tester", "model", "ops", "evals"]);
+const RAIL_MODULES = new Set(["queue", "tester"]);
+const SYSTEM_BAR_MODULES = new Set(["queue", "tester"]);
 
 function renderConsoleWorkspace(context) {
   return `
@@ -3256,6 +3291,14 @@ function attachEvents() {
     });
   }
 
+  document.querySelectorAll("[data-subtab]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.subTabs[state.activeModule] = button.dataset.subtab;
+      window.history.replaceState(null, "", `#${button.dataset.subtab}`);
+      render();
+    });
+  });
+
   document.querySelectorAll("[data-goto]").forEach((button) => {
     button.addEventListener("click", () => {
       activateModule(button.dataset.goto);
@@ -3296,11 +3339,13 @@ function attachEvents() {
   });
 
   const heroText = document.querySelector("#hero-text");
-  const heroEvaluate = document.querySelector("#hero-evaluate");
-  if (heroText && heroEvaluate) {
-    heroEvaluate.addEventListener("click", () => {
+  if (heroText) {
+    heroText.addEventListener("input", () => {
       state.heroText = heroText.value;
-      render();
+      const container = document.querySelector("#hero-result");
+      if (container) {
+        container.innerHTML = renderHeroResult(state.heroText);
+      }
     });
   }
 
@@ -3316,14 +3361,15 @@ function attachEvents() {
 }
 
 window.addEventListener("hashchange", () => {
-  const nextModule = moduleFromHash();
-  if (nextModule !== state.activeModule) {
-    state.activeModule = nextModule;
+  const target = targetFromHash();
+  const subtabNow = SUBTAB_DEFS[target.module] ? state.subTabs[target.module] : null;
+  if (target.module !== state.activeModule || (target.subtab && target.subtab !== subtabNow)) {
+    applyTarget(target);
     render();
     scrollToConsoleTop();
   }
 });
 
-state.activeModule = moduleFromHash();
+applyTarget(targetFromHash());
 render();
 scrollToConsoleTop();

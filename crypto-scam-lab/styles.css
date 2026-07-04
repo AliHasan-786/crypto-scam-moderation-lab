@@ -3072,3 +3072,207 @@ blockquote {
 .module-button > span {
   white-space: nowrap;
 }
+
+/* ============================================================
+   V3: visual refresh — accent system, gradient hero, sub-tabs
+   ============================================================ */
+:root {
+  --accent: #4f46e5;
+  --accent-strong: #4338ca;
+  --accent-soft: #eef2ff;
+  --hero-grad: linear-gradient(135deg, #111827 0%, #1e1b4b 55%, #312e81 100%);
+}
+
+/* --- Sub-tab bar --- */
+.subtab-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 10px;
+}
+
+.subtab {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.subtab:hover { border-color: var(--accent); color: var(--accent); }
+
+.subtab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
+}
+
+/* --- Caveat banner --- */
+.caveat-banner {
+  border: 1px solid #f0d58c;
+  background: linear-gradient(180deg, #fffaf0, #fff6e2);
+  border-left: 4px solid var(--orange);
+  border-radius: 10px;
+  padding: 13px 16px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  margin-bottom: 14px;
+}
+
+.inline-link {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: var(--accent);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* --- Gradient hero --- */
+.welcome-hero {
+  background: var(--hero-grad);
+  color: #f6f7fb;
+  border: 0;
+  box-shadow: 0 20px 50px rgba(30, 27, 75, 0.35);
+}
+
+.welcome-hero .welcome-kicker { color: #a5b4fc; }
+.welcome-hero h1 { color: #fff; }
+.welcome-hero .welcome-lede { color: rgba(246, 247, 251, 0.85); }
+
+.welcome-hero .welcome-stat {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(4px);
+}
+
+.welcome-hero .welcome-stat strong { color: #c7d2fe; }
+.welcome-hero .welcome-stat span { color: rgba(246, 247, 251, 0.72); }
+
+.welcome-hero .path-card {
+  background: rgba(255, 255, 255, 0.95);
+  border: 0;
+}
+
+.welcome-hero .path-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.welcome-hero .path-card strong { color: var(--accent-strong); }
+
+/* --- Hero result: stance + risk --- */
+.hero-risk {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  border: 1px dashed var(--line);
+  border-radius: 999px;
+  padding: 4px 12px;
+  cursor: help;
+}
+
+.stance-chip {
+  justify-self: start;
+  border-radius: 999px;
+  padding: 5px 13px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.stance-good { background: var(--green-soft); color: var(--green); }
+.stance-warn { background: var(--orange-soft); color: var(--orange); }
+.stance-bad { background: var(--rose-soft); color: var(--rose); }
+
+.hero-decision { font-size: 16px; }
+
+.hero-preset.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
+}
+
+.welcome-tester textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+  border-color: transparent;
+}
+
+/* --- General liveliness --- */
+.panel { transition: box-shadow 0.15s ease; }
+.section-label { color: var(--accent); }
+.stat-card strong { color: var(--accent-strong); }
+.stat-card.good strong { color: #2f9d78; }
+.stat-card.bad strong { color: #c2455f; }
+.welcome-stat strong { color: var(--accent-strong); }
+
+.module-button.active {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.how-step span { background: var(--accent); }
+
+.sweep-bar { fill: var(--accent-strong, #4338ca); }
+.week-bar { fill: #818cf8; opacity: 0.8; }
+.week-bar.wave { fill: #e11d48; opacity: 0.9; }
+
+.status-chip.good { background: #dcfce7; color: #15803d; }
+.status-chip.bad { background: #ffe4e6; color: #be123c; }
+
+.tour-card { background: var(--hero-grad); }
+.tour-actions .tour-next { color: var(--accent-strong); }
+
+/* --- Stance showdown (LLM panel) --- */
+.showdown-intro { margin-bottom: 4px; }
+
+.showdown-card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px;
+  display: grid;
+  gap: 10px;
+  margin-bottom: 10px;
+  background: var(--panel-2);
+}
+
+.showdown-card blockquote {
+  font-size: 13.5px;
+  line-height: 1.5;
+  border-left: 3px solid var(--accent);
+  padding-left: 12px;
+}
+
+.showdown-verdicts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.verdict {
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: grid;
+  gap: 3px;
+}
+
+.verdict span { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.75; }
+.verdict strong { font-size: 13px; }
+.verdict.bad { background: var(--rose-soft); color: var(--rose); }
+.verdict.good { background: var(--green-soft); color: var(--green); }
+.verdict.warn { background: var(--orange-soft); color: var(--orange); }
+
+.showdown-note { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+
+@media (max-width: 560px) {
+  .showdown-verdicts { grid-template-columns: 1fr; }
+}

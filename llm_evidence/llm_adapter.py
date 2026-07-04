@@ -222,6 +222,29 @@ def run(args: argparse.Namespace) -> dict:
                 json.dumps(cache_out, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
             )
 
+    # Stance showdown: real baseline false positives vs cached LLM stance reads.
+    showcase = []
+    error_path = Path(getattr(args, "error_analysis", "audit_outputs/error_analysis_report.json"))
+    cache_payload = json.loads(Path(args.cache).read_text(encoding="utf-8"))
+    fp_cache = cache_payload.get("fpShowcase", {})
+    if error_path.exists() and fp_cache:
+        error_report = json.loads(error_path.read_text(encoding="utf-8"))
+        for fp in error_report.get("decisionLevelFalsePositives", []):
+            entry = fp_cache.get(fp["caseId"])
+            if not entry:
+                continue
+            showcase.append(
+                {
+                    "caseId": fp["caseId"],
+                    "text": fp["text"],
+                    "baselineAction": fp["action"],
+                    "baselineScore": fp["score"],
+                    "llmStance": entry["stance"],
+                    "llmVerdict": entry["verdict"],
+                    "llmAnalysis": entry["analysis"],
+                }
+            )
+
     case_by_id = {case["id"]: case for case in cases}
     per_case = []
     llm_pass = baseline_pass = agreement = faithful = 0
@@ -262,6 +285,7 @@ def run(args: argparse.Namespace) -> dict:
         "actionAgreementRate": round(agreement / total, 4),
         "spanFaithfulnessRate": round(faithful / total, 4),
         "costModel": COST_MODEL,
+        "stanceShowdown": showcase,
         "perCase": per_case,
         "extractions": extractions,
         "interpretation": (
@@ -328,6 +352,7 @@ def to_lab_summary(report: dict) -> str:
             "actionAgreementRate",
             "spanFaithfulnessRate",
             "costModel",
+            "stanceShowdown",
             "perCase",
             "interpretation",
         )
@@ -340,6 +365,7 @@ def main() -> int:
     parser.add_argument("--cases", default="evals/scenario_eval_cases.json")
     parser.add_argument("--model-path", default="audit_outputs/fraud_labeler_v2.joblib")
     parser.add_argument("--cache", default="llm_evidence/cache/llm_evidence_cache.json")
+    parser.add_argument("--error-analysis", default="audit_outputs/error_analysis_report.json")
     parser.add_argument("--provider", choices=["cached", "anthropic", "openai"], default="cached")
     parser.add_argument("--regenerate", action="store_true", help="Overwrite the cache with live outputs")
     parser.add_argument("--out", required=True)
