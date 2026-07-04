@@ -1,5 +1,5 @@
 export const evidenceSummary = {
-  "generatedAt": "2026-07-02T03:21:53.889076+00:00",
+  "generatedAt": "2026-07-04T01:35:15.727560+00:00",
   "suite": "structured_evidence_extractor_v1",
   "provider": "deterministic_rubric_v1",
   "caseCount": 19,

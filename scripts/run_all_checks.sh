@@ -6,24 +6,24 @@ cd "$ROOT_DIR"
 
 PYTHON_BIN="${PYTHON_BIN:-python3}"
 
-echo "[1/12] Auditing the original labeler"
+echo "[1/13] Auditing the original labeler"
 "$PYTHON_BIN" audit_original_labeler.py > audit_outputs/original_labeler_audit.json
 
-echo "[2/12] Training and evaluating the reproducible baseline"
+echo "[2/13] Training and evaluating the reproducible baseline"
 "$PYTHON_BIN" policy_proposal_labeler_v2.py evaluate \
   --train data.csv \
   --test test.csv \
   --model-path audit_outputs/fraud_labeler_v2.joblib \
   --out audit_outputs/v2_evaluation.json > /dev/null
 
-echo "[3/12] Running scenario and adversarial evals"
+echo "[3/13] Running scenario and adversarial evals"
 "$PYTHON_BIN" evals/crypto_scam_eval_suite.py \
   --cases evals/scenario_eval_cases.json \
   --model-path audit_outputs/fraud_labeler_v2.joblib \
   --out audit_outputs/eval_suite_report.json \
   --lab-summary crypto-scam-lab/data/evalSummary.js
 
-echo "[4/12] Running production-hardening evals"
+echo "[4/13] Running production-hardening evals"
 "$PYTHON_BIN" evals/production_hardening_eval.py \
   --cases evals/hardening_eval_cases.json \
   --model-path audit_outputs/fraud_labeler_v2.joblib \
@@ -31,7 +31,7 @@ echo "[4/12] Running production-hardening evals"
   --markdown-out audit_outputs/production_hardening_eval_report.md \
   --lab-summary crypto-scam-lab/data/hardeningSummary.js
 
-echo "[5/12] Running controlled mutation tests"
+echo "[5/13] Running controlled mutation tests"
 "$PYTHON_BIN" adversarial_lab/scam_mutation_lab.py \
   --cases evals/scenario_eval_cases.json \
   --model-path audit_outputs/fraud_labeler_v2.joblib \
@@ -39,14 +39,14 @@ echo "[5/12] Running controlled mutation tests"
   --markdown-out audit_outputs/adversarial_scam_lab_report.md \
   --lab-summary crypto-scam-lab/data/adversarialLab.js
 
-echo "[6/12] Checking evidence extraction"
+echo "[6/13] Checking evidence extraction"
 "$PYTHON_BIN" llm_evidence/structured_evidence_extractor.py \
   --cases evals/scenario_eval_cases.json \
   --out audit_outputs/llm_evidence_report.json \
   --markdown-out audit_outputs/llm_evidence_report.md \
   --lab-summary crypto-scam-lab/data/evidenceSummary.js
 
-echo "[7/12] Generating governance and transparency metrics"
+echo "[7/13] Generating governance and transparency metrics"
 "$PYTHON_BIN" governance/transparency_report.py \
   --db audit_outputs/live_review_queue.sqlite \
   --scenarios governance/appeal_scenarios.json \
@@ -54,35 +54,44 @@ echo "[7/12] Generating governance and transparency metrics"
   --markdown-out audit_outputs/governance_transparency_report.md \
   --lab-summary crypto-scam-lab/data/governanceReport.js
 
-echo "[8/12] Generating operations analytics"
+echo "[8/13] Generating operations analytics"
 "$PYTHON_BIN" ops_analytics/generate_ops_report.py \
   --db audit_outputs/live_review_queue.sqlite \
   --out audit_outputs/ops_analytics_report.json \
   --markdown-out audit_outputs/ops_analytics_report.md \
   --lab-summary crypto-scam-lab/data/opsAnalytics.js
 
-echo "[9/12] Running reviewer calibration"
+echo "[9/13] Running reviewer calibration"
 "$PYTHON_BIN" quality/reviewer_calibration.py \
   --cases quality/calibration_cases.json \
   --out audit_outputs/reviewer_calibration_report.json \
   --markdown-out audit_outputs/reviewer_calibration_report.md \
   --lab-summary crypto-scam-lab/data/qualityCalibration.js
 
-echo "[10/12] Running incident-response tabletop checks"
+echo "[10/13] Running incident-response tabletop checks"
 "$PYTHON_BIN" incident_response/incident_tabletop.py \
   --scenarios incident_response/incident_scenarios.json \
   --out audit_outputs/incident_response_tabletop.json \
   --markdown-out audit_outputs/incident_response_tabletop.md \
   --lab-summary crypto-scam-lab/data/incidentResponse.js
 
-echo "[11/12] Refreshing campaign intelligence"
+echo "[11/13] Refreshing campaign intelligence"
 "$PYTHON_BIN" bluesky_integration/review_queue_cli.py \
   --db audit_outputs/live_review_queue.sqlite \
   graph \
   --out audit_outputs/campaign_graph.json \
   --lab-summary crypto-scam-lab/data/campaignGraph.js > /dev/null
 
-echo "[12/12] Enforcing the release gate"
+echo "[12/13] Running standing error analysis (failures are published, guards enforced)"
+"$PYTHON_BIN" evals/error_analysis.py \
+  --test test.csv \
+  --model-path audit_outputs/fraud_labeler_v2.joblib \
+  --unsolved evals/unsolved_cases.json \
+  --out audit_outputs/error_analysis_report.json \
+  --markdown-out audit_outputs/error_analysis_report.md \
+  --lab-summary crypto-scam-lab/data/errorAnalysis.js
+
+echo "[13/13] Enforcing the release gate"
 "$PYTHON_BIN" evals/eval_regression_gate.py \
   --out audit_outputs/eval_regression_gate_report.json \
   --markdown-out audit_outputs/eval_regression_gate_report.md \

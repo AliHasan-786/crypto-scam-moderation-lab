@@ -1,13 +1,13 @@
 {
   "original_file": "policy_proposal_labeler.py",
   "dependencies_available": {
-    "pandas": false,
+    "pandas": true,
     "numpy": true,
     "sklearn": true,
     "sentence_transformers": false,
     "xgboost": false,
     "joblib": true,
-    "matplotlib": false,
+    "matplotlib": true,
     "nltk": false
   },
   "data": {

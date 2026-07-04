@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-02",
+  "generated_at": "2026-07-04",
   "suite": "crypto_scam_policy_eval_v1",
   "caveat": "This is an authored scenario and adversarial eval suite, not an untouched benchmark. It is designed to make policy boundaries, review-routing expectations, and false-positive risks inspectable.",
   "thresholds": {
@@ -60,7 +60,7 @@
       "pass_rate": 1.0,
       "public_labels": 3,
       "review_or_label": 3,
-      "avg_probability": 0.7708540658364346
+      "avg_probability": 0.7708540658364348
     },
     "adversarial_celebrity_impersonation": {
       "count": 3,
@@ -76,7 +76,7 @@
       "pass_rate": 1.0,
       "public_labels": 3,
       "review_or_label": 3,
-      "avg_probability": 0.6581338223083978
+      "avg_probability": 0.658133822308398
     },
     "adversarial_giveaway_fee": {
       "count": 3,
@@ -92,7 +92,7 @@
       "pass_rate": 1.0,
       "public_labels": 3,
       "review_or_label": 3,
-      "avg_probability": 0.8623960876582081
+      "avg_probability": 0.8623960876582082
     },
     "adversarial_recovery_scam": {
       "count": 3,
@@ -100,7 +100,7 @@
       "pass_rate": 1.0,
       "public_labels": 3,
       "review_or_label": 3,
-      "avg_probability": 0.6981997319126453
+      "avg_probability": 0.6981997319126454
     },
     "adversarial_wallet_drainer": {
       "count": 3,
@@ -108,7 +108,7 @@
       "pass_rate": 1.0,
       "public_labels": 3,
       "review_or_label": 3,
-      "avg_probability": 0.7915871482628463
+      "avg_probability": 0.7915871482628464
     },
     "ambiguous_investment": {
       "count": 1,
@@ -116,7 +116,7 @@
       "pass_rate": 1.0,
       "public_labels": 0,
       "review_or_label": 1,
-      "avg_probability": 0.41098952549562817
+      "avg_probability": 0.4109895254956283
     },
     "ambiguous_promotion": {
       "count": 1,
@@ -124,7 +124,7 @@
       "pass_rate": 1.0,
       "public_labels": 0,
       "review_or_label": 1,
-      "avg_probability": 0.5776729114083806
+      "avg_probability": 0.5776729114083807
     },
     "ambiguous_recovery": {
       "count": 1,
@@ -132,7 +132,7 @@
       "pass_rate": 1.0,
       "public_labels": 0,
       "review_or_label": 1,
-      "avg_probability": 0.27217984121572236
+      "avg_probability": 0.27217984121572264
     },
     "authority_misuse": {
       "count": 1,
@@ -156,7 +156,7 @@
       "pass_rate": 1.0,
       "public_labels": 0,
       "review_or_label": 0,
-      "avg_probability": 0.7017621226334829
+      "avg_probability": 0.701762122633483
     },
     "developer_discussion": {
       "count": 1,
@@ -164,7 +164,7 @@
       "pass_rate": 1.0,
       "public_labels": 0,
       "review_or_label": 0,
-      "avg_probability": 0.394286131403193
+      "avg_probability": 0.3942861314031933
     },
     "fake_support": {
       "count": 1,
@@ -180,7 +180,7 @@
       "pass_rate": 1.0,
       "public_labels": 1,
       "review_or_label": 1,
-      "avg_probability": 0.6965428989293473
+      "avg_probability": 0.6965428989293474
     },
     "investment_scam": {
       "count": 1,
@@ -188,7 +188,7 @@
       "pass_rate": 1.0,
       "public_labels": 1,
       "review_or_label": 1,
-      "avg_probability": 0.847180572161238
+      "avg_probability": 0.8471805721612381
     },
     "market_commentary": {
       "count": 1,
@@ -196,7 +196,7 @@
       "pass_rate": 1.0,
       "public_labels": 0,
       "review_or_label": 0,
-      "avg_probability": 0.38804083258375105
+      "avg_probability": 0.3880408325837513
     },
     "market_news": {
       "count": 1,
@@ -204,7 +204,7 @@
       "pass_rate": 1.0,
       "public_labels": 0,
       "review_or_label": 0,
-      "avg_probability": 0.33712685515387497
+      "avg_probability": 0.3371268551538752
     },
     "multimodal_placeholder": {
       "count": 1,
@@ -212,7 +212,7 @@
       "pass_rate": 1.0,
       "public_labels": 0,
       "review_or_label": 1,
-      "avg_probability": 0.6136475957898545
+      "avg_probability": 0.6136475957898546
     },
     "pig_butchering": {
       "count": 1,
@@ -220,7 +220,7 @@
       "pass_rate": 1.0,
       "public_labels": 1,
       "review_or_label": 1,
-      "avg_probability": 0.7976249960992825
+      "avg_probability": 0.7976249960992827
     },
     "recovery_scam": {
       "count": 1,
@@ -228,7 +228,7 @@
       "pass_rate": 1.0,
       "public_labels": 1,
       "review_or_label": 1,
-      "avg_probability": 0.6570928219100403
+      "avg_probability": 0.6570928219100404
     },
     "research_discussion": {
       "count": 1,
@@ -236,7 +236,7 @@
       "pass_rate": 1.0,
       "public_labels": 0,
       "review_or_label": 0,
-      "avg_probability": 0.6336791955313125
+      "avg_probability": 0.6336791955313127
     },
     "satire": {
       "count": 1,
@@ -244,7 +244,7 @@
       "pass_rate": 1.0,
       "public_labels": 0,
       "review_or_label": 0,
-      "avg_probability": 0.4581687143133486
+      "avg_probability": 0.45816871431334877
     },
     "technical_help": {
       "count": 1,
@@ -252,7 +252,7 @@
       "pass_rate": 1.0,
       "public_labels": 0,
       "review_or_label": 1,
-      "avg_probability": 0.3492690134423916
+      "avg_probability": 0.34926901344239186
     },
     "wallet_drainer": {
       "count": 1,
@@ -260,7 +260,7 @@
       "pass_rate": 1.0,
       "public_labels": 1,
       "review_or_label": 1,
-      "avg_probability": 0.8070956234308396
+      "avg_probability": 0.8070956234308397
     }
   },
   "ground_truth_summary": {
@@ -270,7 +270,7 @@
       "pass_rate": 1.0,
       "public_labels": 0,
       "review_or_label": 4,
-      "avg_probability": 0.4686224684773964
+      "avg_probability": 0.4686224684773965
     },
     "fraud": {
       "count": 29,
@@ -278,7 +278,7 @@
       "pass_rate": 1.0,
       "public_labels": 29,
       "review_or_label": 29,
-      "avg_probability": 0.7619668227928788
+      "avg_probability": 0.7619668227928791
     },
     "legitimate": {
       "count": 7,
@@ -286,7 +286,7 @@
       "pass_rate": 1.0,
       "public_labels": 0,
       "review_or_label": 1,
-      "avg_probability": 0.46604755215162214
+      "avg_probability": 0.4660475521516223
     }
   },
   "standards_summary": {
@@ -456,7 +456,7 @@
       ],
       "text": "Final airdrop window is open. Connect your wallet at secure-eth-airdrop.xyz now to claim free ETH before eligibility expires.",
       "rationale": "Airdrop lure, suspicious domain, wallet connection ask, and urgency.",
-      "probability": 0.8070956234308396,
+      "probability": 0.8070956234308397,
       "action": "high_confidence_escalation",
       "public_label": true,
       "review_or_label": true,
@@ -503,7 +503,7 @@
       ],
       "text": "Lost crypto? Our verified recovery team can restore any wallet. Pay the processing fee in BTC upfront and your funds unlock today.",
       "rationale": "Recovery scam with upfront crypto payment and certainty claim.",
-      "probability": 0.6570928219100403,
+      "probability": 0.6570928219100404,
       "action": "high_confidence_escalation",
       "public_label": true,
       "review_or_label": true,
@@ -545,7 +545,7 @@
       ],
       "text": "Private crypto pool now open. Guaranteed 300% monthly returns, risk-free, automated AI trading. Deposit USDT before midnight.",
       "rationale": "High-yield investment claim with risk-free language and deposit ask.",
-      "probability": 0.847180572161238,
+      "probability": 0.8471805721612381,
       "action": "high_confidence_escalation",
       "public_label": true,
       "review_or_label": true,
@@ -630,7 +630,7 @@
       ],
       "text": "Congratulations, your promo code unlocked 2 BTC. Send the small activation fee to the wallet address and claim your prize.",
       "rationale": "Prize claim plus upfront fee and wallet request.",
-      "probability": 0.6965428989293473,
+      "probability": 0.6965428989293474,
       "action": "high_confidence_escalation",
       "public_label": true,
       "review_or_label": true,
@@ -719,7 +719,7 @@
       ],
       "text": "I help beginners earn daily crypto profits with my private trading method. DM me now and I will show you where to deposit first.",
       "rationale": "Investment solicitation with deposit funnel; may need review before public label.",
-      "probability": 0.7976249960992825,
+      "probability": 0.7976249960992827,
       "action": "high_confidence_escalation",
       "public_label": true,
       "review_or_label": true,
@@ -761,7 +761,7 @@
       ],
       "text": "Coinbase earnings are out. Revenue was up this quarter, but analysts still disagree about long-term exchange volume.",
       "rationale": "Ordinary market commentary without solicitation or transfer request.",
-      "probability": 0.33712685515387497,
+      "probability": 0.3371268551538752,
       "action": "no_label",
       "public_label": false,
       "review_or_label": false,
@@ -799,7 +799,7 @@
       ],
       "text": "Reminder: do not send crypto to people promising guaranteed returns. The FTC has repeatedly warned about social media investment scams.",
       "rationale": "Anti-scam education should not be treated as scam content.",
-      "probability": 0.7017621226334829,
+      "probability": 0.701762122633483,
       "action": "no_label",
       "public_label": false,
       "review_or_label": false,
@@ -840,7 +840,7 @@
       ],
       "text": "Our paper studies how crypto giveaway scams reuse celebrity names, wallet requests, and urgency cues across social platforms.",
       "rationale": "Research discussion names scam features but does not solicit funds.",
-      "probability": 0.6336791955313125,
+      "probability": 0.6336791955313127,
       "action": "no_label",
       "public_label": false,
       "review_or_label": false,
@@ -882,7 +882,7 @@
       ],
       "text": "I lost access to an old wallet from 2016. Does anyone know how to evaluate recovery services without getting scammed?",
       "rationale": "Help-seeking and risk awareness should not receive a public label, but wallet recovery services are risky enough for review routing.",
-      "probability": 0.3492690134423916,
+      "probability": 0.34926901344239186,
       "action": "send_to_human_review",
       "public_label": false,
       "review_or_label": true,
@@ -917,7 +917,7 @@
       ],
       "text": "I am obviously not the CEO of Bitcoin, but if you send me one imaginary coin I will send back two imaginary coins.",
       "rationale": "Clear satire should not receive a public fraud label.",
-      "probability": 0.4581687143133486,
+      "probability": 0.45816871431334877,
       "action": "no_label",
       "public_label": false,
       "review_or_label": false,
@@ -955,7 +955,7 @@
       ],
       "text": "Debugging a wallet connection bug in our testnet app. The issue is a stale session token, not a user-facing security problem.",
       "rationale": "Technical wallet discussion without solicitation.",
-      "probability": 0.394286131403193,
+      "probability": 0.3942861314031933,
       "action": "no_label",
       "public_label": false,
       "review_or_label": false,
@@ -990,7 +990,7 @@
       ],
       "text": "Bitcoin rallied after macro data came in cooler than expected. I am still not treating this as investment advice.",
       "rationale": "Market commentary with no deceptive offer.",
-      "probability": 0.38804083258375105,
+      "probability": 0.3880408325837513,
       "action": "no_label",
       "public_label": false,
       "review_or_label": false,
@@ -1027,7 +1027,7 @@
       ],
       "text": "A new token project says early users can claim an airdrop next week. I have not verified the link yet.",
       "rationale": "Risky language but insufficient evidence for a public label.",
-      "probability": 0.5776729114083806,
+      "probability": 0.5776729114083807,
       "action": "send_to_human_review",
       "public_label": false,
       "review_or_label": true,
@@ -1068,7 +1068,7 @@
       ],
       "text": "A recovery service says they charge only after funds are recovered. Has anyone used them safely?",
       "rationale": "Recovery topic is high risk, but the speaker is asking for safety input.",
-      "probability": 0.27217984121572236,
+      "probability": 0.27217984121572264,
       "action": "send_to_human_review",
       "public_label": false,
       "review_or_label": true,
@@ -1105,7 +1105,7 @@
       ],
       "text": "This trading group claims premium members get early signals and better entry prices. I cannot tell if it is legit.",
       "rationale": "Potential investment scam context, but user is skeptical.",
-      "probability": 0.41098952549562817,
+      "probability": 0.4109895254956283,
       "action": "send_to_human_review",
       "public_label": false,
       "review_or_label": true,
@@ -1146,7 +1146,7 @@
       ],
       "text": "[Image OCR] Claim your bonus token using the QR code. Wallet connect required. No visible source account.",
       "rationale": "Image/OCR signal should route to review before enforcement.",
-      "probability": 0.6136475957898545,
+      "probability": 0.6136475957898546,
       "action": "send_to_human_review",
       "public_label": false,
       "review_or_label": true,
@@ -1349,7 +1349,7 @@
       "rationale": "Adversarial mutation of fraud_wallet_drainer_airdrop using spaced_keywords.",
       "generated_from": "fraud_wallet_drainer_airdrop",
       "mutation": "spaced_keywords",
-      "probability": 0.804914948518633,
+      "probability": 0.8049149485186332,
       "action": "high_confidence_escalation",
       "public_label": true,
       "review_or_label": true,
@@ -1400,7 +1400,7 @@
       "rationale": "Adversarial mutation of fraud_wallet_drainer_airdrop using leetspeak.",
       "generated_from": "fraud_wallet_drainer_airdrop",
       "mutation": "leetspeak",
-      "probability": 0.7713286376247515,
+      "probability": 0.7713286376247516,
       "action": "high_confidence_escalation",
       "public_label": true,
       "review_or_label": true,
@@ -1451,7 +1451,7 @@
       "rationale": "Adversarial mutation of fraud_wallet_drainer_airdrop using punctuation_noise.",
       "generated_from": "fraud_wallet_drainer_airdrop",
       "mutation": "punctuation_noise",
-      "probability": 0.7985178586451545,
+      "probability": 0.7985178586451546,
       "action": "high_confidence_escalation",
       "public_label": true,
       "review_or_label": true,
@@ -1548,7 +1548,7 @@
       "rationale": "Adversarial mutation of fraud_recovery_fee_advance using leetspeak.",
       "generated_from": "fraud_recovery_fee_advance",
       "mutation": "leetspeak",
-      "probability": 0.6429031921499028,
+      "probability": 0.642903192149903,
       "action": "high_confidence_escalation",
       "public_label": true,
       "review_or_label": true,
@@ -1644,7 +1644,7 @@
       "rationale": "Adversarial mutation of fraud_hyip_guaranteed_returns using spaced_keywords.",
       "generated_from": "fraud_hyip_guaranteed_returns",
       "mutation": "spaced_keywords",
-      "probability": 0.8387720979323198,
+      "probability": 0.83877209793232,
       "action": "high_confidence_escalation",
       "public_label": true,
       "review_or_label": true,
@@ -1691,7 +1691,7 @@
       "rationale": "Adversarial mutation of fraud_hyip_guaranteed_returns using leetspeak.",
       "generated_from": "fraud_hyip_guaranteed_returns",
       "mutation": "leetspeak",
-      "probability": 0.8299261905828585,
+      "probability": 0.8299261905828588,
       "action": "high_confidence_escalation",
       "public_label": true,
       "review_or_label": true,
@@ -1789,7 +1789,7 @@
       "rationale": "Adversarial mutation of fraud_fake_exchange_support using spaced_keywords.",
       "generated_from": "fraud_fake_exchange_support",
       "mutation": "spaced_keywords",
-      "probability": 0.6039461767855492,
+      "probability": 0.6039461767855493,
       "action": "apply_potential_crypto_fraud_label",
       "public_label": true,
       "review_or_label": true,
@@ -1835,7 +1835,7 @@
       "rationale": "Adversarial mutation of fraud_fake_exchange_support using leetspeak.",
       "generated_from": "fraud_fake_exchange_support",
       "mutation": "leetspeak",
-      "probability": 0.5980213928570135,
+      "probability": 0.5980213928570136,
       "action": "apply_potential_crypto_fraud_label",
       "public_label": true,
       "review_or_label": true,
@@ -1978,7 +1978,7 @@
       "rationale": "Adversarial mutation of fraud_promo_code_fee using leetspeak.",
       "generated_from": "fraud_promo_code_fee",
       "mutation": "leetspeak",
-      "probability": 0.6828670247139138,
+      "probability": 0.6828670247139137,
       "action": "high_confidence_escalation",
       "public_label": true,
       "review_or_label": true,
@@ -2074,7 +2074,7 @@
       "rationale": "Adversarial mutation of fraud_fake_grant using spaced_keywords.",
       "generated_from": "fraud_fake_grant",
       "mutation": "spaced_keywords",
-      "probability": 0.7407364469235933,
+      "probability": 0.7407364469235934,
       "action": "high_confidence_escalation",
       "public_label": true,
       "review_or_label": true,
@@ -2124,7 +2124,7 @@
       "rationale": "Adversarial mutation of fraud_fake_grant using leetspeak.",
       "generated_from": "fraud_fake_grant",
       "mutation": "leetspeak",
-      "probability": 0.7437835397547207,
+      "probability": 0.7437835397547208,
       "action": "high_confidence_escalation",
       "public_label": true,
       "review_or_label": true,

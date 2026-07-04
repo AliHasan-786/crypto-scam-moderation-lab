@@ -1,0 +1,85 @@
+{
+  "description": "Authored hard cases the current system is NOT expected to handle correctly, plus guard cases that must keep passing. This file is a standing red-team surface: when a failing case starts passing, it is promoted to the scenario suite and replaced here with something harder. Failures in this file are published, not fixed-then-hidden.",
+  "cases": [
+    {
+      "id": "unsolved-001",
+      "category": "warning_wrapper_evasion",
+      "text": "⚠️ Warning: the ETH airdrop links going around are SCAMS. The only real verified claim page is eth-claim-official.xyz — connect your wallet there before the window closes.",
+      "expected_action": "send_to_human_review",
+      "rationale": "Adversary wraps a drainer lure in protective language. Protective-context suppression should not grant immunity when the same post contains a connect-wallet ask; the conflict should route to review.",
+      "known_blind_spot": "Protective-context patterns currently suppress the public label without checking whether the speaker adds their own ask."
+    },
+    {
+      "id": "unsolved-002",
+      "category": "doubt_language_evasion",
+      "text": "Not sure if this is legit but this trading bot literally doubled my USDT in a week 😅 DM me for the link, still can't believe it works. DYOR!",
+      "expected_action": "send_to_human_review",
+      "rationale": "Testimonial-with-doubt is a documented scam format: the doubt markers are camouflage. Should route to review on doubling claim + DM funnel.",
+      "known_blind_spot": "Doubt markers reduce risk scoring in exactly the way adversaries want."
+    },
+    {
+      "id": "unsolved-003",
+      "category": "recovery_testimonial",
+      "text": "Huge thanks to @cryptorecover_pro for getting back my stolen 0.4 BTC after I paid the small processing fee 🙏 DM them if you lost funds, they are the only legit recovery team!",
+      "expected_action": "send_to_human_review",
+      "rationale": "Advance-fee recovery scam advertised as a grateful testimonial — the standard format for re-victimization. The fee mention plus DM funnel should reach review.",
+      "known_blind_spot": "Testimonial voice ('thanks to...') is not covered by promoter-ask patterns."
+    },
+    {
+      "id": "unsolved-004",
+      "category": "multilingual_obfuscation",
+      "text": "G4N4NCIAS GARANTIZADAS 💸 duplica tu USDT hoy mismo. Envía 50 USDT y recibe 100 de vuelta. Escríbeme al DM, cupos limitados.",
+      "expected_action": "apply_potential_crypto_fraud_label",
+      "rationale": "Spanish send-to-receive with leetspeak obfuscation of the guarantee keyword. Canonicalization plus Spanish rules should hold the label.",
+      "known_blind_spot": "Leetspeak canonicalization coverage for non-English keywords is untested beyond this case."
+    },
+    {
+      "id": "unsolved-005",
+      "category": "recruitment_surface",
+      "text": "Trading with my mentor honestly changed my life ❤️ financial freedom is real if you're willing to learn. My DMs are open if you want to know how I started.",
+      "expected_action": "send_to_human_review",
+      "rationale": "Pig-butchering recruitment surface: no explicit return claim, no link, just a DM funnel and a lifestyle promise. The highest-loss typology in IC3 data enters exactly like this.",
+      "known_blind_spot": "Without an explicit claim or ask, lexical systems have nothing to hold onto. Documented in the threat landscape as the core single-post limitation."
+    },
+    {
+      "id": "unsolved-006",
+      "category": "off_text_evidence",
+      "text": "Everything you need is in the screenshot 👇 send exactly what it shows and you'll get double back within the hour. Don't sleep on this one.",
+      "expected_action": "send_to_human_review",
+      "rationale": "The operative scam content lives in an image the text pipeline cannot see; the doubling promise in text should still carry it to review.",
+      "known_blind_spot": "OCR evidence extraction is simulated only; image-borne asks are invisible."
+    },
+    {
+      "id": "unsolved-007",
+      "category": "soft_authority_insider",
+      "text": "I work at a top-5 exchange (obviously can't say which) and I can get a few people into vetted presales early. Small facilitation fee, serious inquiries only.",
+      "expected_action": "send_to_human_review",
+      "rationale": "Unverifiable insider authority plus an advance fee. No brand name is dropped, so authority-misuse patterns keyed to named brands may not fire.",
+      "known_blind_spot": "Authority detection is keyed to named entities; anonymous authority claims slip through."
+    },
+    {
+      "id": "unsolved-008",
+      "category": "protective_bait",
+      "text": "Avoid fake airdrops out there!! Only use the official verified faucet link in my bio to claim your free 2 ETH safely ✅",
+      "expected_action": "send_to_human_review",
+      "rationale": "Anti-scam framing used to market the poster's own free-claim funnel. 'Free 2 ETH' plus a claim link should force review despite the protective opener.",
+      "known_blind_spot": "Same suppression gap as unsolved-001, in bait rather than warning form."
+    },
+    {
+      "id": "guard-001",
+      "category": "protected_context_guard",
+      "text": "I think I just got scammed by one of those doubling sites... sent 0.2 BTC and got nothing back. I feel so stupid. What do I even do now?",
+      "expected_action": "no_label",
+      "rationale": "Victim help-seeking must never be labeled. This is a guard case: if it ever fails, the release gate failure is correct and the change that broke it must not ship.",
+      "known_blind_spot": null
+    },
+    {
+      "id": "unsolved-009",
+      "category": "slow_burn_platform",
+      "text": "Week 3 update: staking dashboard showing +11% again 📈 compounding is unreal. Not financial advice but happy to share the platform if anyone's curious.",
+      "expected_action": "send_to_human_review",
+      "rationale": "Serialized fake-platform promotion: each post individually mild, pattern lethal. Single-post review routing on repeated yield claims plus offer-to-share is the best available proxy until account-history enrichment exists.",
+      "known_blind_spot": "No cross-post memory in the current pipeline; the campaign graph only clusters infrastructure, not serialized behavior by one account."
+    }
+  ]
+}

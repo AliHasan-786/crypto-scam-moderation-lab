@@ -1,5 +1,5 @@
 export const adversarialLab = {
-  "generatedAt": "2026-07-02T03:21:53.766554+00:00",
+  "generatedAt": "2026-07-04T01:35:15.637586+00:00",
   "suite": "adversarial_scam_mutation_lab_v1",
   "seedCount": 7,
   "mutationCount": 8,
@@ -31,7 +31,7 @@ export const adversarialLab = {
       "escapeCount": 0,
       "downgradeCount": 7,
       "severeDowngradeCount": 0,
-      "avgProbabilityDelta": -0.0018187276333877986,
+      "avgProbabilityDelta": -0.0018187276333879096,
       "worstVariantId": "fraud_fake_exchange_support__screenshot_ocr",
       "worstAction": "send_to_human_review",
       "worstProbability": 0.6122643588954335
@@ -51,10 +51,10 @@ export const adversarialLab = {
       "escapeCount": 0,
       "downgradeCount": 3,
       "severeDowngradeCount": 0,
-      "avgProbabilityDelta": -0.1487632762332261,
+      "avgProbabilityDelta": -0.14876327623322605,
       "worstVariantId": "fraud_fake_exchange_support__synonym_laundering",
       "worstAction": "send_to_human_review",
-      "worstProbability": 0.45359709945291915
+      "worstProbability": 0.4535970994529193
     },
     {
       "id": "context_laundering",
@@ -71,10 +71,10 @@ export const adversarialLab = {
       "escapeCount": 0,
       "downgradeCount": 3,
       "severeDowngradeCount": 0,
-      "avgProbabilityDelta": -0.12006108849561357,
+      "avgProbabilityDelta": -0.12006108849561356,
       "worstVariantId": "fraud_fake_exchange_support__context_laundering",
       "worstAction": "send_to_human_review",
-      "worstProbability": 0.47592220957585574
+      "worstProbability": 0.47592220957585596
     },
     {
       "id": "leetspeak",
@@ -111,10 +111,10 @@ export const adversarialLab = {
       "escapeCount": 0,
       "downgradeCount": 0,
       "severeDowngradeCount": 0,
-      "avgProbabilityDelta": -0.0033532359135675887,
+      "avgProbabilityDelta": -0.0033532359135676044,
       "worstVariantId": "fraud_fake_exchange_support__spaced_keywords",
       "worstAction": "high_confidence_escalation",
-      "worstProbability": 0.6284212675616401
+      "worstProbability": 0.6284212675616402
     },
     {
       "id": "punctuation_stuffing",
@@ -131,10 +131,10 @@ export const adversarialLab = {
       "escapeCount": 0,
       "downgradeCount": 0,
       "severeDowngradeCount": 0,
-      "avgProbabilityDelta": -0.03557481068770848,
+      "avgProbabilityDelta": -0.035574810687708416,
       "worstVariantId": "fraud_fake_exchange_support__punctuation_stuffing",
       "worstAction": "apply_potential_crypto_fraud_label",
-      "worstProbability": 0.6030069437548353
+      "worstProbability": 0.6030069437548354
     },
     {
       "id": "defanged_url",
@@ -151,7 +151,7 @@ export const adversarialLab = {
       "escapeCount": 0,
       "downgradeCount": 0,
       "severeDowngradeCount": 0,
-      "avgProbabilityDelta": 0.05848624912736149,
+      "avgProbabilityDelta": 0.05848624912736146,
       "worstVariantId": "fraud_fake_exchange_support__defanged_url",
       "worstAction": "high_confidence_escalation",
       "worstProbability": 0.7319034195543597
@@ -174,7 +174,7 @@ export const adversarialLab = {
       "avgProbabilityDelta": 0.004971923948055711,
       "worstVariantId": "fraud_fake_exchange_support__brand_impersonation_shift",
       "worstAction": "apply_potential_crypto_fraud_label",
-      "worstProbability": 0.6098460134298526
+      "worstProbability": 0.6098460134298528
     }
   ],
   "categorySummary": {
@@ -222,9 +222,9 @@ export const adversarialLab = {
       "category": "semantic_obfuscation",
       "baselineAction": "high_confidence_escalation",
       "mutatedAction": "send_to_human_review",
-      "baselineProbability": 0.8070956234308396,
-      "mutatedProbability": 0.47030067723540675,
-      "probabilityDelta": -0.3367949461954329,
+      "baselineProbability": 0.8070956234308397,
+      "mutatedProbability": 0.4703006772354069,
+      "probabilityDelta": -0.3367949461954328,
       "publicLabelDropped": true,
       "escaped": false,
       "mutatedText": "Final allocation window is open. sync your vault at secure-eth-allocation.xyz now to redeem complimentary ETH before eligibility expires."
@@ -236,9 +236,9 @@ export const adversarialLab = {
       "category": "multimodal_placeholder",
       "baselineAction": "high_confidence_escalation",
       "mutatedAction": "send_to_human_review",
-      "baselineProbability": 0.6570928219100403,
+      "baselineProbability": 0.6570928219100404,
       "mutatedProbability": 0.662594294186746,
-      "probabilityDelta": 0.005501472276705721,
+      "probabilityDelta": 0.00550147227670561,
       "publicLabelDropped": true,
       "escaped": false,
       "mutatedText": "[Image OCR]\nScreenshot text: Lost crypto? Our verified recovery team can restore any wallet. Pay the processing fee in BTC upfront and your funds unlock today.\nQR code visible. Link is partially cropped. Source account not visible."
@@ -250,8 +250,8 @@ export const adversarialLab = {
       "category": "multimodal_placeholder",
       "baselineAction": "high_confidence_escalation",
       "mutatedAction": "send_to_human_review",
-      "baselineProbability": 0.6965428989293473,
-      "mutatedProbability": 0.6921523085121175,
+      "baselineProbability": 0.6965428989293474,
+      "mutatedProbability": 0.6921523085121176,
       "probabilityDelta": -0.004390590417229778,
       "publicLabelDropped": true,
       "escaped": false,
@@ -278,9 +278,9 @@ export const adversarialLab = {
       "category": "multimodal_placeholder",
       "baselineAction": "high_confidence_escalation",
       "mutatedAction": "send_to_human_review",
-      "baselineProbability": 0.8070956234308396,
+      "baselineProbability": 0.8070956234308397,
       "mutatedProbability": 0.8009397965426335,
-      "probabilityDelta": -0.006155826888206151,
+      "probabilityDelta": -0.006155826888206262,
       "publicLabelDropped": true,
       "escaped": false,
       "mutatedText": "[Image OCR]\nScreenshot text: Final airdrop window is open. Connect your wallet at secure-eth-airdrop.xyz now to claim free ETH before eligibility expires.\nQR code visible. Link is partially cropped. Source account not visible."
