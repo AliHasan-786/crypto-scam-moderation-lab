@@ -12,6 +12,10 @@ import { incidentResponse } from "./data/incidentResponse.js";
 import { evalGate } from "./data/evalGate.js";
 import { agenticAbuseLab } from "./data/agenticAbuseLab.js";
 import { campaignGallery } from "./data/campaignGallery.js";
+import { errorAnalysis } from "./data/errorAnalysis.js";
+import { llmComparison } from "./data/llmComparison.js";
+import { scaleSimulation } from "./data/scaleSimulation.js";
+import { threatLandscape } from "./data/threatLandscape.js";
 
 const app = document.querySelector("#app");
 
@@ -21,7 +25,10 @@ const state = {
   selectedId: null,
   selectedMode: "dataset",
   activeLens: "content",
-  activeModule: "overview",
+  activeModule: "welcome",
+  heroText:
+    "Elon Musk is giving away 1000 ETH to celebrate. Send 0.1 ETH to our verified wallet and get 0.5 ETH back instantly.",
+  tourStep: null,
   agentStrategy: "airdrop-funnel",
   incidentId: "ir_wallet_drainer_campaign",
   incidentChoice: "route_review",
@@ -103,8 +110,18 @@ const calibrationActions = [
 
 const consoleModules = [
   {
+    id: "welcome",
+    label: "Start Here",
+    subtitle: "The story, a live demo, and where to go next",
+    group: "Start",
+    title: "Start here",
+    description:
+      "What this project is, why it exists, and a live demo you can try without reading anything else.",
+  },
+  {
     id: "overview",
-    label: "Overview",
+    label: "Project Overview",
+    subtitle: "The policy foundation behind the product",
     group: "Start",
     title: "Crypto Scam Moderation Lab",
     description:
@@ -113,6 +130,7 @@ const consoleModules = [
   {
     id: "queue",
     label: "Review Queue",
+    subtitle: "Ranked cases with the evidence shown",
     group: "Review",
     title: "Review queue",
     description:
@@ -121,6 +139,7 @@ const consoleModules = [
   {
     id: "tester",
     label: "Test Post",
+    subtitle: "Paste anything, attack it, watch it decide",
     group: "Review",
     title: "Test a post",
     description:
@@ -129,14 +148,34 @@ const consoleModules = [
   {
     id: "evals",
     label: "Evals",
+    subtitle: "Does it protect speech, not just catch scams?",
     group: "Assurance",
     title: "Evaluation suite",
     description:
       "Check whether the system preserves legitimate speech, catches scam patterns, and blocks regressions before launch.",
   },
   {
+    id: "failures",
+    label: "Error Analysis",
+    subtitle: "Real mistakes, published on purpose",
+    group: "Assurance",
+    title: "What this system gets wrong",
+    description:
+      "The live false positives, the unsolved hard cases, and the tradeoff behind each one. Kept public deliberately.",
+  },
+  {
+    id: "llm",
+    label: "LLM vs Baseline",
+    subtitle: "Where a language model earns its cost",
+    group: "Assurance",
+    title: "LLM evidence adapter",
+    description:
+      "A hosted-LLM assistant compared honestly against the cheap baseline: accuracy, cost, latency, and one open disagreement.",
+  },
+  {
     id: "agentic",
     label: "GenAI Abuse Lab",
+    subtitle: "Can AI tools here be tricked or misused?",
     group: "Assurance",
     title: "GenAI and agentic abuse lab",
     description:
@@ -145,22 +184,43 @@ const consoleModules = [
   {
     id: "campaigns",
     label: "Campaign Graph",
+    subtitle: "Following the wallets, domains, and phrasing",
     group: "Intelligence",
     title: "Campaign graph",
     description:
       "Follow shared domains, wallet-like strings, repeated handles, and high-risk phrases across local review candidates.",
   },
   {
+    id: "threat",
+    label: "Threat Landscape",
+    subtitle: "The real-world fraud this models",
+    group: "Intelligence",
+    title: "Threat landscape",
+    description:
+      "IC3 and Chainalysis-documented scam typologies mapped to what this system detects - and what it cannot see.",
+  },
+  {
     id: "ops",
     label: "Ops Analytics",
+    subtitle: "Queue health, backlog, and tradeoffs",
     group: "Operations",
     title: "Operations analytics",
     description:
       "Tune thresholds while watching review coverage, backlog, precision, recall, and repeated-entity leads.",
   },
   {
+    id: "scale",
+    label: "Scale & Capacity",
+    subtitle: "What every threshold costs in payroll",
+    group: "Operations",
+    title: "Scale and capacity",
+    description:
+      "A 50,000-post day: queue load, reviewers required, cost per caught scam, and twelve weeks with two campaign waves.",
+  },
+  {
     id: "qa",
     label: "QA Calibration",
+    subtitle: "Do reviewers agree on the hard cases?",
     group: "Operations",
     title: "QA calibration",
     description:
@@ -169,6 +229,7 @@ const consoleModules = [
   {
     id: "incidents",
     label: "Incident Response",
+    subtitle: "When a scam wave hits at 2am",
     group: "Operations",
     title: "Incident response",
     description:
@@ -177,6 +238,7 @@ const consoleModules = [
   {
     id: "governance",
     label: "Appeals / Transparency",
+    subtitle: "Notices, appeals, reversals, reports",
     group: "Governance",
     title: "Appeals and transparency",
     description:
@@ -185,6 +247,7 @@ const consoleModules = [
   {
     id: "model",
     label: "Model Audit",
+    subtitle: "The browser sim vs the real baseline",
     group: "Governance",
     title: "Model audit",
     description:
@@ -551,9 +614,9 @@ function compactEntity(value) {
 }
 
 function moduleFromHash(hash = window.location.hash) {
-  const key = String(hash || "#overview").replace(/^#/, "") || "overview";
+  const key = String(hash || "#welcome").replace(/^#/, "") || "welcome";
   const moduleId = moduleHashAliases[key] || key;
-  return consoleModules.some((module) => module.id === moduleId) ? moduleId : "overview";
+  return consoleModules.some((module) => module.id === moduleId) ? moduleId : "welcome";
 }
 
 function activeModule() {
@@ -791,6 +854,10 @@ function labelForPrediction(value) {
   return value === 1 ? "Flagged" : "Not flagged";
 }
 
+function queueDisplayTitle(item) {
+  return `${friendlyName(item)} <small class="case-id">${escapeHtml(item.id)}</small>`;
+}
+
 function renderQueueItem(item, selected) {
   const mode = item.mode || "dataset";
   const active = selected && selected.id === item.id && state.selectedMode === mode;
@@ -803,8 +870,8 @@ function renderQueueItem(item, selected) {
   return `
     <button class="queue-item ${active ? "active" : ""} ${errorClass}" data-select="${escapeHtml(item.id)}" data-select-mode="${mode}">
       <span class="queue-meta">
-        <strong>${escapeHtml(item.id)}</strong>
-        <span>${escapeHtml(item.split)} / ${labelForGroundTruth(item.groundTruth)}</span>
+        <strong>${escapeHtml(friendlyName(item))}</strong>
+        <span>${escapeHtml(item.id)} &middot; ${labelForGroundTruth(item.groundTruth)}</span>
       </span>
       <span class="queue-score">${percentage(item.score)}</span>
       <span class="queue-text">${escapeHtml(item.text.slice(0, 138))}${item.text.length > 138 ? "..." : ""}</span>
@@ -931,8 +998,8 @@ function renderSelected(item) {
       <div class="section-label">Case review</div>
       <div class="detail-head">
         <div>
-          <h2>${state.selectedMode === "custom" ? "Live post tester" : escapeHtml(item.id)}</h2>
-          <span>${escapeHtml(item.split)} / ground truth: ${labelForGroundTruth(item.groundTruth)}</span>
+          <h2>${state.selectedMode === "custom" ? "Live post tester" : escapeHtml(friendlyName(item))}</h2>
+          <span>${state.selectedMode === "custom" ? "draft" : `${escapeHtml(item.id)} &middot; ${escapeHtml(item.split)} set &middot; ground truth: ${labelForGroundTruth(item.groundTruth)}`}</span>
         </div>
         <div class="score-ring ${scoreClass}">
           <strong>${percentage(item.score)}</strong>
@@ -2062,6 +2129,640 @@ function renderProjectPrimer(metrics) {
   `;
 }
 
+const REPO_URL = "https://github.com/AliHasan-786/crypto-scam-moderation-lab";
+
+const PLAIN_ACTION_EXPLAINER = {
+  "Block pending reviewer confirmation": {
+    tone: "bad",
+    plain: "Strong scam evidence. A human reviewer confirms before anything becomes public.",
+  },
+  "Interstitial plus downrank": {
+    tone: "bad",
+    plain: "High risk: shown behind a warning screen and ranked lower while review happens.",
+  },
+  "Potential Crypto Fraud label": {
+    tone: "bad",
+    plain: "Enough evidence for a public warning label - after a human confirms it.",
+  },
+  "Human review queue": {
+    tone: "warn",
+    plain: "The system is not sure, so it asks a human instead of guessing.",
+  },
+  "No label": {
+    tone: "good",
+    plain: "No scam evidence. The post is left completely alone.",
+  },
+};
+
+function friendlyName(item) {
+  const top = (item.ruleResults || [])
+    .filter((rule) => rule.matched)
+    .sort((a, b) => b.weight - a.weight)[0];
+  return top
+    ? top.label
+    : item.groundTruth === 1
+      ? "Suspicious post"
+      : "Ordinary post";
+}
+
+const heroPresets = [
+  {
+    id: "hero-scam",
+    label: "An obvious scam",
+    text: "Elon Musk is giving away 1000 ETH to celebrate. Send 0.1 ETH to our verified wallet and get 0.5 ETH back instantly.",
+  },
+  {
+    id: "hero-warning",
+    label: "A warning about scams",
+    text: "PSA: do NOT send crypto to anyone promising to double it. These giveaway posts are scams. Report and move on.",
+  },
+  {
+    id: "hero-satire",
+    label: "A joke",
+    text: "I am obviously not the CEO of Bitcoin, but if you send me one imaginary coin I will send back two imaginary coins.",
+  },
+  {
+    id: "hero-skeptic",
+    label: "A skeptical question",
+    text: "A platform is promising 10% monthly returns on stablecoin deposits. Claims to be licensed offshore. I can't verify anything about them.",
+  },
+];
+
+function renderWelcome() {
+  const heroResult = scoreText(state.heroText);
+  const explain = PLAIN_ACTION_EXPLAINER[heroResult.action] || { tone: "warn", plain: "" };
+  const matched = heroResult.ruleResults.filter((rule) => rule.matched).slice(0, 4);
+  const sim = scaleSimulation || {};
+  const opPoint = sim.operatingPoint || {};
+  const errSummary = (errorAnalysis && errorAnalysis.summary) || {};
+  return `
+    <div class="welcome-shell">
+      <section class="welcome-hero panel">
+        <span class="welcome-kicker">A Trust &amp; Safety portfolio system by Ali Hasan</span>
+        <h1>Can a platform catch crypto scams without silencing everyone who talks about them?</h1>
+        <p class="welcome-lede">
+          Scammers, journalists, victims, comedians, and researchers all use the same words.
+          This lab is a working moderation system that tells them apart: it scores posts against a
+          written policy, sends uncertain cases to humans, publishes its own mistakes, and shows
+          what every threshold costs in reviewer payroll. Everything here runs in your browser on
+          sanitized data - it looks at posts, never at you.
+        </p>
+        <div class="welcome-stats">
+          <div class="welcome-stat">
+            <strong>${sim.corpus ? (sim.corpus.truePrevalence * 100).toFixed(1) + "%" : "1.5%"}</strong>
+            <span>of simulated posts are scams. The other ${sim.corpus ? (100 - sim.corpus.truePrevalence * 100).toFixed(1) : "98.5"}% is why this is hard.</span>
+          </div>
+          <div class="welcome-stat">
+            <strong>${errSummary.falsePositiveCount ?? 8}</strong>
+            <span>real false positives, published and explained instead of hidden.</span>
+          </div>
+          <div class="welcome-stat">
+            <strong>${errSummary.unsolvedStillFailing ?? 5}</strong>
+            <span>hard cases still failing - kept on display deliberately.</span>
+          </div>
+        </div>
+        <div class="welcome-paths">
+          <button type="button" class="path-card" data-tour="start">
+            <strong>Take the 90-second tour</strong>
+            <span>Guided walk through the whole system. No background needed.</span>
+          </button>
+          <button type="button" class="path-card" data-goto="queue">
+            <strong>Enter the console</strong>
+            <span>The full operator workbench: queue, evals, ops, governance.</span>
+          </button>
+          <button type="button" class="path-card" data-goto="failures">
+            <strong>Start with the failures</strong>
+            <span>For reviewers who know that 100% green means someone is hiding something.</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="panel welcome-tester" id="hero-tester">
+        <div class="section-label">Try it yourself</div>
+        <h2>Paste any post. Watch the system decide - and explain itself.</h2>
+        <p class="welcome-hint">The same words appear in a scam and in a warning about that scam. Try both:</p>
+        <div class="hero-presets">
+          ${heroPresets
+            .map(
+              (preset) => `
+                <button type="button" class="hero-preset ${state.heroText === preset.text ? "active" : ""}" data-hero-preset="${escapeHtml(preset.id)}">
+                  ${escapeHtml(preset.label)}
+                </button>
+              `,
+            )
+            .join("")}
+        </div>
+        <textarea id="hero-text" rows="3" aria-label="Post text to evaluate">${escapeHtml(state.heroText)}</textarea>
+        <button type="button" id="hero-evaluate" class="hero-evaluate">Evaluate this post</button>
+        <div class="hero-result hero-result-${explain.tone}">
+          <div class="hero-result-head">
+            <span class="hero-decision">${escapeHtml(heroResult.action)}</span>
+            <strong>${percentage(heroResult.score)} risk</strong>
+          </div>
+          <p>${escapeHtml(explain.plain)}</p>
+          ${
+            matched.length
+              ? `<div class="hero-evidence">${matched
+                  .map(
+                    (rule) =>
+                      `<span class="hero-evidence-chip">${escapeHtml(rule.label)} +${Math.round(rule.weight * 100)}</span>`,
+                  )
+                  .join("")}</div>`
+              : `<div class="hero-evidence"><span class="hero-evidence-chip neutral">No policy evidence matched</span></div>`
+          }
+        </div>
+      </section>
+
+      <section class="panel welcome-how">
+        <div class="section-label">How it works</div>
+        <div class="how-steps">
+          <div class="how-step"><span>1</span><strong>A post arrives</strong><p>Real systems see millions a day. This demo simulates that stream with sanitized data.</p></div>
+          <div class="how-step"><span>2</span><strong>Evidence, not vibes</strong><p>A written policy turns into scored evidence: transfer asks, fake authority, impossible returns.</p></div>
+          <div class="how-step"><span>3</span><strong>Three-way decision</strong><p>Strong evidence &rarr; label candidate. Uncertainty &rarr; human review. No evidence &rarr; leave it alone.</p></div>
+          <div class="how-step"><span>4</span><strong>Humans stay in charge</strong><p>Reviewers confirm every label. Users get notices and appeals. Mistakes get published.</p></div>
+        </div>
+      </section>
+
+      <section class="panel welcome-provenance">
+        <div class="section-label">Provenance</div>
+        <p>
+          Started as Cornell Tech Trust &amp; Safety coursework (CS 5342); rebuilt solo into this system after
+          auditing my own original model and finding its evaluation flaws. The
+          <a href="${REPO_URL}" target="_blank" rel="noopener">repository</a> contains the full policy pack,
+          eval suites, decision log, and a CI release gate that regenerates everything on every commit.
+          Deliberate limits: sanitized public data, no enforcement capability, no tracking of visitors.
+        </p>
+      </section>
+    </div>
+  `;
+}
+
+function renderErrorAnalysisPanel() {
+  const summary = errorAnalysis.summary || {};
+  const categories = errorAnalysis.falsePositiveCategories || {};
+  return `
+    <section class="panel error-analysis-panel" id="error-analysis">
+      <div class="section-label">Standing error analysis</div>
+      <p class="panel-intro">
+        Authored eval suites that pass 100% are indistinguishable from suites written to pass.
+        This page is the antidote: the system's real mistakes on held-out data, plus hard cases it
+        still fails, kept public on purpose (Decision Log 010).
+      </p>
+      <div class="stat-grid">
+        <div class="stat-card"><strong>${summary.falsePositiveCount ?? 0}</strong><span>false positives at the operating point</span></div>
+        <div class="stat-card"><strong>${summary.missCount ?? 0}</strong><span>scams missed entirely</span></div>
+        <div class="stat-card"><strong>${summary.unsolvedStillFailing ?? 0}/${summary.unsolvedTotal ?? 0}</strong><span>hard cases still failing</span></div>
+        <div class="stat-card ${summary.guardsPassing ? "good" : "bad"}"><strong>${summary.guardsPassing ? "Pass" : "FAIL"}</strong><span>protected-context guards</span></div>
+      </div>
+      <h3>The false positives, by class</h3>
+      ${Object.entries(categories)
+        .map(
+          ([category, count]) => `
+            <details class="fp-category">
+              <summary><strong>${escapeHtml(humanize(category))}</strong><span>${count} case${count === 1 ? "" : "s"}</span></summary>
+              <p>${escapeHtml((errorAnalysis.categoryCommentary || {})[category] || "")}</p>
+              ${(errorAnalysis.falsePositives || [])
+                .filter((fp) => fp.category === category)
+                .map(
+                  (fp) => `
+                    <blockquote class="fp-quote">
+                      <p>${escapeHtml(fp.text)}</p>
+                      <footer>score ${percentage(fp.score)} &middot; ${escapeHtml(humanize(fp.action))}</footer>
+                    </blockquote>
+                  `,
+                )
+                .join("")}
+            </details>
+          `,
+        )
+        .join("")}
+      <h3>Unsolved hard cases</h3>
+      <p class="panel-intro">
+        When one of these starts passing, it gets promoted into the regression suite and replaced
+        with something harder. Failures are the roadmap.
+      </p>
+      <div class="unsolved-list">
+        ${(errorAnalysis.unsolvedCases || [])
+          .map(
+            (item) => `
+              <div class="unsolved-card status-${item.status === "pass" ? "pass" : "fail"}">
+                <div class="unsolved-head">
+                  <strong>${escapeHtml(humanize(item.category))}</strong>
+                  <span class="status-chip ${item.status === "pass" ? "good" : "bad"}">${escapeHtml(item.status)}</span>
+                </div>
+                <blockquote>${escapeHtml(item.text)}</blockquote>
+                <div class="unsolved-actions">
+                  <span>expected: <b>${escapeHtml(humanize(item.expectedAction))}</b></span>
+                  <span>actual: <b>${escapeHtml(humanize(item.actualAction))}</b></span>
+                </div>
+                <p>${escapeHtml(item.rationale)}</p>
+                ${item.knownBlindSpot ? `<p class="blind-spot">Blind spot: ${escapeHtml(item.knownBlindSpot)}</p>` : ""}
+              </div>
+            `,
+          )
+          .join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderLlmComparisonPanel() {
+  const rows = llmComparison.perCase || [];
+  const disagreements = rows.filter((row) => !row.agree);
+  return `
+    <section class="panel llm-panel" id="llm-comparison">
+      <div class="section-label">LLM vs baseline</div>
+      <p class="panel-intro">
+        A hosted-LLM evidence adapter runs against the same cases, the same policy prompt, and the
+        <em>same span-faithfulness gate</em> as the deterministic extractor. Outputs below are cached
+        (<b>${escapeHtml(llmComparison.provider || "")}</b>) so this demo stays static and key-less;
+        a regeneration script reruns them against a live API.
+      </p>
+      <div class="stat-grid">
+        <div class="stat-card"><strong>${percentage(llmComparison.baselineExpectationPassRate || 0)}</strong><span>baseline pass rate</span></div>
+        <div class="stat-card"><strong>${percentage(llmComparison.llmExpectationPassRate || 0)}</strong><span>LLM pass rate</span></div>
+        <div class="stat-card"><strong>${percentage(llmComparison.actionAgreementRate || 0)}</strong><span>action agreement</span></div>
+        <div class="stat-card ${llmComparison.spanFaithfulnessRate === 1 ? "good" : "bad"}"><strong>${percentage(llmComparison.spanFaithfulnessRate || 0)}</strong><span>span faithfulness</span></div>
+      </div>
+      <h3>The economics</h3>
+      <div class="cost-grid">
+        <div><span>Baseline</span><strong>${escapeHtml((llmComparison.costModel || {}).baselinePer1kPosts || "")}</strong></div>
+        <div><span>Hosted LLM</span><strong>${escapeHtml((llmComparison.costModel || {}).llmPer1kPosts || "")}</strong></div>
+        <div><span>Latency</span><strong>${escapeHtml((llmComparison.costModel || {}).llmLatencyPerPost || "")}</strong></div>
+      </div>
+      <p>${escapeHtml((llmComparison.costModel || {}).operationalNote || "")}</p>
+      <h3>Where they disagree${disagreements.length ? ` (${disagreements.length})` : ""}</h3>
+      ${
+        disagreements.length
+          ? disagreements
+              .map(
+                (row) => `
+                  <div class="disagreement-card">
+                    <strong>${escapeHtml(row.caseId)}</strong>
+                    <div class="unsolved-actions">
+                      <span>expected: <b>${escapeHtml(humanize(row.expected))}</b></span>
+                      <span>baseline: <b>${escapeHtml(humanize(row.baseline))}</b></span>
+                      <span>LLM: <b>${escapeHtml(humanize(row.llm))}</b></span>
+                    </div>
+                    <p>${escapeHtml(row.reviewerSummary || "")}</p>
+                  </div>
+                `,
+              )
+              .join("")
+          : "<p>Full agreement on this suite.</p>"
+      }
+      <p class="panel-intro">${escapeHtml(llmComparison.interpretation || "")}</p>
+      <details class="llm-table-details">
+        <summary>All ${rows.length} cases</summary>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Case</th><th>Expected</th><th>Baseline</th><th>LLM</th></tr></thead>
+            <tbody>
+              ${rows
+                .map(
+                  (row) => `
+                    <tr class="${row.agree ? "" : "row-disagree"}">
+                      <td>${escapeHtml(row.caseId)}</td>
+                      <td>${escapeHtml(humanize(row.expected))}</td>
+                      <td>${escapeHtml(humanize(row.baseline))}${row.baselinePass ? "" : " &#10060;"}</td>
+                      <td>${escapeHtml(humanize(row.llm))}${row.llmPass ? "" : " &#10060;"}</td>
+                    </tr>
+                  `,
+                )
+                .join("")}
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </section>
+  `;
+}
+
+function renderScalePanel() {
+  const sweep = scaleSimulation.thresholdSweep || [];
+  const weeks = scaleSimulation.weeklySeries || [];
+  const assumptions = scaleSimulation.assumptions || {};
+  const op = scaleSimulation.operatingPoint || {};
+  const maxReviewers = Math.max(...sweep.map((row) => row.reviewersNeeded), 1);
+  const chartW = 560;
+  const chartH = 190;
+  const barW = chartW / sweep.length;
+  const maxQueue = Math.max(...weeks.map((week) => week.reviewQueue), 1);
+  const weekBarW = 560 / weeks.length;
+  return `
+    <section class="panel scale-panel" id="scale-capacity">
+      <div class="section-label">Scale &amp; capacity</div>
+      <p class="panel-intro">
+        Everything else in this lab works on hundreds of posts. This module asks what the thresholds
+        cost at ${((scaleSimulation.corpus || {}).dailyVolume || 50000).toLocaleString()} posts/day:
+        every threshold choice is a staffing decision with a payroll number attached.
+      </p>
+      <div class="stat-grid">
+        <div class="stat-card"><strong>${percentage((scaleSimulation.corpus || {}).truePrevalence || 0)}</strong><span>true scam prevalence (knowable because synthetic)</span></div>
+        <div class="stat-card"><strong>${op.reviewersNeededAtOperatingPoint ?? "-"}</strong><span>reviewers needed at the operating point</span></div>
+        <div class="stat-card"><strong>${percentage(op.falseLabelShareOnLegit || 0)}</strong><span>legit posts reaching label-candidate stage</span></div>
+        <div class="stat-card"><strong>${assumptions.decisionsPerReviewerDay ?? "-"}</strong><span>decisions per reviewer per day (90s handle time)</span></div>
+      </div>
+      <h3>The threshold sweep: recall vs payroll</h3>
+      <svg viewBox="0 0 ${chartW + 60} ${chartH + 46}" class="sweep-chart" role="img" aria-label="Reviewers needed and review-net recall by threshold">
+        ${sweep
+          .map((row, index) => {
+            const barH = (row.reviewersNeeded / maxReviewers) * (chartH - 20);
+            return `
+              <rect x="${30 + index * barW + 6}" y="${chartH - barH}" width="${barW - 12}" height="${barH}" class="sweep-bar" />
+              <text x="${30 + index * barW + barW / 2}" y="${chartH + 16}" class="chart-tick" text-anchor="middle">${row.threshold.toFixed(2)}</text>
+              <text x="${30 + index * barW + barW / 2}" y="${chartH - barH - 6}" class="chart-value" text-anchor="middle">${row.reviewersNeeded}</text>
+            `;
+          })
+          .join("")}
+        <polyline
+          class="sweep-recall-line"
+          points="${sweep
+            .map(
+              (row, index) =>
+                `${30 + index * barW + barW / 2},${chartH - row.reviewNetRecall * (chartH - 20)}`,
+            )
+            .join(" ")}"
+        />
+        <text x="${chartW - 80}" y="16" class="chart-legend">&#9632; reviewers</text>
+        <text x="${chartW - 80}" y="34" class="chart-legend recall">&#9472; recall</text>
+        <text x="30" y="${chartH + 38}" class="chart-tick">review threshold &rarr;</text>
+      </svg>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Threshold</th><th>Queue/day</th><th>Review-net recall</th><th>Reviewers</th><th>Daily cost</th><th>Cost per caught scam</th></tr></thead>
+          <tbody>
+            ${sweep
+              .map(
+                (row) => `
+                  <tr class="${row.threshold === 0.4 ? "row-operating" : ""}">
+                    <td>${row.threshold.toFixed(2)}${row.threshold === 0.4 ? " (policy floor)" : ""}</td>
+                    <td>${row.queuePerDay.toLocaleString()}</td>
+                    <td>${percentage(row.reviewNetRecall)}</td>
+                    <td>${row.reviewersNeeded}</td>
+                    <td>$${row.dailyReviewCost.toLocaleString()}</td>
+                    <td>$${row.costPerCaughtScam.toLocaleString()}</td>
+                  </tr>
+                `,
+              )
+              .join("")}
+          </tbody>
+        </table>
+      </div>
+      <h3>Twelve weeks, two campaign waves</h3>
+      <p class="panel-intro">Point-in-time metrics mislead. The waves in weeks 5 and 9 show why burst capacity - not steady state - is the real staffing problem, and why the incident runbook exists.</p>
+      <svg viewBox="0 0 620 170" class="weeks-chart" role="img" aria-label="Weekly review queue with campaign waves">
+        ${weeks
+          .map((week, index) => {
+            const barH = (week.reviewQueue / maxQueue) * 120;
+            return `
+              <rect x="${20 + index * weekBarW + 4}" y="${140 - barH}" width="${weekBarW - 8}" height="${barH}" class="week-bar ${week.campaignWave ? "wave" : ""}" />
+              <text x="${20 + index * weekBarW + weekBarW / 2}" y="156" class="chart-tick" text-anchor="middle">W${week.week}</text>
+            `;
+          })
+          .join("")}
+      </svg>
+      <p class="panel-intro">${escapeHtml(scaleSimulation.interpretation || "")}</p>
+    </section>
+  `;
+}
+
+function renderThreatPanel() {
+  return `
+    <section class="panel threat-panel" id="threat-landscape">
+      <div class="section-label">Threat landscape</div>
+      <p class="panel-intro">
+        The eval cases in this lab are authored, but the behaviors they encode are not invented.
+        Every violation subtype maps to fraud typologies documented by the FBI's IC3, Chainalysis,
+        and the FTC. Figures as reported by sources; verified July 2026.
+      </p>
+      <div class="stat-grid threat-stats">
+        ${(threatLandscape.headline || [])
+          .map(
+            (stat) => `
+              <div class="stat-card">
+                <strong>${escapeHtml(stat.value)}</strong>
+                <span>${escapeHtml(stat.label)}</span>
+                <small>${escapeHtml(stat.detail)} <em>${escapeHtml(stat.source)}</em></small>
+              </div>
+            `,
+          )
+          .join("")}
+      </div>
+      <h3>Documented typology &rarr; what this system sees &rarr; what it cannot</h3>
+      <div class="typology-list">
+        ${(threatLandscape.typologies || [])
+          .map(
+            (typology) => `
+              <details class="typology-card">
+                <summary><strong>${escapeHtml(typology.name)}</strong><span>${escapeHtml(typology.labSubtype)}</span></summary>
+                <p><b>Documented:</b> ${escapeHtml(typology.documented)}</p>
+                <p><b>Detected here via:</b> ${escapeHtml(typology.detects)}</p>
+                <p class="blind-spot"><b>Blind spot:</b> ${escapeHtml(typology.blindSpot)}</p>
+              </details>
+            `,
+          )
+          .join("")}
+      </div>
+      <h3>What the landscape implies</h3>
+      ${(threatLandscape.productImplications || []).map((implication) => `<p class="implication">${escapeHtml(implication)}</p>`).join("")}
+    </section>
+  `;
+}
+
+function computeNetworkLayout() {
+  const entityNodes = (campaignGraph.topEntities || []).map((entity) => ({
+    id: entity.id,
+    label: entity.type === "wallet" ? compactEntity(entity.label) : entity.label,
+    type: entity.type,
+    shared: entity.shared,
+    kind: "entity",
+  }));
+  const itemIds = new Set();
+  (campaignGraph.edges || []).forEach((edge) => itemIds.add(edge.target));
+  const itemNodes = Array.from(itemIds).map((id) => ({
+    id,
+    label: id.split("/").pop().replace(/-/g, " "),
+    type: "post",
+    kind: "item",
+  }));
+  const nodes = [...entityNodes, ...itemNodes];
+  const index = new Map(nodes.map((node, position) => [node.id, position]));
+  const links = (campaignGraph.edges || [])
+    .filter((edge) => index.has(edge.source) && index.has(edge.target))
+    .map((edge) => ({ source: index.get(edge.source), target: index.get(edge.target) }));
+
+  const width = 620;
+  const height = 380;
+  const rand = (seed) => {
+    let value = seed;
+    return () => {
+      value = (value * 1103515245 + 12345) % 2147483648;
+      return value / 2147483648;
+    };
+  };
+  const random = rand(5342);
+  nodes.forEach((node) => {
+    node.x = 60 + random() * (width - 120);
+    node.y = 50 + random() * (height - 100);
+    node.vx = 0;
+    node.vy = 0;
+  });
+  for (let iteration = 0; iteration < 260; iteration += 1) {
+    for (let a = 0; a < nodes.length; a += 1) {
+      for (let b = a + 1; b < nodes.length; b += 1) {
+        const dx = nodes[b].x - nodes[a].x;
+        const dy = nodes[b].y - nodes[a].y;
+        const distSq = Math.max(80, dx * dx + dy * dy);
+        const force = 2600 / distSq;
+        const dist = Math.sqrt(distSq);
+        const fx = (dx / dist) * force;
+        const fy = (dy / dist) * force;
+        nodes[a].vx -= fx;
+        nodes[a].vy -= fy;
+        nodes[b].vx += fx;
+        nodes[b].vy += fy;
+      }
+    }
+    links.forEach((link) => {
+      const source = nodes[link.source];
+      const target = nodes[link.target];
+      const dx = target.x - source.x;
+      const dy = target.y - source.y;
+      const dist = Math.max(1, Math.sqrt(dx * dx + dy * dy));
+      const pull = (dist - 92) * 0.02;
+      const fx = (dx / dist) * pull;
+      const fy = (dy / dist) * pull;
+      source.vx += fx;
+      source.vy += fy;
+      target.vx -= fx;
+      target.vy -= fy;
+    });
+    nodes.forEach((node) => {
+      node.vx += (width / 2 - node.x) * 0.004;
+      node.vy += (height / 2 - node.y) * 0.004;
+      node.x = Math.min(width - 30, Math.max(30, node.x + node.vx * 0.5));
+      node.y = Math.min(height - 24, Math.max(24, node.y + node.vy * 0.5));
+      node.vx *= 0.62;
+      node.vy *= 0.62;
+    });
+  }
+  return { nodes, links, width, height };
+}
+
+let cachedNetworkLayout = null;
+
+function renderCampaignNetwork() {
+  if (!cachedNetworkLayout) {
+    cachedNetworkLayout = computeNetworkLayout();
+  }
+  const { nodes, links, width, height } = cachedNetworkLayout;
+  return `
+    <section class="panel network-panel" id="campaign-network">
+      <div class="section-label">Campaign network</div>
+      <p class="panel-intro">
+        Scam campaigns rotate accounts faster than they rotate infrastructure. Wallets, domains, and
+        recycled phrasing connect posts that look unrelated one at a time.
+      </p>
+      <svg viewBox="0 0 ${width} ${height}" class="network-svg" role="img" aria-label="Campaign graph: posts connected by shared wallets, domains, and phrases">
+        ${links
+          .map(
+            (link) =>
+              `<line x1="${nodes[link.source].x.toFixed(1)}" y1="${nodes[link.source].y.toFixed(1)}" x2="${nodes[link.target].x.toFixed(1)}" y2="${nodes[link.target].y.toFixed(1)}" class="network-link" />`,
+          )
+          .join("")}
+        ${nodes
+          .map(
+            (node) => `
+              <g class="network-node node-${node.type} ${node.shared ? "shared" : ""}">
+                <circle cx="${node.x.toFixed(1)}" cy="${node.y.toFixed(1)}" r="${node.kind === "item" ? 13 : node.shared ? 10 : 7}" />
+                <text x="${node.x.toFixed(1)}" y="${(node.y + (node.kind === "item" ? 26 : 21)).toFixed(1)}" text-anchor="middle">${escapeHtml(node.label.length > 22 ? node.label.slice(0, 20) + "…" : node.label)}</text>
+              </g>
+            `,
+          )
+          .join("")}
+      </svg>
+      <div class="network-legend">
+        <span class="legend-item post">post</span>
+        <span class="legend-item wallet">wallet</span>
+        <span class="legend-item domain">domain</span>
+        <span class="legend-item risk_phrase">risk phrase</span>
+        <span class="legend-item brand">brand</span>
+        <span class="legend-item actor">handle</span>
+        <span class="legend-item sharednote">larger = shared across posts</span>
+      </div>
+    </section>
+  `;
+}
+
+const tourSteps = [
+  {
+    module: "welcome",
+    title: "What this is",
+    body: "A working crypto-scam moderation system built from a written policy. The hard part is not catching scams - it is not catching everyone else. Use Next to walk through it.",
+  },
+  {
+    module: "queue",
+    title: "The review queue",
+    body: "Every flagged post lands here ranked by risk, with the evidence shown, not hidden. Click any case on the left to see exactly why the system scored it.",
+  },
+  {
+    module: "tester",
+    title: "Try to fool it",
+    body: "Paste anything, or hit the obfuscation buttons (leetspeak, spacing, defanged links) to attack the system the way scammers do. Watch evidence and decisions change live.",
+  },
+  {
+    module: "evals",
+    title: "Proving it protects speech",
+    body: "Evals here measure two different promises: scams get caught, AND warnings, satire, research, and help-seeking stay untouched. A release gate blocks any change that breaks either.",
+  },
+  {
+    module: "failures",
+    title: "What it gets wrong - in public",
+    body: "Real false positives with explanations, and hard cases the system still fails, published deliberately. Failure honesty is a feature: suites that pass 100% prove nothing.",
+  },
+  {
+    module: "llm",
+    title: "Where an LLM earns its cost",
+    body: "A hosted-LLM evidence assistant compared honestly against the cheap baseline: accuracy, cost, latency, and one unresolved disagreement about a help-seeker, kept visible.",
+  },
+  {
+    module: "scale",
+    title: "Thresholds are staffing decisions",
+    body: "At 50,000 posts/day, moving one threshold from 0.40 to 0.30 roughly doubles reviewer payroll. This module turns model knobs into money and people.",
+  },
+  {
+    module: "governance",
+    title: "Appeals and accountability",
+    body: "Every label ships with a notice and an appeal path. Reversals feed back into policy. That loop - not the classifier - is what makes a moderation system legitimate. End of tour!",
+  },
+];
+
+function renderTourOverlay() {
+  if (state.tourStep === null) return "";
+  const step = tourSteps[state.tourStep];
+  return `
+    <div class="tour-overlay" role="dialog" aria-label="Guided tour">
+      <div class="tour-card">
+        <div class="tour-progress">Step ${state.tourStep + 1} of ${tourSteps.length}</div>
+        <strong>${escapeHtml(step.title)}</strong>
+        <p>${escapeHtml(step.body)}</p>
+        <div class="tour-actions">
+          <button type="button" data-tour="exit">Exit</button>
+          <div>
+            ${state.tourStep > 0 ? '<button type="button" data-tour="back">Back</button>' : ""}
+            ${
+              state.tourStep < tourSteps.length - 1
+                ? '<button type="button" class="tour-next" data-tour="next">Next</button>'
+                : '<button type="button" class="tour-next" data-tour="exit">Done</button>'
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 function renderPolicyCard() {
   return `
     <section class="panel policy-panel" id="policy">
@@ -2121,6 +2822,7 @@ function renderConsoleNav() {
                 aria-current="${state.activeModule === module.id ? "page" : "false"}"
               >
                 <span>${escapeHtml(module.label)}</span>
+                ${module.subtitle ? `<small class="nav-subtitle">${escapeHtml(module.subtitle)}</small>` : ""}
               </button>
             `;
           })
@@ -2192,7 +2894,7 @@ function renderEvidenceRail(selected, metrics, queue) {
     <aside class="evidence-rail" aria-label="Selected case and system context">
       <section class="rail-card selected-rail-card">
         <span class="rail-label">Selected case</span>
-        <strong>${state.selectedMode === "custom" ? "Draft post" : escapeHtml(selected.id)}</strong>
+        <strong>${state.selectedMode === "custom" ? "Draft post" : escapeHtml(friendlyName(selected))}</strong>
         <p>${escapeHtml(selected.text.slice(0, 168))}${selected.text.length > 168 ? "..." : ""}</p>
         <div class="rail-decision">
           <span class="${selected.prediction ? "bad" : "good"}">${labelForPrediction(selected.prediction)}</span>
@@ -2237,8 +2939,44 @@ function renderEvidenceRail(selected, metrics, queue) {
 }
 
 function renderModuleContent({ metrics, curvePoints, queue, selected }) {
+  if (state.activeModule === "welcome") {
+    return renderWelcome();
+  }
+
   if (state.activeModule === "overview") {
     return renderProjectPrimer(metrics);
+  }
+
+  if (state.activeModule === "failures") {
+    return `
+      <div class="module-grid single-column">
+        ${renderErrorAnalysisPanel()}
+      </div>
+    `;
+  }
+
+  if (state.activeModule === "llm") {
+    return `
+      <div class="module-grid single-column">
+        ${renderLlmComparisonPanel()}
+      </div>
+    `;
+  }
+
+  if (state.activeModule === "scale") {
+    return `
+      <div class="module-grid single-column">
+        ${renderScalePanel()}
+      </div>
+    `;
+  }
+
+  if (state.activeModule === "threat") {
+    return `
+      <div class="module-grid single-column">
+        ${renderThreatPanel()}
+      </div>
+    `;
   }
 
   if (state.activeModule === "queue") {
@@ -2301,6 +3039,7 @@ function renderModuleContent({ metrics, curvePoints, queue, selected }) {
     return `
       <div class="module-grid two-column">
         <div class="module-stack">
+          ${renderCampaignNetwork()}
           ${renderCampaignGraph()}
           ${renderCampaignGallery()}
         </div>
@@ -2374,12 +3113,15 @@ function renderModuleContent({ metrics, curvePoints, queue, selected }) {
   `;
 }
 
+const RAIL_MODULES = new Set(["queue", "tester", "model"]);
+const SYSTEM_BAR_MODULES = new Set(["queue", "tester", "model", "ops", "evals"]);
+
 function renderConsoleWorkspace(context) {
   return `
     <main class="console-main">
-      ${renderSystemBar(context.metrics, context.queue, context.selected)}
+      ${SYSTEM_BAR_MODULES.has(state.activeModule) ? renderSystemBar(context.metrics, context.queue, context.selected) : ""}
       <section class="console-workspace">
-        ${state.activeModule === "overview" ? "" : renderModuleHeader()}
+        ${state.activeModule === "overview" || state.activeModule === "welcome" ? "" : renderModuleHeader()}
         <div class="module-content" data-active-module="${escapeHtml(state.activeModule)}">
           ${renderModuleContent(context)}
         </div>
@@ -2396,12 +3138,14 @@ function render() {
   const selected = selectedItem(scored, queue);
   const curvePoints = thresholdCurve(testItems);
 
+  const showRail = RAIL_MODULES.has(state.activeModule);
   app.innerHTML = `
-    <div class="console-shell">
+    <div class="console-shell ${showRail ? "" : "no-rail"}">
       ${renderConsoleNav()}
       ${renderConsoleWorkspace({ metrics, curvePoints, queue, selected })}
-      ${renderEvidenceRail(selected, metrics, queue)}
+      ${showRail ? renderEvidenceRail(selected, metrics, queue) : ""}
     </div>
+    ${renderTourOverlay()}
   `;
 
   attachEvents();
@@ -2508,6 +3252,54 @@ function attachEvents() {
   if (threshold) {
     threshold.addEventListener("input", (event) => {
       state.threshold = Number(event.target.value);
+      render();
+    });
+  }
+
+  document.querySelectorAll("[data-goto]").forEach((button) => {
+    button.addEventListener("click", () => {
+      activateModule(button.dataset.goto);
+    });
+  });
+
+  document.querySelectorAll("[data-tour]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const command = button.dataset.tour;
+      if (command === "start") {
+        state.tourStep = 0;
+      } else if (command === "next") {
+        state.tourStep = Math.min(tourSteps.length - 1, state.tourStep + 1);
+      } else if (command === "back") {
+        state.tourStep = Math.max(0, state.tourStep - 1);
+      } else {
+        state.tourStep = null;
+        render();
+        return;
+      }
+      const step = tourSteps[state.tourStep];
+      if (step.module !== state.activeModule) {
+        activateModule(step.module);
+      } else {
+        render();
+      }
+    });
+  });
+
+  document.querySelectorAll("[data-hero-preset]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const preset = heroPresets.find((entry) => entry.id === button.dataset.heroPreset);
+      if (preset) {
+        state.heroText = preset.text;
+        render();
+      }
+    });
+  });
+
+  const heroText = document.querySelector("#hero-text");
+  const heroEvaluate = document.querySelector("#hero-evaluate");
+  if (heroText && heroEvaluate) {
+    heroEvaluate.addEventListener("click", () => {
+      state.heroText = heroText.value;
       render();
     });
   }
