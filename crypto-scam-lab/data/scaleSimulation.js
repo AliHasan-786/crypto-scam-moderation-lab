@@ -1,0 +1,233 @@
+export const scaleSimulation = {
+  "generatedAt": "2026-07-04",
+  "corpus": {
+    "posts": 6000,
+    "dailyVolume": 50000,
+    "seed": 5342,
+    "truePrevalence": 0.0155,
+    "note": "True prevalence is knowable here because the corpus is synthetic. In production this number requires labeled random sampling \u2014 detection-derived 'prevalence' measures what you catch, not what exists (see METRICS_DEFINITIONS.md)."
+  },
+  "assumptions": {
+    "handleTimeSeconds": 90,
+    "productiveHoursPerDay": 6,
+    "loadedHourlyRate": 38.0,
+    "decisionsPerReviewerDay": 240
+  },
+  "operatingPoint": {
+    "actionCounts": {
+      "no_label": 5025,
+      "high_confidence_escalation": 319,
+      "send_to_human_review": 512,
+      "apply_potential_crypto_fraud_label": 144
+    },
+    "flaggedShare": 0.1625,
+    "falseLabelShareOnLegit": 0.0633,
+    "falseLabelNote": "Share of legitimate posts reaching label-candidate or escalation before reviewer confirmation. Driven overwhelmingly by warning, news, and skeptical-reportage content \u2014 the same class the error analysis documents. At this volume it is the single strongest argument for stance-aware assistance on the review slice.",
+    "reviewersNeededAtOperatingPoint": 18
+  },
+  "thresholdSweep": [
+    {
+      "threshold": 0.25,
+      "queuePerDay": 47666,
+      "queueShare": 0.9533,
+      "reviewNetRecall": 1.0,
+      "reviewNetPrecision": 0.0163,
+      "reviewersNeeded": 199,
+      "dailyReviewCost": 45372.0,
+      "costPerCaughtScam": 58.54
+    },
+    {
+      "threshold": 0.3,
+      "queuePerDay": 33366,
+      "queueShare": 0.6673,
+      "reviewNetRecall": 1.0,
+      "reviewNetPrecision": 0.0232,
+      "reviewersNeeded": 140,
+      "dailyReviewCost": 31920.0,
+      "costPerCaughtScam": 41.19
+    },
+    {
+      "threshold": 0.35,
+      "queuePerDay": 19283,
+      "queueShare": 0.3857,
+      "reviewNetRecall": 1.0,
+      "reviewNetPrecision": 0.0402,
+      "reviewersNeeded": 81,
+      "dailyReviewCost": 18468.0,
+      "costPerCaughtScam": 23.83
+    },
+    {
+      "threshold": 0.4,
+      "queuePerDay": 8833,
+      "queueShare": 0.1767,
+      "reviewNetRecall": 1.0,
+      "reviewNetPrecision": 0.0877,
+      "reviewersNeeded": 37,
+      "dailyReviewCost": 8436.0,
+      "costPerCaughtScam": 10.89
+    },
+    {
+      "threshold": 0.45,
+      "queuePerDay": 6341,
+      "queueShare": 0.1268,
+      "reviewNetRecall": 1.0,
+      "reviewNetPrecision": 0.1222,
+      "reviewersNeeded": 27,
+      "dailyReviewCost": 6156.0,
+      "costPerCaughtScam": 7.94
+    },
+    {
+      "threshold": 0.5,
+      "queuePerDay": 5666,
+      "queueShare": 0.1133,
+      "reviewNetRecall": 1.0,
+      "reviewNetPrecision": 0.1368,
+      "reviewersNeeded": 24,
+      "dailyReviewCost": 5472.0,
+      "costPerCaughtScam": 7.06
+    },
+    {
+      "threshold": 0.55,
+      "queuePerDay": 4033,
+      "queueShare": 0.0807,
+      "reviewNetRecall": 0.9032,
+      "reviewNetPrecision": 0.1736,
+      "reviewersNeeded": 17,
+      "dailyReviewCost": 3876.0,
+      "costPerCaughtScam": 5.54
+    },
+    {
+      "threshold": 0.6,
+      "queuePerDay": 2883,
+      "queueShare": 0.0577,
+      "reviewNetRecall": 0.7742,
+      "reviewNetPrecision": 0.2081,
+      "reviewersNeeded": 13,
+      "dailyReviewCost": 2964.0,
+      "costPerCaughtScam": 4.94
+    }
+  ],
+  "weeklySeries": [
+    {
+      "week": 1,
+      "posts": 350000,
+      "truePrevalencePct": 1.63,
+      "reviewQueue": 8247,
+      "labelsApplied": 5131,
+      "appeals": 61,
+      "reversals": 9,
+      "campaignWave": false
+    },
+    {
+      "week": 2,
+      "posts": 350000,
+      "truePrevalencePct": 1.51,
+      "reviewQueue": 7846,
+      "labelsApplied": 4766,
+      "appeals": 57,
+      "reversals": 8,
+      "campaignWave": false
+    },
+    {
+      "week": 3,
+      "posts": 350000,
+      "truePrevalencePct": 1.5,
+      "reviewQueue": 7785,
+      "labelsApplied": 4710,
+      "appeals": 56,
+      "reversals": 8,
+      "campaignWave": false
+    },
+    {
+      "week": 4,
+      "posts": 350000,
+      "truePrevalencePct": 1.71,
+      "reviewQueue": 8531,
+      "labelsApplied": 5391,
+      "appeals": 64,
+      "reversals": 9,
+      "campaignWave": false
+    },
+    {
+      "week": 5,
+      "posts": 350000,
+      "truePrevalencePct": 4.98,
+      "reviewQueue": 19806,
+      "labelsApplied": 15682,
+      "appeals": 188,
+      "reversals": 47,
+      "campaignWave": true
+    },
+    {
+      "week": 6,
+      "posts": 350000,
+      "truePrevalencePct": 1.68,
+      "reviewQueue": 8437,
+      "labelsApplied": 5305,
+      "appeals": 63,
+      "reversals": 9,
+      "campaignWave": false
+    },
+    {
+      "week": 7,
+      "posts": 350000,
+      "truePrevalencePct": 1.66,
+      "reviewQueue": 8345,
+      "labelsApplied": 5221,
+      "appeals": 62,
+      "reversals": 9,
+      "campaignWave": false
+    },
+    {
+      "week": 8,
+      "posts": 350000,
+      "truePrevalencePct": 1.57,
+      "reviewQueue": 8027,
+      "labelsApplied": 4931,
+      "appeals": 59,
+      "reversals": 8,
+      "campaignWave": false
+    },
+    {
+      "week": 9,
+      "posts": 350000,
+      "truePrevalencePct": 4.27,
+      "reviewQueue": 17352,
+      "labelsApplied": 13443,
+      "appeals": 161,
+      "reversals": 40,
+      "campaignWave": true
+    },
+    {
+      "week": 10,
+      "posts": 350000,
+      "truePrevalencePct": 1.51,
+      "reviewQueue": 7850,
+      "labelsApplied": 4770,
+      "appeals": 57,
+      "reversals": 8,
+      "campaignWave": false
+    },
+    {
+      "week": 11,
+      "posts": 350000,
+      "truePrevalencePct": 1.33,
+      "reviewQueue": 7211,
+      "labelsApplied": 4186,
+      "appeals": 50,
+      "reversals": 7,
+      "campaignWave": false
+    },
+    {
+      "week": 12,
+      "posts": 350000,
+      "truePrevalencePct": 1.68,
+      "reviewQueue": 8414,
+      "labelsApplied": 5284,
+      "appeals": 63,
+      "reversals": 9,
+      "campaignWave": false
+    }
+  ],
+  "interpretation": "The sweep makes Decision Log 002 concrete: dropping the review threshold from 0.40 to 0.30 buys ~1 point of review-net recall and roughly doubles reviewer payroll. The campaign weeks in the series show the real staffing problem is burst capacity, not steady state \u2014 which is why the incident runbook exists and why campaign-level clustering beats per-post scoring during waves."
+};
