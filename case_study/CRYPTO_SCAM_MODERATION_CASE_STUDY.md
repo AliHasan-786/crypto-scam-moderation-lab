@@ -1,215 +1,61 @@
-# Crypto Scam Moderation Lab Case Study
+# Case Study: Crypto Scam Moderation Lab
 
-## One-Line Summary
+## The one-sentence version
 
-I turned a Cornell Trust & Safety policy proposal and coursework labeler into an interactive crypto-scam moderation workbench for Bluesky-style platforms: model audit, reproducible baseline, eval suite, reviewer queue, calibration simulator, incident replay, fraud-intelligence graph, GenAI abuse lab, structured evidence extraction, appeals, and transparency reporting.
+I took a coursework crypto-scam classifier, audited my own model and found its evaluation flaws, and rebuilt it solo into a full-stack Trust & Safety system — policy, tiered enforcement, human review, campaign intelligence, incident response, appeals, LLM assistance, scale economics — that publishes its own failures instead of hiding them.
 
-[Open the live lab](https://crypto-scam-lab.vercel.app) | [Inspect the source and evaluation artifacts](https://github.com/AliHasan-786/crypto-scam-moderation-lab)
+[Open the live lab](https://crypto-scam-lab.vercel.app) · [Repository](https://github.com/AliHasan-786/crypto-scam-moderation-lab)
 
-## Why This Project Exists
+## The problem worth solving
 
-The original coursework project was an automated Bluesky labeler for crypto-fraud posts. That was a good class artifact, but not enough for a serious portfolio project. A real Trust & Safety system needs more than a classifier:
+Crypto investment scams cost Americans $5.8B in reported losses in 2024 (FBI IC3) — the largest category of crypto crime. But the detection problem is not "find scam words." Scammers, journalists warning about scams, researchers studying them, comedians mocking them, and victims asking for help all use the *same vocabulary*. A classifier that optimizes for catch rate silences the platform's best allies: the warners and the victims.
 
-- a policy boundary
-- a reproducible model
-- evals that include false-positive risks
-- reviewer routing
-- operational analytics
-- reviewer calibration and QA
-- incident response
-- evidence display
-- adversarial robustness testing
-- campaign intelligence
-- appeal and reversal handling
-- transparency reporting
+So the product question I built around: **when is evidence strong enough for a public fraud accusation, when does uncertainty belong with a human, and when should the platform leave speech alone?**
 
-The portfolio version is framed as an operator workbench, not a model leaderboard.
+## What I actually did (in order)
 
-## Policy Foundation: What Assignment 2 Established
+**1. Audited my own coursework model — and published the audit.** The original classifier looked impressive and had real problems: model-selection hygiene and leakage risks. Instead of quietly fixing it, I wrote `audit_original_labeler.py`, documented the issues in a versioned artifact, and kept the flawed original in the repo as provenance. Rebuilding trust in a metric starts with distrusting your own.
 
-Assignment 2 was the policy specification for the later labeler. It asked how Bluesky should reduce investment scams without treating all financial or cryptocurrency speech as harmful.
+**2. Wrote the policy like a policy team would.** A platform-style policy document with in/out-of-scope definitions, six protected contexts enforced in code, an enforcement matrix (violation × severity × minimum evidence × action), and a dated decision log where every threshold and tradeoff has an owner, a rationale, and a revisit trigger. The moment worth highlighting: the decision that **no confidence level ever auto-publishes a label** — automation ends at "candidate," humans confirm, users appeal.
 
-- **Definition:** investment scams persuade people to send money to illegitimate or nonexistent opportunities through promises of easy returns, low risk, fake authority, or urgent access. Wallet drainers, fake airdrops, advance-fee recovery, referral fraud, and impersonated support were in scope.
-- **ABC spread model:** actors included fake coaches, bots, impersonators, and compromised users; behaviors included unsolicited DMs, fabricated testimonials, mass tagging, and repeated external links; content included wallet asks, referral posts, promotional graphics, and guaranteed-return claims.
-- **SxR justification:** the harm has high severity because losses can be financially and emotionally devastating, and high platform responsibility because feeds, reposts, DMs, and decentralized labelers influence reach and intervention.
-- **AIM and ABC response:** verify financial promoters, cluster reused domains and wallets, rate-limit suspicious bursts, warn before risky links, combine automated detection with human review, and use appeals and reviewer feedback to improve decisions.
-- **Boundaries:** blanket crypto bans, manual pre-approval, and reports-only enforcement were rejected. News, education, warnings, satire, technical discussion, and help-seeking should remain visible; enforcement should use minimal data, multi-source evidence, transparent notices, and appeals.
+**3. Split evaluation into promises the product actually makes.** Aggregate F1 is one number for two different failure modes with wildly different costs. I separated public-label precision (a wrong label is platform-inflicted harm) from review-or-label recall (did risky content at least reach a human?), added protected-context suppression tests, adversarial mutation retention, and wired it all into a CI release gate that fails the build on regression.
 
-That policy boundary is the organizing logic for the portfolio system. The model is one component; the product must also decide when evidence is strong enough for a public label, when ambiguity belongs in review, and when the platform should leave speech alone.
+**4. Built the failure-honesty layer — the part I'm proudest of.** Authored eval suites passing at 100% are indistinguishable from suites written to pass. So the system maintains a standing error analysis: the 8 real false positives at the operating point, categorized (6 of 8 are people *skeptically describing* scams — the system's biggest real weakness, found by this analysis), plus 9 authored hard cases where 5 still fail — warning-wrapper evasion, doubt-language camouflage, anonymous-authority claims — published with the reason each is hard. When one starts passing, it gets promoted to the regression suite and replaced with something harder. Failures are the roadmap.
 
-## Workbench Contents
+**5. Priced the thresholds in people and payroll.** A scale simulation runs the same model over a synthetic 50,000-post day (1.5% scam prevalence — knowable because synthetic; in production that number requires labeled sampling, and the report says so). Result: the 0.40 review-threshold policy floor costs ~37 reviewers/day; dropping to 0.30 roughly doubles payroll for ~1 point of review-net recall. It also surfaced a new finding: ~6% of legitimate posts reach the label-candidate stage, overwhelmingly the skeptical-reportage class — quantifying at scale exactly what the error analysis found in miniature.
 
-The rebuild turns the original labeler into a small moderation command center for social-media crypto scams. It catches obvious scams, sends uncertain posts to review, avoids labeling warnings or jokes, and exposes the machinery a real platform would need around the model:
+**6. Made the LLM earn its seat.** A hosted-LLM evidence adapter (cached, provenance-labeled outputs for the static demo; live regeneration script included) runs against the same policy prompt and the same span-faithfulness gate as the deterministic extractor. The comparison is honest: the baseline wins on cost by orders of magnitude; the LLM reads *stance* — who is speaking and why — which is precisely the dimension behind the baseline's worst false-positive class. One scored disagreement (the suite expects review for a help-seeking post; the LLM declined to burden a victim) is preserved unresolved, because it is a live policy question.
 
-- model audit and reproducible v2 baseline
-- conservative policy rubric and protected-context rules
-- reviewer queue, threshold controls, and evidence views
-- scenario, adversarial, hardening, evidence, calibration, and launch-gate evals
-- SQL-readable queue analytics and entity/campaign graphing
-- interactive 12-case reviewer calibration plus quality standards
-- incident replay, runbook, tabletop scenarios, mitigations, and postmortem prompts
-- deterministic GenAI abuse variants and agent-assistant guardrail checks
-- public-safe campaign gallery for repeated infrastructure, recovery, support, warning, and OCR patterns
-- appeal scenarios, reversal tracking, notice copy, and transparency reporting
+**7. Built the operational shell real systems need.** Reviewer calibration with answer keys, ops analytics with SQL, campaign graphs over reused wallets/domains/phrasing, incident tabletops with severity tiers, appeals with reversal tracking, a transparency report, Santa Clara / NIST RMF mapping, and a DSA statement-of-reasons sample populated from actual pipeline outputs.
 
-## What Changed From The Coursework Version
+**8. Rebuilt the front door for humans.** The operator console remains for people who want density. But the landing page now leads with the story and one interaction anyone can use: paste a post — or one-click between an obvious scam, a warning, a joke, and a skeptical question — and watch the decision and evidence change. A guided 8-step tour walks non-technical visitors through the whole system in 90 seconds.
 
-| Coursework Version | Portfolio Version |
-| --- | --- |
-| Hybrid classifier with unclear model-selection hygiene. | Audited original implementation and documented leakage/consistency risks. |
-| Single automated labeler framing. | Tiered workflow: no action, human review, public label candidate, high-confidence escalation. |
-| Metrics centered on assignment output. | Metrics include public-label precision/recall, review-or-label recall, adversarial retention, span faithfulness, appeal reversals, ops health, calibration coverage, and standards controls. |
-| Static report. | Interactive browser lab with queue, tester, threshold tuning, evals, adversarial lab, ops, QA, incident, graph, evidence, and governance panels. |
-| Text-only moderation. | Entity extraction and campaign graph for reused domains, wallets, handles, brands, and risk phrases. |
-| No procedural-fairness layer. | Notice templates, authored appeal scenarios, reversal tracking, transparency report, and standards scorecard. |
+## Key numbers
 
-## System Architecture
+Baseline: precision 0.882 / recall 1.000 / F1 0.938 on the held-out test set — all 8 false positives published with commentary. Mutation testing: 100% review-or-label retention across 56 variants (82.1% public-label retention; the downgrade is designed, not a defect). Evidence: 100% span faithfulness for both extractors. Scale: full threshold-to-staffing curve at 50k posts/day. Pipeline: 15 steps, one command, same in CI.
 
-```mermaid
-flowchart LR
-    A["Coursework CSVs + policy rubric"] --> B["V2 model: TF-IDF + policy features"]
-    B --> C["Tiered thresholds: review, label, escalation"]
-    C --> D["SQLite review queue"]
-    D --> E["Reviewer lab UI"]
-    D --> R["Ops analytics: queue health + backlog"]
-    R --> S["SQL query pack + ops report"]
-    D --> F["Entity extraction: domains, wallets, handles"]
-    F --> G["Campaign graph"]
-    B --> H["Scenario and adversarial evals"]
-    H --> I["Eval + hardening panels"]
-    B --> J["Adversarial mutation lab"]
-    J --> K["Red-team report"]
-    B --> P["Production-hardening evals"]
-    P --> Q["Canonicalization + URL evidence"]
-    D --> L["Structured evidence extractor"]
-    L --> M["Span-faithfulness eval"]
-    D --> N["Appeals and transparency report"]
-    N --> O["Standards scorecard"]
-    E --> T["QA calibration cases"]
-    T --> U["Reviewer quality report"]
-    E --> V["Incident response tabletop"]
-    V --> W["Runbook + postmortem template"]
-    H --> X["Launch regression gate"]
-```
+## What I'd change at 100× scale
 
-## Key Metrics
+Honest answers to the "what breaks at 5M posts/day" question:
 
-- V2 operational public-label F1: **0.938**
-- V2 public-label precision: **0.882**
-- V2 public-label recall: **1.000**
-- V2 confusion matrix: **TN 100, FP 8, FN 0, TP 60**
-- Scenario/adversarial eval cases: **40**
-- Authored scenario cases: **19**
-- Generated adversarial eval cases: **21**
-- Eval expectation pass rate: **100.0%**
-- Public-label eval F1: **100.0%** on the scenario/adversarial suite
-- Production-hardening eval cases: **12**
-- Hardening expectation pass rate: **100.0%**
-- URL evidence cases: **7**
-- Canonicalization-applied cases: **9**
-- Controlled red-team variants: **56**
-- Review-or-label retention on mutations: **100.0%**
-- Public-label retention on mutations: **82.1%**
-- Structured evidence extractor cases: **19**
-- Evidence span faithfulness: **100.0%**
-- Local queue candidates: **5 sanitized demo items**
-- Ops analytics: **60.0% review coverage, 2-item backlog, 8 total observations**
-- Reviewer calibration: **12 answer-key cases, 7 protected-context cases**
-- Incident response: **3 tabletop scenarios, 1 SEV2 campaign scenario, 2 SEV3 scenarios**
-- Launch gate: **11 checks, 0 failures**
-- Campaign graph: **21 entities, 6 shared entities, 1 synthetic campaign cluster**
-- Governance report: **4 appeal scenarios, 2 reversals, 0.914 standards scorecard average**
+**The classifier stops being the interesting part.** At scale, the baseline becomes a cheap first-pass triage and the real detection moves to campaign level: near-duplicate clustering, account-history features, infrastructure reuse velocity. Single-post scoring cannot see pig butchering — the highest-loss typology — because its recruitment surface is deliberately mild. I'd invest in the graph, not the post model.
 
-## Evaluation Philosophy
+**Burst capacity beats steady state.** The 12-week simulation shows campaign waves tripling queue load. Static staffing fails; I'd build surge protocols (the incident runbook's temporary interstitials, pre-authorized threshold shifts with automatic expiry, cross-trained reviewer pools) rather than hiring to peak.
 
-The central evaluation argument is that aggregate F1 is not enough for Trust & Safety.
+**The review queue needs stratified sampling, not just risk ranking.** Pure risk-descending review starves measurement. I'd reserve a fixed slice of reviewer capacity for random sampling to get true prevalence and calibration drift — the numbers transparency reports are supposed to contain.
 
-I separated:
+**LLM assistance goes where stance matters.** Not first-pass filtering (cost), not final decisions (accountability) — but drafting evidence summaries on the review slice and flagging stance mismatches ("this reads as reportage, not solicitation") where the baseline is systematically weak.
 
-- **public-label precision/recall**: when is it safe to show a public label?
-- **review-or-label recall**: did risky content at least reach a human workflow?
-- **protected-context behavior**: warnings, research, satire, developer debugging, and help-seeking should suppress public labels.
-- **adversarial retention**: obfuscation should not fully escape detection.
-- **hardening behavior**: canonicalization, defanged URLs, shorteners, OCR/source ambiguity, Spanish-language phrasing, and market-news false positives should be tested directly.
-- **downgrade behavior**: moving from public label to human review can be correct when context is missing.
-- **LLM evidence faithfulness**: extracted evidence must be backed by source spans.
-- **governance metrics**: appeals, reversals, automation-assisted rate, and false-positive categories.
-- **ops metrics**: review coverage, backlog, action distribution, false-positive candidates, and entity leads.
-- **quality metrics**: reviewer answer-key coverage, protected-context calibration, and QA process readiness.
-- **incident readiness**: severity tiers, escalation criteria, mitigations, postmortems, and launch gates.
+**Appeals become the primary feedback loop.** At scale, reversal categories are the highest-signal data the policy team gets. I'd wire reversal taxonomies directly into eval-case generation — every overturned decision should become a regression test within the week.
 
-The core point: the project shows evals that measure product risk, not only model accuracy.
+## Limitations
 
-## Product Design Decisions
-
-The product surface is intentionally an operator tool:
-
-- context-first overview before the interactive moderation tools
-- dense queue, evidence, metric, and graph panels
-- restrained colors and typography
-- no marketing-style hero inside the lab
-- no hidden uncertainty
-- no autonomous moderation action
-- public demo uses sanitized data
-- live Bluesky ingestion remains read-only and local
-- LLM output is reviewer assistance only
-- appeal and reversal flows are visible
-- hardening failures are treated as product signals, not hidden defects
-- ops analytics, calibration, incident response, and launch gates are visible because real safety work depends on repeatable process
-
-The strongest product decision is restraint. The system does not pretend to know intent from one post. If source, link destination, OCR quality, or speaker context is missing, the system routes to review. When a hardening eval finds overreach, the fix is targeted to the policy boundary rather than hidden behind a higher aggregate score.
+The dataset is small and mostly English. The suites are authored (the error-analysis surface exists precisely because of this). Campaign examples are sanitized and deterministic. OCR, live URL resolution, and account-history enrichment are simulated or future work. The public demo cannot take any platform action, by design. None of this is hidden — the failure page is a top-level navigation item.
 
 ## Screenshots
 
-### Lab Desktop Overview
-
-![Lab desktop overview](assets/lab-desktop-overview.png)
-
-### Appeals And Transparency Panel
+![Landing page](assets/lab-desktop-overview.png)
 
 ![Governance panel](assets/lab-governance-panel.png)
 
-### Mobile Reviewer View
-
-![Mobile reviewer view](assets/lab-mobile-review.png)
-
-### Portfolio Case Study Section
-
-![Portfolio case study section](assets/portfolio-case-study.png)
-
-## Project Narrative
-
-> I inherited a coursework crypto-scam labeler that looked impressive but had reproducibility and evaluation issues. I audited it, rebuilt a simpler baseline, then expanded the project into a Trust & Safety workbench with evals, reviewer routing, adversarial testing, campaign graphing, structured evidence extraction, and governance reporting.
-
-> The v2 model uses TF-IDF plus explicit policy features and calibrated tiers for review, label, and escalation. The important part is the eval layer: I separated public-label metrics from review-or-label recall, added protected-context cases, adversarial mutation tests, span-faithfulness checks for evidence extraction, and governance metrics for appeals and reversals.
-
-> The product judgment is that moderation is not a single threshold. Public labels require stronger evidence. Ambiguity routes to human review. Warnings, satire, research, debugging, and help-seeking suppress public labels. The UI makes those tradeoffs inspectable.
-
-> The project moves through the stack: policy definition, classifier, evals, review workflow, entity/campaign intelligence, red-team robustness, evidence summaries, appeals, and transparency reporting. That is closer to how real Trust & Safety systems work.
-
-> After the core build, I added a hardening suite for deployment-pressure cases: leetspeak, defanged domains, URL shorteners, OCR/source ambiguity, Spanish-language prompts, and protected-context false positives. The first run caught two issues, I patched the policy layer narrowly, and the rerun passed while preserving the report.
-
-## Known Limitations
-
-- The assignment dataset is small and English-centric.
-- The scenario suite is authored, not an untouched external benchmark.
-- The production-hardening suite is authored and should be expanded with observed campaigns.
-- The campaign graph uses sanitized demo examples and deterministic extraction.
-- The adversarial lab is controlled, not a live adversary benchmark.
-- URL evidence is deterministic and no-fetch; it does not resolve redirects or crawl landing pages.
-- The evidence extractor is deterministic, not a hosted LLM adapter yet.
-- Appeal flows are authored scenarios, not a production appeal backend.
-- Live Bluesky integration is read-only and local; no labels or reports are published.
-
-These are not hidden. They are part of the project story: the system is honest about what is production-grade and what is a portfolio-grade scaffold.
-
-## Next Extensions
-
-- Final static deployment of the lab and portfolio case study.
-- Hosted LLM evidence adapter gated by schema and faithfulness evals.
-- Live URL redirect resolution and landing-page evidence capture beyond deterministic URL evidence.
-- OCR/image evidence extraction for screenshot scams.
-- Account-history enrichment and near-duplicate clustering.
-- Multilingual scam evals.
-- Active-learning loop from reviewer outcomes.
-- Authenticated appeal backend with SLA tracking and privacy controls.
+![Mobile view](assets/lab-mobile-review.png)

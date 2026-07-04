@@ -1,102 +1,64 @@
 # Crypto Scam Moderation Lab
 
-An interactive Trust & Safety workbench for investigating crypto-scam content on Bluesky-style social platforms.
+**A working Trust & Safety system that publishes its own failures.**
 
-The project begins with a narrow policy question: how can a platform reduce investment scams without suppressing legitimate financial speech? It turns that policy boundary into an inspectable system with model evaluation, human review, campaign intelligence, incident response, appeals, and bounded GenAI assistance.
+An interactive moderation workbench for crypto investment scams on Bluesky-style platforms — built solo from Cornell Tech T&S coursework (CS 5342) into a full-stack safety system: written policy, tiered enforcement, human review, QA calibration, campaign intelligence, incident response, appeals, transparency reporting, an LLM-assist track, scale economics, and a CI release gate that regenerates every artifact on every commit.
 
-## What You Can Explore
+**Live lab:** [crypto-scam-lab.vercel.app](https://crypto-scam-lab.vercel.app) — start with the 90-second tour, or go straight to [what the system gets wrong](https://crypto-scam-lab.vercel.app/#failures).
 
-- A grounded overview of the investment-scam problem and policy methodology.
-- A review queue with evidence, uncertainty, and tiered intervention decisions.
-- A custom post tester with adjustable thresholds and protected-context handling.
-- Scenario, adversarial, production-hardening, evidence, and launch-gate evals.
-- A reviewer calibration simulator and incident-response replay.
-- Campaign graphs over repeated domains, wallets, handles, and risk phrases.
-- Appeals, reversals, user notices, and transparency metrics.
-- A deterministic GenAI abuse lab with prompt-injection, tool-misuse, excessive-agency, and memory-poisoning tests.
+---
 
-The public demo is static and uses sanitized or synthetic examples. It cannot publish labels, report accounts, resolve live links, or take platform actions.
+## The problem
 
-**Live lab:** [crypto-scam-lab.vercel.app](https://crypto-scam-lab.vercel.app)
+Investment scams cost Americans $5.8B in reported losses in 2024 (FBI IC3) — and the same words scammers use appear in warnings, news, satire, research, and victims asking for help. A system that just "catches scams" silences all of them. This project treats that boundary as the product: public labels require strong evidence, uncertainty routes to humans, protected speech suppresses enforcement, and every decision is explainable and appealable.
 
-## System Shape
+## What makes it different
 
-```mermaid
-flowchart LR
-    A["Policy boundary"] --> B["Reproducible baseline"]
-    B --> C["Tiered decisions"]
-    C --> D["Human review queue"]
-    D --> E["Ops and QA"]
-    D --> F["Entity and campaign graph"]
-    B --> G["Scenario and hardening evals"]
-    G --> H["Regression gate"]
-    D --> I["Appeals and transparency"]
-    D --> J["Incident response"]
-```
+**Failures are published, not hidden.** Authored eval suites that pass 100% prove nothing. The standing [error analysis](audit_outputs/error_analysis_report.md) shows the 8 real false positives at the operating point (with category commentary), and 5 authored hard cases the system still fails — kept on display until solved, then replaced with harder ones. Protected-context guard cases are the only ones the release gate enforces.
 
-## Evaluation Snapshot
+**Thresholds are treated as staffing decisions.** The [scale simulation](audit_outputs/scale_simulation_report.md) prices every threshold at 50,000 posts/day: queue load, reviewers required, cost per caught scam, and a 12-week series with campaign waves. Moving the review threshold from 0.40 to 0.30 roughly doubles payroll for ~1 point of recall — that tradeoff is Decision Log entry 002, not a footnote.
 
-| Evaluation surface | Current artifact |
-| --- | ---: |
-| Reproducible baseline | 0.938 operational F1 |
-| Scenario and adversarial cases | 40 |
-| Production-hardening cases | 12 |
-| Controlled mutation variants | 56 |
-| Structured evidence cases | 19 |
-| Reviewer calibration cases | 12 |
-| Incident tabletop scenarios | 3 |
-| Release-gate failures | 0 |
+**The LLM earns its place or it doesn't.** A [hosted-LLM evidence adapter](llm_evidence/llm_adapter.py) runs against the same policy prompt and the same span-faithfulness gate as the deterministic extractor, with an honest [baseline-vs-LLM comparison](audit_outputs/llm_adapter_report.md) covering accuracy, cost, and latency. Public demo uses cached, provenance-labeled outputs; a regeneration script reruns them live.
 
-The authored suites are not presented as external benchmarks. Their purpose is to make policy boundaries, failure modes, and regression expectations executable. See [the case study](case_study/CRYPTO_SCAM_MODERATION_CASE_STUDY.md) for methodology, limitations, and interpretation.
+**Policy is written like policy.** A platform-style [policy document](policy/CRYPTO_INVESTMENT_SCAM_POLICY.md), an [enforcement matrix](policy/ENFORCEMENT_MATRIX.md) (violation × severity × evidence × action), a dated [decision log](policy/DECISION_LOG.md) recording every tradeoff, [metrics definitions](ops_analytics/METRICS_DEFINITIONS.md) with failure modes for each number, and a [DSA statement-of-reasons sample](governance/dsa_statement_of_reasons_sample.json) mapping system outputs to EU transparency requirements.
 
-## Repository Map
+**Grounded in documented fraud.** The [threat landscape](threat_landscape/THREAT_LANDSCAPE.md) maps every violation subtype to typologies documented by FBI IC3, Chainalysis, and the FTC — including what the highest-loss typology (pig butchering) makes invisible to single-post classification, and why that limit shapes the roadmap.
 
-- `crypto-scam-lab/`: static interactive safety console.
-- `policy_proposal_labeler_v2.py`: reproducible TF-IDF and policy-feature baseline.
-- `evals/`: scenario, adversarial, hardening, and release-gate checks.
-- `adversarial_lab/`: controlled scam mutation testing.
-- `llm_evidence/`: structured evidence schema, extractor, and faithfulness evals.
-- `bluesky_integration/`: read-only ingestion scaffolds, review store, entity extraction, and campaign graphing.
-- `ops_analytics/`: SQL-readable queue and reviewer metrics.
-- `quality/`: calibration guide, answer key, and QA report.
-- `incident_response/`: severity model, runbook, tabletop scenarios, and postmortem structure.
-- `governance/`: appeal scenarios, notice templates, reversals, and transparency report.
-- `audit_outputs/`: versioned generated reports and the sanitized demo queue.
-- `case_study/`: long-form project narrative and screenshots.
+## The T&S stack, end to end
 
-The original coursework implementation remains in `policy_proposal_labeler.py` for provenance. Its evaluation and model-selection issues are documented in `audit_outputs/original_labeler_audit.json`; the public workbench uses the separate v2 baseline.
+| Discipline | Where it lives |
+| --- | --- |
+| Policy development & taxonomy design | `policy/` — policy doc, enforcement matrix, decision log |
+| Detection & ML | `policy_proposal_labeler_v2.py` — audited, reproducible baseline (original coursework model kept with its [audit](audit_outputs/original_labeler_audit.json)) |
+| Evals & red-teaming | `evals/`, `adversarial_lab/` — scenario, hardening, mutation, regression gate, standing error analysis |
+| LLM safety & assistance | `llm_evidence/`, GenAI abuse lab — evidence extraction, faithfulness gating, prompt-injection/tool-misuse tests |
+| Human review & quality | `quality/` — calibration cases, answer keys, reviewer QA workflow |
+| Operations & analytics | `ops_analytics/`, `scale_sim/` — SQL query pack, metrics definitions, capacity economics |
+| Threat intelligence | `bluesky_integration/`, `threat_landscape/` — entity extraction, campaign graphing, typology grounding |
+| Incident response | `incident_response/` — severity model, runbook, tabletop scenarios |
+| Governance & compliance | `governance/` — appeals, reversals, notices, transparency report, Santa Clara / NIST mapping, DSA sample |
+| Product & interface | `crypto-scam-lab/` — the operator console with a recruiter-friendly front door |
 
-## Run The Lab
+## Current numbers (regenerated by CI on every commit)
+
+Baseline test set: precision 0.882 / recall 1.000 / F1 0.938 (TN 100, FP 8, FN 0, TP 60) — with all 8 false positives [published and categorized](audit_outputs/error_analysis_report.md). Review-or-label retention under 56 controlled mutations: 100% (public-label retention 82.1% — downgrade-to-review under obfuscation is designed behavior, Decision Log 007). Evidence span faithfulness: 100% for both deterministic and LLM extractors. Scale model at 50k posts/day: ~18 reviewers at the operating point, with the full threshold-to-payroll sweep in the report. Launch gate: 15-step pipeline, guard cases enforced, unsolved failures deliberately not gated.
+
+## Reproduce everything
 
 ```bash
-cd crypto-scam-lab
-python3 -m http.server 5177
-```
-
-Open `http://127.0.0.1:5177`.
-
-## Reproduce The Release Gate
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
+python3 -m venv .venv && source .venv/bin/activate
 python -m pip install -r requirements-v2.txt
-bash scripts/run_all_checks.sh
+bash scripts/run_all_checks.sh   # same command CI runs
 ```
 
-The same command runs in GitHub Actions. It retrains the reproducible baseline, refreshes the scenario, hardening, mutation, evidence, governance, operations, calibration, incident, and campaign artifacts, and fails when the launch gate detects a regression.
+This retrains the baseline and regenerates every eval report, the error analysis, the LLM comparison, the scale simulation, governance/ops/calibration/incident artifacts, and all frontend data modules — failing if the release gate detects a regression.
 
-## Bluesky Boundary
+Run the lab locally:
 
-The repository includes authenticated search and Jetstream ingestion scaffolds for local, read-only analysis. Credentials are read from environment variables and are never required for the public demo. Live ingestion is opt-in, bounded by explicit limits, and does not publish moderation actions.
+```bash
+cd crypto-scam-lab && python3 -m http.server 5177
+```
 
-See [the Bluesky integration guide](bluesky_integration/README.md) for local setup and privacy constraints.
+## Boundaries, stated plainly
 
-## Known Limitations
-
-- The coursework dataset is small and primarily English-language.
-- Scenario and hardening suites are authored rather than untouched external benchmarks.
-- Campaign examples are sanitized and deterministic.
-- OCR, redirect resolution, and hosted LLM extraction remain bounded simulations or future adapters.
-- The included appeal flows are authored scenarios, not a production appeals service.
-- No public enforcement capability is implemented.
+The public demo is static and sanitized: it cannot publish labels, report accounts, resolve live links, or take any platform action. Live Bluesky ingestion is local, read-only, and opt-in. LLM output is reviewer assistance only, cached for the demo, and gated by faithfulness checks. The dataset is small and mostly English. The eval suites are authored — which is exactly why the error-analysis surface exists. Full limitations in the [case study](case_study/CRYPTO_SCAM_MODERATION_CASE_STUDY.md).
