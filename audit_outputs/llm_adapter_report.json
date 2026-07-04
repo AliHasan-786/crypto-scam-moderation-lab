@@ -1,0 +1,2142 @@
+{
+  "generatedAt": "2026-07-04",
+  "provider": "claude-fable-5 (cached 2026-07-03)",
+  "caseCount": 19,
+  "llmExpectationPassRate": 0.9474,
+  "baselineExpectationPassRate": 1.0,
+  "actionAgreementRate": 0.9474,
+  "spanFaithfulnessRate": 1.0,
+  "costModel": {
+    "baselinePer1kPosts": "$0 (CPU, <1 ms/post)",
+    "llmPer1kPosts": "$5-15 depending on model tier (700 in / 450 out tokens/post)",
+    "llmLatencyPerPost": "1-4 s per call vs <1 ms baseline",
+    "operationalNote": "At 1M posts/day the LLM cannot be the first-pass filter on cost alone. The defensible architecture is baseline-first triage with LLM evidence extraction only on the review-queue slice (~5-20% of volume), which is exactly how this lab wires it."
+  },
+  "perCase": [
+    {
+      "caseId": "fraud_elon_multiplier",
+      "groundTruth": "fraud",
+      "expected": "public_label_candidate",
+      "baseline": "public_label_candidate",
+      "llm": "public_label_candidate",
+      "baselinePass": true,
+      "llmPass": true,
+      "agree": true,
+      "confidence": 0.97,
+      "spanFaithful": true,
+      "reviewerSummary": "Classic doubling scam: impersonated celebrity authority, a direct transfer request, an impossible instant return, and a countdown. All four signals are quoted verbatim; no benign context present."
+    },
+    {
+      "caseId": "fraud_wallet_drainer_airdrop",
+      "groundTruth": "fraud",
+      "expected": "public_label_candidate",
+      "baseline": "public_label_candidate",
+      "llm": "public_label_candidate",
+      "baselinePass": true,
+      "llmPass": true,
+      "agree": true,
+      "confidence": 0.95,
+      "spanFaithful": true,
+      "reviewerSummary": "Drainer-pattern lure: connect-wallet instruction tied to a free-ETH claim on an unverified domain with an expiry window. Domain behavior itself is unobservable, but the ask pattern alone meets the policy's strong-evidence bar."
+    },
+    {
+      "caseId": "fraud_recovery_fee_advance",
+      "groundTruth": "fraud",
+      "expected": "public_label_candidate",
+      "baseline": "public_label_candidate",
+      "llm": "public_label_candidate",
+      "baselinePass": true,
+      "llmPass": true,
+      "agree": true,
+      "confidence": 0.94,
+      "spanFaithful": true,
+      "reviewerSummary": "Advance-fee recovery scam: universal recovery claim plus an upfront BTC fee with same-day promise. This typology re-victimizes people who already lost funds, which raises its severity under the enforcement matrix."
+    },
+    {
+      "caseId": "fraud_hyip_guaranteed_returns",
+      "groundTruth": "fraud",
+      "expected": "public_label_candidate",
+      "baseline": "public_label_candidate",
+      "llm": "public_label_candidate",
+      "baselinePass": true,
+      "llmPass": true,
+      "agree": true,
+      "confidence": 0.97,
+      "spanFaithful": true,
+      "reviewerSummary": "HYIP template: a guarantee, a risk-free claim, an AI-authority gloss, a deposit ask, and a midnight deadline. Every element of the guaranteed-return typology is present in one post."
+    },
+    {
+      "caseId": "fraud_fake_exchange_support",
+      "groundTruth": "fraud",
+      "expected": "public_label_candidate",
+      "baseline": "public_label_candidate",
+      "llm": "public_label_candidate",
+      "baselinePass": true,
+      "llmPass": true,
+      "agree": true,
+      "confidence": 0.95,
+      "spanFaithful": true,
+      "reviewerSummary": "Support-impersonation phishing: claims exchange authority, demands a deposit disguised as verification, and coerces with an account restriction. Real exchange support never requests deposits — the ask itself is dispositive."
+    },
+    {
+      "caseId": "fraud_promo_code_fee",
+      "groundTruth": "fraud",
+      "expected": "public_label_candidate",
+      "baseline": "public_label_candidate",
+      "llm": "public_label_candidate",
+      "baselinePass": true,
+      "llmPass": true,
+      "agree": true,
+      "confidence": 0.94,
+      "spanFaithful": true,
+      "reviewerSummary": "Prize/fee scam: an unearned 2 BTC windfall gated behind a small upfront fee — the advance-fee template in giveaway costume."
+    },
+    {
+      "caseId": "fraud_fake_grant",
+      "groundTruth": "fraud",
+      "expected": "public_label_candidate",
+      "baseline": "public_label_candidate",
+      "llm": "public_label_candidate",
+      "baselinePass": true,
+      "llmPass": true,
+      "agree": true,
+      "confidence": 0.95,
+      "spanFaithful": true,
+      "reviewerSummary": "Brand-impersonation grant scam: corporate authority claim, a BTC payment recast as identity validation, and an immediate bonus. Legitimate grants do not charge validation fees in crypto."
+    },
+    {
+      "caseId": "fraud_dm_investment_mentor",
+      "groundTruth": "fraud",
+      "expected": "public_label_candidate",
+      "baseline": "public_label_candidate",
+      "llm": "public_label_candidate",
+      "baselinePass": true,
+      "llmPass": true,
+      "agree": true,
+      "confidence": 0.9,
+      "spanFaithful": true,
+      "reviewerSummary": "Mentor-funnel scam: daily-profit claim plus a DM funnel ending in deposit instructions. The recruitment surface of the fake-platform typology; the destination platform is deliberately kept off-post."
+    },
+    {
+      "caseId": "legit_coinbase_earnings",
+      "groundTruth": "legitimate",
+      "expected": "no_action",
+      "baseline": "no_action",
+      "llm": "no_action",
+      "baselinePass": true,
+      "llmPass": true,
+      "agree": true,
+      "confidence": 0.96,
+      "spanFaithful": true,
+      "reviewerSummary": "Ordinary earnings commentary. Mentions an exchange by name with no ask, no promise, and no funnel — the reason brand mentions alone must never be actionable."
+    },
+    {
+      "caseId": "legit_regulator_warning",
+      "groundTruth": "legitimate",
+      "expected": "no_action",
+      "baseline": "no_action",
+      "llm": "no_action",
+      "baselinePass": true,
+      "llmPass": true,
+      "agree": true,
+      "confidence": 0.97,
+      "spanFaithful": true,
+      "reviewerSummary": "Consumer warning that quotes scam vocabulary in order to warn against it. Labeling this would punish exactly the speech the platform most needs. Stance detection, not keyword detection, is what separates this from promotion."
+    },
+    {
+      "caseId": "legit_academic_research",
+      "groundTruth": "legitimate",
+      "expected": "no_action",
+      "baseline": "no_action",
+      "llm": "no_action",
+      "baselinePass": true,
+      "llmPass": true,
+      "agree": true,
+      "confidence": 0.97,
+      "spanFaithful": true,
+      "reviewerSummary": "Research description of scam mechanics. Names every scam feature while asking for nothing — protected research context."
+    },
+    {
+      "caseId": "legit_wallet_help",
+      "groundTruth": "legitimate",
+      "expected": "human_review",
+      "baseline": "human_review",
+      "llm": "no_action",
+      "baselinePass": true,
+      "llmPass": false,
+      "agree": false,
+      "confidence": 0.93,
+      "spanFaithful": true,
+      "reviewerSummary": "Help-seeking about evaluating recovery services safely — the question form of the recovery topic, from a potential victim. Enforcement here would silence the people the policy protects."
+    },
+    {
+      "caseId": "legit_satire_bitcoin_ceo",
+      "groundTruth": "legitimate",
+      "expected": "no_action",
+      "baseline": "no_action",
+      "llm": "no_action",
+      "baselinePass": true,
+      "llmPass": true,
+      "agree": true,
+      "confidence": 0.94,
+      "spanFaithful": true,
+      "reviewerSummary": "Satire of doubling scams using explicitly imaginary assets and a self-negating authority claim. No real funds are solicited."
+    },
+    {
+      "caseId": "legit_dev_wallet_bug",
+      "groundTruth": "legitimate",
+      "expected": "no_action",
+      "baseline": "no_action",
+      "llm": "no_action",
+      "baselinePass": true,
+      "llmPass": true,
+      "agree": true,
+      "confidence": 0.96,
+      "spanFaithful": true,
+      "reviewerSummary": "Developer debugging note. 'Wallet connection' appears in a technical stance with a testnet scope and no user-facing ask."
+    },
+    {
+      "caseId": "legit_price_discussion",
+      "groundTruth": "legitimate",
+      "expected": "no_action",
+      "baseline": "no_action",
+      "llm": "no_action",
+      "baselinePass": true,
+      "llmPass": true,
+      "agree": true,
+      "confidence": 0.97,
+      "spanFaithful": true,
+      "reviewerSummary": "Price commentary with an explicit disclaimer and no ask. Ordinary financial speech."
+    },
+    {
+      "caseId": "ambiguous_airdrop_announcement",
+      "groundTruth": "ambiguous",
+      "expected": "human_review",
+      "baseline": "human_review",
+      "llm": "human_review",
+      "baselinePass": true,
+      "llmPass": true,
+      "agree": true,
+      "confidence": 0.72,
+      "spanFaithful": true,
+      "reviewerSummary": "Third-party description of an upcoming airdrop with the key evidence (the link) explicitly unverified. Could be a legitimate project or a drainer funnel; the text cannot decide it. Route to review — labeling would be premature, ignoring would be negligent."
+    },
+    {
+      "caseId": "ambiguous_recovery_service",
+      "groundTruth": "ambiguous",
+      "expected": "human_review",
+      "baseline": "human_review",
+      "llm": "human_review",
+      "baselinePass": true,
+      "llmPass": true,
+      "agree": true,
+      "confidence": 0.7,
+      "spanFaithful": true,
+      "reviewerSummary": "A question about a contingency-fee recovery service. Contingency framing is a documented scam variant, but the speaker is asking, not offering. Review can check whether the named service recurs in the campaign graph."
+    },
+    {
+      "caseId": "ambiguous_influencer_signal",
+      "groundTruth": "ambiguous",
+      "expected": "human_review",
+      "baseline": "human_review",
+      "llm": "human_review",
+      "baselinePass": true,
+      "llmPass": true,
+      "agree": true,
+      "confidence": 0.71,
+      "spanFaithful": true,
+      "reviewerSummary": "Skeptical description of a paid-signals group. The described product matches the pump-group typology, but the speaker is evaluating, not promoting. Reviewer should assess the group, not the poster — the distinction the error analysis shows the baseline misses."
+    },
+    {
+      "caseId": "ambiguous_qr_image_ocr",
+      "groundTruth": "ambiguous",
+      "expected": "human_review",
+      "baseline": "human_review",
+      "llm": "human_review",
+      "baselinePass": true,
+      "llmPass": true,
+      "agree": true,
+      "confidence": 0.75,
+      "spanFaithful": true,
+      "reviewerSummary": "OCR fragment with a wallet-connect requirement and QR indirection but no observable source or destination. The ask pattern is drainer-like; the evidence quality is too degraded for a public label. Exactly what the review tier exists for."
+    }
+  ],
+  "extractions": [
+    {
+      "caseId": "fraud_elon_multiplier",
+      "provider": "claude-fable-5 (cached 2026-07-03)",
+      "recommendedReviewerAction": "public_label_candidate",
+      "confidence": 0.97,
+      "riskFactors": [
+        "celebrity impersonation",
+        "send-to-receive structure",
+        "urgency framing"
+      ],
+      "benignFactors": [],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "receive 1 ETH back instantly",
+              "start": 75,
+              "end": 103
+            }
+          ],
+          "summary": "Promises a 10x instant return."
+        },
+        "transfer_ask": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Send 0.1 ETH to the verified wallet below",
+              "start": 29,
+              "end": 70
+            }
+          ],
+          "summary": "Direct request to send crypto to a wallet."
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Elon Musk official giveaway",
+              "start": 0,
+              "end": 27
+            }
+          ],
+          "summary": "Claims an official celebrity giveaway."
+        },
+        "urgency": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Limited time",
+              "start": 105,
+              "end": 117
+            }
+          ],
+          "summary": "Scarcity pressure."
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "Classic doubling scam: impersonated celebrity authority, a direct transfer request, an impossible instant return, and a countdown. All four signals are quoted verbatim; no benign context present.",
+      "faithfulness": {
+        "spanCount": 4,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      }
+    },
+    {
+      "caseId": "fraud_wallet_drainer_airdrop",
+      "provider": "claude-fable-5 (cached 2026-07-03)",
+      "recommendedReviewerAction": "public_label_candidate",
+      "confidence": 0.95,
+      "riskFactors": [
+        "wallet-connection ask on unverified domain",
+        "free-claim lure",
+        "deadline pressure"
+      ],
+      "benignFactors": [],
+      "missingContext": [
+        "landing-page behavior of secure-eth-airdrop.xyz is not observable from text"
+      ],
+      "fields": {
+        "promised_return": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "claim free ETH",
+              "start": 83,
+              "end": 97
+            }
+          ],
+          "summary": "Free-token promise."
+        },
+        "transfer_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "wallet_connection_ask": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Connect your wallet at secure-eth-airdrop.xyz",
+              "start": 30,
+              "end": 75
+            }
+          ],
+          "summary": "Instructs users to connect wallets on an external site."
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Final airdrop window is open",
+              "start": 0,
+              "end": 28
+            },
+            {
+              "text": "before eligibility expires",
+              "start": 98,
+              "end": 124
+            }
+          ],
+          "summary": "Two urgency cues bracketing the ask."
+        },
+        "risky_link_or_wallet": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "secure-eth-airdrop.xyz",
+              "start": 53,
+              "end": 75
+            }
+          ],
+          "summary": "Unverified external domain."
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "Drainer-pattern lure: connect-wallet instruction tied to a free-ETH claim on an unverified domain with an expiry window. Domain behavior itself is unobservable, but the ask pattern alone meets the policy's strong-evidence bar.",
+      "faithfulness": {
+        "spanCount": 5,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      }
+    },
+    {
+      "caseId": "fraud_recovery_fee_advance",
+      "provider": "claude-fable-5 (cached 2026-07-03)",
+      "recommendedReviewerAction": "public_label_candidate",
+      "confidence": 0.94,
+      "riskFactors": [
+        "advance-fee recovery structure",
+        "upfront payment demand",
+        "targets prior victims"
+      ],
+      "benignFactors": [],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "your funds unlock today",
+              "start": 106,
+              "end": 129
+            }
+          ],
+          "summary": "Same-day recovery promise."
+        },
+        "transfer_ask": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Pay the processing fee in BTC upfront",
+              "start": 64,
+              "end": 101
+            }
+          ],
+          "summary": "Upfront fee demanded before service."
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Our verified recovery team can restore any wallet",
+              "start": 13,
+              "end": 62
+            }
+          ],
+          "summary": "Universal recovery capability claim."
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "Advance-fee recovery scam: universal recovery claim plus an upfront BTC fee with same-day promise. This typology re-victimizes people who already lost funds, which raises its severity under the enforcement matrix.",
+      "faithfulness": {
+        "spanCount": 3,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      }
+    },
+    {
+      "caseId": "fraud_hyip_guaranteed_returns",
+      "provider": "claude-fable-5 (cached 2026-07-03)",
+      "recommendedReviewerAction": "public_label_candidate",
+      "confidence": 0.97,
+      "riskFactors": [
+        "guaranteed impossible returns",
+        "risk-free claim",
+        "deposit solicitation with deadline"
+      ],
+      "benignFactors": [],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Guaranteed 300% monthly returns, risk-free",
+              "start": 30,
+              "end": 72
+            }
+          ],
+          "summary": "Impossible guaranteed return."
+        },
+        "transfer_ask": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Deposit USDT before midnight",
+              "start": 96,
+              "end": 124
+            }
+          ],
+          "summary": "Deposit solicitation."
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "before midnight",
+              "start": 109,
+              "end": 124
+            }
+          ],
+          "summary": "Deadline pressure."
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Private crypto pool now open",
+              "start": 0,
+              "end": 28
+            }
+          ],
+          "summary": "Private-pool exclusivity funnel."
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "HYIP template: a guarantee, a risk-free claim, an AI-authority gloss, a deposit ask, and a midnight deadline. Every element of the guaranteed-return typology is present in one post.",
+      "faithfulness": {
+        "spanCount": 4,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      }
+    },
+    {
+      "caseId": "fraud_fake_exchange_support",
+      "provider": "claude-fable-5 (cached 2026-07-03)",
+      "recommendedReviewerAction": "public_label_candidate",
+      "confidence": 0.95,
+      "riskFactors": [
+        "exchange support impersonation",
+        "deposit demand framed as verification",
+        "account-threat coercion"
+      ],
+      "benignFactors": [],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "send a small ETH deposit",
+              "start": 60,
+              "end": 84
+            }
+          ],
+          "summary": "Deposit demand disguised as support."
+        },
+        "wallet_connection_ask": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "verify your wallet address",
+              "start": 29,
+              "end": 55
+            }
+          ],
+          "summary": "Wallet verification demand."
+        },
+        "impersonated_entity": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Coinbase support escalation",
+              "start": 0,
+              "end": 27
+            }
+          ],
+          "summary": "Claims exchange support authority."
+        },
+        "urgency": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "remove the account restriction",
+              "start": 95,
+              "end": 125
+            }
+          ],
+          "summary": "Coercion via account threat."
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "Support-impersonation phishing: claims exchange authority, demands a deposit disguised as verification, and coerces with an account restriction. Real exchange support never requests deposits — the ask itself is dispositive.",
+      "faithfulness": {
+        "spanCount": 4,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      }
+    },
+    {
+      "caseId": "fraud_promo_code_fee",
+      "provider": "claude-fable-5 (cached 2026-07-03)",
+      "recommendedReviewerAction": "public_label_candidate",
+      "confidence": 0.94,
+      "riskFactors": [
+        "prize-claim structure",
+        "activation-fee demand",
+        "unearned windfall framing"
+      ],
+      "benignFactors": [],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "your promo code unlocked 2 BTC",
+              "start": 17,
+              "end": 47
+            }
+          ],
+          "summary": "Unearned prize claim."
+        },
+        "transfer_ask": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Send the small activation fee to the wallet address",
+              "start": 49,
+              "end": 100
+            }
+          ],
+          "summary": "Fee required to claim prize."
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "claim your prize",
+              "start": 105,
+              "end": 121
+            }
+          ],
+          "summary": "Claim-now framing."
+        },
+        "risky_link_or_wallet": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "the wallet address",
+              "start": 82,
+              "end": 100
+            }
+          ],
+          "summary": "Wallet destination referenced."
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "Prize/fee scam: an unearned 2 BTC windfall gated behind a small upfront fee — the advance-fee template in giveaway costume.",
+      "faithfulness": {
+        "spanCount": 4,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      }
+    },
+    {
+      "caseId": "fraud_fake_grant",
+      "provider": "claude-fable-5 (cached 2026-07-03)",
+      "recommendedReviewerAction": "public_label_candidate",
+      "confidence": 0.95,
+      "riskFactors": [
+        "brand impersonation",
+        "identity-validation fee",
+        "instant bonus promise"
+      ],
+      "benignFactors": [],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "receive your bonus grant immediately",
+              "start": 91,
+              "end": 127
+            }
+          ],
+          "summary": "Instant grant promise."
+        },
+        "transfer_ask": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Send 0.05 BTC to validate identity",
+              "start": 52,
+              "end": 86
+            }
+          ],
+          "summary": "Payment disguised as identity check."
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Official Microsoft crypto grant",
+              "start": 0,
+              "end": 31
+            }
+          ],
+          "summary": "Claims corporate grant authority."
+        },
+        "urgency": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "immediately",
+              "start": 116,
+              "end": 127
+            }
+          ],
+          "summary": "Immediacy cue."
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "Brand-impersonation grant scam: corporate authority claim, a BTC payment recast as identity validation, and an immediate bonus. Legitimate grants do not charge validation fees in crypto.",
+      "faithfulness": {
+        "spanCount": 4,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      }
+    },
+    {
+      "caseId": "fraud_dm_investment_mentor",
+      "provider": "claude-fable-5 (cached 2026-07-03)",
+      "recommendedReviewerAction": "public_label_candidate",
+      "confidence": 0.9,
+      "riskFactors": [
+        "daily-profit promise",
+        "DM funnel",
+        "deposit direction"
+      ],
+      "benignFactors": [],
+      "missingContext": [
+        "the platform being promoted is only revealed in DMs"
+      ],
+      "fields": {
+        "promised_return": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "earn daily crypto profits",
+              "start": 17,
+              "end": 42
+            }
+          ],
+          "summary": "Consistent-profit claim."
+        },
+        "transfer_ask": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "I will show you where to deposit first",
+              "start": 89,
+              "end": 127
+            }
+          ],
+          "summary": "Deposit direction promised in private."
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "now",
+              "start": 81,
+              "end": 84
+            }
+          ],
+          "summary": "Mild immediacy cue."
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "DM me now",
+              "start": 75,
+              "end": 84
+            }
+          ],
+          "summary": "Private-channel funnel."
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "Mentor-funnel scam: daily-profit claim plus a DM funnel ending in deposit instructions. The recruitment surface of the fake-platform typology; the destination platform is deliberately kept off-post.",
+      "faithfulness": {
+        "spanCount": 4,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      }
+    },
+    {
+      "caseId": "legit_coinbase_earnings",
+      "provider": "claude-fable-5 (cached 2026-07-03)",
+      "recommendedReviewerAction": "no_action",
+      "confidence": 0.96,
+      "riskFactors": [],
+      "benignFactors": [
+        "market commentary",
+        "no ask of any kind"
+      ],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": true,
+          "stance": "research",
+          "spans": [
+            {
+              "text": "Coinbase earnings are out. Revenue was up this quarter",
+              "start": 0,
+              "end": 54
+            }
+          ],
+          "summary": "Market commentary on public earnings."
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "Ordinary earnings commentary. Mentions an exchange by name with no ask, no promise, and no funnel — the reason brand mentions alone must never be actionable.",
+      "faithfulness": {
+        "spanCount": 1,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      }
+    },
+    {
+      "caseId": "legit_regulator_warning",
+      "provider": "claude-fable-5 (cached 2026-07-03)",
+      "recommendedReviewerAction": "no_action",
+      "confidence": 0.97,
+      "riskFactors": [],
+      "benignFactors": [
+        "consumer-protection warning",
+        "protective stance toward readers"
+      ],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": true,
+          "stance": "warning",
+          "spans": [
+            {
+              "text": "people promising guaranteed returns",
+              "start": 32,
+              "end": 67
+            }
+          ],
+          "summary": "Scam vocabulary quoted in a warning stance."
+        },
+        "transfer_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": true,
+          "stance": "warning",
+          "spans": [
+            {
+              "text": "do not send crypto",
+              "start": 10,
+              "end": 28
+            },
+            {
+              "text": "The FTC has repeatedly warned",
+              "start": 69,
+              "end": 98
+            }
+          ],
+          "summary": "Explicit protective guidance citing a regulator."
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "Consumer warning that quotes scam vocabulary in order to warn against it. Labeling this would punish exactly the speech the platform most needs. Stance detection, not keyword detection, is what separates this from promotion.",
+      "faithfulness": {
+        "spanCount": 3,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      }
+    },
+    {
+      "caseId": "legit_academic_research",
+      "provider": "claude-fable-5 (cached 2026-07-03)",
+      "recommendedReviewerAction": "no_action",
+      "confidence": 0.97,
+      "riskFactors": [],
+      "benignFactors": [
+        "research framing",
+        "descriptive, not solicitational"
+      ],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": true,
+          "stance": "research",
+          "spans": [
+            {
+              "text": "Our paper studies how crypto giveaway scams reuse celebrity names",
+              "start": 0,
+              "end": 65
+            }
+          ],
+          "summary": "Academic study framing."
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "Research description of scam mechanics. Names every scam feature while asking for nothing — protected research context.",
+      "faithfulness": {
+        "spanCount": 1,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      }
+    },
+    {
+      "caseId": "legit_wallet_help",
+      "provider": "claude-fable-5 (cached 2026-07-03)",
+      "recommendedReviewerAction": "no_action",
+      "confidence": 0.93,
+      "riskFactors": [],
+      "benignFactors": [
+        "victim-adjacent help-seeking",
+        "explicit scam-avoidance intent"
+      ],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": true,
+          "stance": "question",
+          "spans": [
+            {
+              "text": "evaluate recovery services without getting scammed",
+              "start": 66,
+              "end": 116
+            }
+          ],
+          "summary": "Recovery topic raised as a safety question, not an offer."
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": true,
+          "stance": "question",
+          "spans": [
+            {
+              "text": "Does anyone know how to",
+              "start": 42,
+              "end": 65
+            }
+          ],
+          "summary": "Advice-seeking framing."
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "Help-seeking about evaluating recovery services safely — the question form of the recovery topic, from a potential victim. Enforcement here would silence the people the policy protects.",
+      "faithfulness": {
+        "spanCount": 2,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      }
+    },
+    {
+      "caseId": "legit_satire_bitcoin_ceo",
+      "provider": "claude-fable-5 (cached 2026-07-03)",
+      "recommendedReviewerAction": "no_action",
+      "confidence": 0.94,
+      "riskFactors": [],
+      "benignFactors": [
+        "explicit satire markers",
+        "imaginary assets only"
+      ],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": true,
+          "stance": "satire",
+          "spans": [
+            {
+              "text": "I will send back two imaginary coins",
+              "start": 77,
+              "end": 113
+            }
+          ],
+          "summary": "Doubling structure with imaginary assets."
+        },
+        "transfer_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": true,
+          "stance": "satire",
+          "spans": [
+            {
+              "text": "I am obviously not the CEO of Bitcoin",
+              "start": 0,
+              "end": 37
+            }
+          ],
+          "summary": "Self-negating satire marker."
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "Satire of doubling scams using explicitly imaginary assets and a self-negating authority claim. No real funds are solicited.",
+      "faithfulness": {
+        "spanCount": 2,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      }
+    },
+    {
+      "caseId": "legit_dev_wallet_bug",
+      "provider": "claude-fable-5 (cached 2026-07-03)",
+      "recommendedReviewerAction": "no_action",
+      "confidence": 0.96,
+      "riskFactors": [],
+      "benignFactors": [
+        "developer/debugging context",
+        "testnet scope"
+      ],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "wallet_connection_ask": {
+          "present": true,
+          "stance": "technical",
+          "spans": [
+            {
+              "text": "Debugging a wallet connection bug in our testnet app",
+              "start": 0,
+              "end": 52
+            }
+          ],
+          "summary": "Technical usage of wallet-connection vocabulary."
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": true,
+          "stance": "technical",
+          "spans": [
+            {
+              "text": "The issue is a stale session token",
+              "start": 54,
+              "end": 88
+            }
+          ],
+          "summary": "Engineering detail inconsistent with a lure."
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "Developer debugging note. 'Wallet connection' appears in a technical stance with a testnet scope and no user-facing ask.",
+      "faithfulness": {
+        "spanCount": 2,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      }
+    },
+    {
+      "caseId": "legit_price_discussion",
+      "provider": "claude-fable-5 (cached 2026-07-03)",
+      "recommendedReviewerAction": "no_action",
+      "confidence": 0.97,
+      "riskFactors": [],
+      "benignFactors": [
+        "market commentary",
+        "explicit not-advice disclaimer"
+      ],
+      "missingContext": [],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": true,
+          "stance": "research",
+          "spans": [
+            {
+              "text": "I am still not treating this as investment advice",
+              "start": 63,
+              "end": 112
+            }
+          ],
+          "summary": "Disclaimer plus commentary."
+        },
+        "missing_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        }
+      },
+      "reviewerSummary": "Price commentary with an explicit disclaimer and no ask. Ordinary financial speech.",
+      "faithfulness": {
+        "spanCount": 1,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      }
+    },
+    {
+      "caseId": "ambiguous_airdrop_announcement",
+      "provider": "claude-fable-5 (cached 2026-07-03)",
+      "recommendedReviewerAction": "human_review",
+      "confidence": 0.72,
+      "riskFactors": [
+        "airdrop claim mechanics",
+        "unverified link"
+      ],
+      "benignFactors": [
+        "third-party reporting voice",
+        "explicit unverified disclaimer"
+      ],
+      "missingContext": [
+        "link destination unverified",
+        "project legitimacy unknown"
+      ],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": true,
+          "stance": "question",
+          "spans": [
+            {
+              "text": "early users can claim an airdrop next week",
+              "start": 25,
+              "end": 67
+            }
+          ],
+          "summary": "Airdrop claim mechanics described secondhand."
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": true,
+          "stance": "missing_context",
+          "spans": [
+            {
+              "text": "I have not verified the link yet",
+              "start": 69,
+              "end": 101
+            }
+          ],
+          "summary": "Speaker flags unverified evidence."
+        }
+      },
+      "reviewerSummary": "Third-party description of an upcoming airdrop with the key evidence (the link) explicitly unverified. Could be a legitimate project or a drainer funnel; the text cannot decide it. Route to review — labeling would be premature, ignoring would be negligent.",
+      "faithfulness": {
+        "spanCount": 2,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      }
+    },
+    {
+      "caseId": "ambiguous_recovery_service",
+      "provider": "claude-fable-5 (cached 2026-07-03)",
+      "recommendedReviewerAction": "human_review",
+      "confidence": 0.7,
+      "riskFactors": [
+        "recovery-service subject matter",
+        "contingency-fee claim is a known scam variant"
+      ],
+      "benignFactors": [
+        "question form",
+        "safety-seeking intent"
+      ],
+      "missingContext": [
+        "service identity unknown",
+        "fee structure unverifiable"
+      ],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": true,
+          "stance": "question",
+          "spans": [
+            {
+              "text": "they charge only after funds are recovered",
+              "start": 24,
+              "end": 66
+            }
+          ],
+          "summary": "Contingency-fee recovery claim, reported secondhand."
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": true,
+          "stance": "missing_context",
+          "spans": [
+            {
+              "text": "Has anyone used them safely?",
+              "start": 68,
+              "end": 96
+            }
+          ],
+          "summary": "Open safety question."
+        }
+      },
+      "reviewerSummary": "A question about a contingency-fee recovery service. Contingency framing is a documented scam variant, but the speaker is asking, not offering. Review can check whether the named service recurs in the campaign graph.",
+      "faithfulness": {
+        "spanCount": 2,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      }
+    },
+    {
+      "caseId": "ambiguous_influencer_signal",
+      "provider": "claude-fable-5 (cached 2026-07-03)",
+      "recommendedReviewerAction": "human_review",
+      "confidence": 0.71,
+      "riskFactors": [
+        "premium-signal funnel is a pump-group hallmark"
+      ],
+      "benignFactors": [
+        "skeptical framing",
+        "no endorsement"
+      ],
+      "missingContext": [
+        "group identity unknown",
+        "claims unverifiable from text"
+      ],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "wallet_connection_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": true,
+          "stance": "question",
+          "spans": [
+            {
+              "text": "premium members get early signals and better entry prices",
+              "start": 26,
+              "end": 83
+            }
+          ],
+          "summary": "Paid-signals product described secondhand."
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": true,
+          "stance": "missing_context",
+          "spans": [
+            {
+              "text": "I cannot tell if it is legit",
+              "start": 85,
+              "end": 113
+            }
+          ],
+          "summary": "Explicit uncertainty from the speaker."
+        }
+      },
+      "reviewerSummary": "Skeptical description of a paid-signals group. The described product matches the pump-group typology, but the speaker is evaluating, not promoting. Reviewer should assess the group, not the poster — the distinction the error analysis shows the baseline misses.",
+      "faithfulness": {
+        "spanCount": 2,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      }
+    },
+    {
+      "caseId": "ambiguous_qr_image_ocr",
+      "provider": "claude-fable-5 (cached 2026-07-03)",
+      "recommendedReviewerAction": "human_review",
+      "confidence": 0.75,
+      "riskFactors": [
+        "wallet-connect requirement",
+        "QR indirection",
+        "no visible source"
+      ],
+      "benignFactors": [],
+      "missingContext": [
+        "OCR provenance",
+        "QR destination",
+        "source account invisible"
+      ],
+      "fields": {
+        "promised_return": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "transfer_ask": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "wallet_connection_ask": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Wallet connect required",
+              "start": 54,
+              "end": 77
+            }
+          ],
+          "summary": "Connection requirement stated."
+        },
+        "impersonated_entity": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "urgency": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "risky_link_or_wallet": {
+          "present": true,
+          "stance": "claim",
+          "spans": [
+            {
+              "text": "Claim your bonus token using the QR code",
+              "start": 12,
+              "end": 52
+            }
+          ],
+          "summary": "QR-mediated claim funnel."
+        },
+        "recovery_claim": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "private_channel_or_signal": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "benign_context": {
+          "present": false,
+          "stance": "unknown",
+          "spans": [],
+          "summary": ""
+        },
+        "missing_context": {
+          "present": true,
+          "stance": "missing_context",
+          "spans": [
+            {
+              "text": "No visible source account",
+              "start": 79,
+              "end": 104
+            },
+            {
+              "text": "[Image OCR]",
+              "start": 0,
+              "end": 11
+            }
+          ],
+          "summary": "Degraded, sourceless evidence."
+        }
+      },
+      "reviewerSummary": "OCR fragment with a wallet-connect requirement and QR indirection but no observable source or destination. The ask pattern is drainer-like; the evidence quality is too degraded for a public label. Exactly what the review tier exists for.",
+      "faithfulness": {
+        "spanCount": 4,
+        "allSpansFoundInSource": true,
+        "unsupportedFields": []
+      }
+    }
+  ],
+  "interpretation": "Where the two disagree, the interesting cases are stance cases: the baseline keys on WHAT vocabulary appears, the LLM on WHO is speaking and WHY. The error-analysis report shows the baseline's largest real false-positive class is skeptical third-party reportage — exactly the stance distinction an LLM reads natively. That, not aggregate accuracy on this small suite, is the argument for LLM assistance on the review slice. The one scored disagreement (legit_wallet_help: suite expects review, the model chose no-action to avoid burdening a help-seeker) is preserved rather than tuned away — it is a live policy question, and pretending the tools agree would hide it."
+}
