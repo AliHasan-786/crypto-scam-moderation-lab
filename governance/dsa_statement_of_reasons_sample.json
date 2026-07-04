@@ -1,0 +1,35 @@
+{
+  "description": "Sample EU Digital Services Act Article 17 statement of reasons, populated from this lab's pipeline outputs for a hypothetical public-label decision. Field structure follows the EC DSA Transparency Database submission schema (simplified). This demonstrates that every field a DSA-regulated platform must disclose is already produced by the system.",
+  "generated_by": "governance/transparency_report.py (sample; not submitted anywhere)",
+  "statement_of_reasons": {
+    "decision_visibility": ["DECISION_VISIBILITY_CONTENT_LABELLED"],
+    "decision_visibility_other": "Post remains visible with a 'Potential Crypto Fraud' interstitial label",
+    "category": "STATEMENT_CATEGORY_SCAMS_AND_FRAUD",
+    "category_specification": ["KEYWORD_INVESTMENT_SCAM"],
+    "content_type": ["CONTENT_TYPE_TEXT"],
+    "content_language": "en",
+    "content_date": "2026-01-14",
+    "application_date": "2026-01-15",
+    "decision_facts": "The post promises a doubled return for cryptocurrency sent to a wallet address controlled by the poster ('Send 0.05 BTC to verify your wallet and receive 1 BTC instantly'), combined with impersonation of a giveaway event and an external unverified domain. Rule matches: crypto_transfer_request (+24), unrealistic_returns (+25), suspicious_giveaway (+22), risky_link_surface (+10). Evidence spans are quoted verbatim from the post and stored with the case record.",
+    "decision_ground": "DECISION_GROUND_INCOMPATIBLE_CONTENT",
+    "incompatible_content_ground": "Crypto Investment Scam Policy v2.0, Section 2 (send-to-receive schemes; giveaway/airdrop fraud) and Section 5 (public label tier).",
+    "incompatible_content_explanation": "Content meets the strong-evidence standard: direct transfer request from the speaker plus send-to-receive structure. No protected-context indicators present.",
+    "automated_detection": "Yes",
+    "automated_decision": "AUTOMATED_DECISION_PARTIALLY",
+    "automated_decision_explanation": "Automated scoring and evidence extraction produced a label candidate (calibrated score 0.98, above the 0.54 public-label threshold). A human reviewer confirmed the label before application, per Decision Log entry 004 (no fully automated public labels).",
+    "source_type": "SOURCE_VOLUNTARY_OWN_INITIATIVE",
+    "source_identity": null,
+    "redress": ["REDRESS_INTERNAL_COMPLAINT_MECHANISM"],
+    "redress_explanation": "User notice includes the matched rule, quoted evidence, and an appeal path reviewed by a different reviewer. Reversal statistics are published in the transparency report.",
+    "territorial_scope": ["EEA"],
+    "platform_uid_type": "PSEUDONYMIZED_CASE_ID",
+    "puid": "case-demo-0001"
+  },
+  "field_mapping_notes": {
+    "decision_facts": "Populated from the structured evidence extractor output (llm_evidence/) — rule matches, weights, and verbatim spans.",
+    "automated_decision_explanation": "Populated from the review-store decision record (bluesky_integration/review_store.py) which retains score, threshold version, and reviewer action.",
+    "category_specification": "Maps from the policy taxonomy subtype in the enforcement matrix.",
+    "redress_explanation": "Notice templates and appeal flows in governance/appeal_scenarios.json.",
+    "content_language": "Currently en/es only — a known limitation flagged in the policy."
+  }
+}
