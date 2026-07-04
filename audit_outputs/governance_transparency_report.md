@@ -1,6 +1,6 @@
 # Governance And Transparency Report
 
-Generated: 2026-07-04T01:35:15.748123+00:00
+Generated: 2026-07-04T02:16:03.981609+00:00
 
 ## Summary
 
