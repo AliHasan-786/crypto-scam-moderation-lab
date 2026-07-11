@@ -184,6 +184,56 @@ def main() -> int:
             }
         )
 
+    # Volume tiers: the same measured shares priced at 50k/day and at
+    # 5M/day (mid-size platform). Rates come from the scored sample;
+    # only volume scales. The 5M tier includes campaign-wave surge
+    # staffing (3x queue, from the weekly series waves) to make the
+    # burst-capacity argument concrete.
+    volume_tiers = []
+    for volume in (args.daily_volume, 5_000_000):
+        tier_rows = []
+        for row in sweep:
+            queue_day = int(row["queueShare"] * volume)
+            reviewers = int(np.ceil(queue_day / DECISIONS_PER_REVIEWER_DAY))
+            surge_reviewers = int(np.ceil(queue_day * 3 / DECISIONS_PER_REVIEWER_DAY))
+            daily_cost = reviewers * PRODUCTIVE_HOURS * LOADED_RATE_HOURLY
+            tier_rows.append(
+                {
+                    "threshold": row["threshold"],
+                    "queuePerDay": queue_day,
+                    "reviewersNeeded": reviewers,
+                    "campaignSurgeReviewers": surge_reviewers,
+                    "dailyReviewCost": round(daily_cost, 2),
+                    "annualReviewCost": round(daily_cost * 365, 2),
+                }
+            )
+        volume_tiers.append({"dailyVolume": volume, "rows": tier_rows})
+
+    # Optional empirical check: if the live-stream calibration report
+    # exists, surface its measured review-tier share next to the
+    # synthetic assumption instead of leaving the gap implicit.
+    empirical_check = None
+    calibration_path = REPO_ROOT / "audit_outputs" / "live_stream_calibration.json"
+    if calibration_path.exists():
+        calibration = json.loads(calibration_path.read_text(encoding="utf-8"))
+        review_row = calibration.get("decisionTierShares", {}).get(
+            "send_to_human_review", {}
+        )
+        empirical_check = {
+            "source": calibration.get("source"),
+            "generatedAt": calibration.get("generatedAt"),
+            "postsScored": calibration.get("window", {}).get("postsScored"),
+            "measuredReviewTierShare": review_row.get("share"),
+            "syntheticFlaggedShare": round(flagged_prevalence, 4),
+            "note": (
+                "Measured on real firehose traffic with the same model and "
+                "decision layer. The gap between the synthetic corpus share "
+                "and the live share is the calibration error this report "
+                "would otherwise hide; live-traffic staffing should be read "
+                "from the measured share."
+            ),
+        }
+
     # 12-week transparency-style series with two campaign waves.
     weeks = []
     for week in range(1, 13):
@@ -247,6 +297,8 @@ def main() -> int:
             ),
         },
         "thresholdSweep": sweep,
+        "volumeTiers": volume_tiers,
+        "empiricalStreamCheck": empirical_check,
         "weeklySeries": weeks,
         "interpretation": (
             "The sweep makes Decision Log 002 concrete: dropping the review "
@@ -275,6 +327,43 @@ def main() -> int:
                 f"{row['reviewNetRecall']:.1%} | {row['reviewersNeeded']} | "
                 f"${row['dailyReviewCost']:,.0f} | ${row['costPerCaughtScam']:,.0f} |"
             )
+        five_m = volume_tiers[-1]
+        lines += [
+            "",
+            f"## At {five_m['dailyVolume']:,} posts/day (mid-size platform)",
+            "",
+            "Same measured rates, production volume. Surge = campaign-wave weeks (3x queue).",
+            "",
+            "| Review threshold | Queue/day | Reviewers | Surge reviewers | Annual review cost |",
+            "| --- | --- | --- | --- | --- |",
+        ]
+        for row in five_m["rows"]:
+            lines.append(
+                f"| {row['threshold']:.2f} | {row['queuePerDay']:,} | "
+                f"{row['reviewersNeeded']:,} | {row['campaignSurgeReviewers']:,} | "
+                f"${row['annualReviewCost']:,.0f} |"
+            )
+        lines += [
+            "",
+            "At this volume the sweep stops being a staffing question and becomes an "
+            "architecture question: no threshold shift closes a multi-hundred-reviewer "
+            "surge gap, which is why the 100x roadmap moves detection to campaign-level "
+            "clustering and reserves per-post review for the measurement slice.",
+        ]
+        if empirical_check:
+            lines += [
+                "",
+                "## Reality check against the live firehose",
+                "",
+                f"The same model and decision layer, run over "
+                f"{empirical_check['postsScored']:,} real posts from the public "
+                f"Bluesky Jetstream firehose ({empirical_check['generatedAt']}), "
+                f"measured a review-tier share of "
+                f"{empirical_check['measuredReviewTierShare']:.2%} against the "
+                f"synthetic corpus share of "
+                f"{empirical_check['syntheticFlaggedShare']:.2%}. "
+                + empirical_check["note"],
+            ]
         lines += ["", report["interpretation"], ""]
         Path(args.markdown_out).write_text("\n".join(lines), encoding="utf-8")
     if args.lab_summary:

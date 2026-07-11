@@ -1,5 +1,5 @@
 export const scaleSimulation = {
-  "generatedAt": "2026-07-04",
+  "generatedAt": "2026-07-11",
   "corpus": {
     "posts": 6000,
     "dailyVolume": 50000,
@@ -107,6 +107,154 @@ export const scaleSimulation = {
       "costPerCaughtScam": 4.94
     }
   ],
+  "volumeTiers": [
+    {
+      "dailyVolume": 50000,
+      "rows": [
+        {
+          "threshold": 0.25,
+          "queuePerDay": 47665,
+          "reviewersNeeded": 199,
+          "campaignSurgeReviewers": 596,
+          "dailyReviewCost": 45372.0,
+          "annualReviewCost": 16560780.0
+        },
+        {
+          "threshold": 0.3,
+          "queuePerDay": 33365,
+          "reviewersNeeded": 140,
+          "campaignSurgeReviewers": 418,
+          "dailyReviewCost": 31920.0,
+          "annualReviewCost": 11650800.0
+        },
+        {
+          "threshold": 0.35,
+          "queuePerDay": 19285,
+          "reviewersNeeded": 81,
+          "campaignSurgeReviewers": 242,
+          "dailyReviewCost": 18468.0,
+          "annualReviewCost": 6740820.0
+        },
+        {
+          "threshold": 0.4,
+          "queuePerDay": 8835,
+          "reviewersNeeded": 37,
+          "campaignSurgeReviewers": 111,
+          "dailyReviewCost": 8436.0,
+          "annualReviewCost": 3079140.0
+        },
+        {
+          "threshold": 0.45,
+          "queuePerDay": 6340,
+          "reviewersNeeded": 27,
+          "campaignSurgeReviewers": 80,
+          "dailyReviewCost": 6156.0,
+          "annualReviewCost": 2246940.0
+        },
+        {
+          "threshold": 0.5,
+          "queuePerDay": 5665,
+          "reviewersNeeded": 24,
+          "campaignSurgeReviewers": 71,
+          "dailyReviewCost": 5472.0,
+          "annualReviewCost": 1997280.0
+        },
+        {
+          "threshold": 0.55,
+          "queuePerDay": 4034,
+          "reviewersNeeded": 17,
+          "campaignSurgeReviewers": 51,
+          "dailyReviewCost": 3876.0,
+          "annualReviewCost": 1414740.0
+        },
+        {
+          "threshold": 0.6,
+          "queuePerDay": 2885,
+          "reviewersNeeded": 13,
+          "campaignSurgeReviewers": 37,
+          "dailyReviewCost": 2964.0,
+          "annualReviewCost": 1081860.0
+        }
+      ]
+    },
+    {
+      "dailyVolume": 5000000,
+      "rows": [
+        {
+          "threshold": 0.25,
+          "queuePerDay": 4766500,
+          "reviewersNeeded": 19861,
+          "campaignSurgeReviewers": 59582,
+          "dailyReviewCost": 4528308.0,
+          "annualReviewCost": 1652832420.0
+        },
+        {
+          "threshold": 0.3,
+          "queuePerDay": 3336500,
+          "reviewersNeeded": 13903,
+          "campaignSurgeReviewers": 41707,
+          "dailyReviewCost": 3169884.0,
+          "annualReviewCost": 1157007660.0
+        },
+        {
+          "threshold": 0.35,
+          "queuePerDay": 1928500,
+          "reviewersNeeded": 8036,
+          "campaignSurgeReviewers": 24107,
+          "dailyReviewCost": 1832208.0,
+          "annualReviewCost": 668755920.0
+        },
+        {
+          "threshold": 0.4,
+          "queuePerDay": 883500,
+          "reviewersNeeded": 3682,
+          "campaignSurgeReviewers": 11044,
+          "dailyReviewCost": 839496.0,
+          "annualReviewCost": 306416040.0
+        },
+        {
+          "threshold": 0.45,
+          "queuePerDay": 634000,
+          "reviewersNeeded": 2642,
+          "campaignSurgeReviewers": 7925,
+          "dailyReviewCost": 602376.0,
+          "annualReviewCost": 219867240.0
+        },
+        {
+          "threshold": 0.5,
+          "queuePerDay": 566500,
+          "reviewersNeeded": 2361,
+          "campaignSurgeReviewers": 7082,
+          "dailyReviewCost": 538308.0,
+          "annualReviewCost": 196482420.0
+        },
+        {
+          "threshold": 0.55,
+          "queuePerDay": 403499,
+          "reviewersNeeded": 1682,
+          "campaignSurgeReviewers": 5044,
+          "dailyReviewCost": 383496.0,
+          "annualReviewCost": 139976040.0
+        },
+        {
+          "threshold": 0.6,
+          "queuePerDay": 288500,
+          "reviewersNeeded": 1203,
+          "campaignSurgeReviewers": 3607,
+          "dailyReviewCost": 274284.0,
+          "annualReviewCost": 100113660.0
+        }
+      ]
+    }
+  ],
+  "empiricalStreamCheck": {
+    "source": "Bluesky Jetstream public firehose (app.bsky.feed.post creates)",
+    "generatedAt": "2026-07-11 22:34Z",
+    "postsScored": 8210,
+    "measuredReviewTierShare": 0.071,
+    "syntheticFlaggedShare": 0.1625,
+    "note": "Measured on real firehose traffic with the same model and decision layer. The gap between the synthetic corpus share and the live share is the calibration error this report would otherwise hide; live-traffic staffing should be read from the measured share."
+  },
   "weeklySeries": [
     {
       "week": 1,

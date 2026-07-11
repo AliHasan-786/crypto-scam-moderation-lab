@@ -73,3 +73,10 @@ Dated record of the judgment calls behind the system, with the tradeoff each one
 **Decision:** Add a standing error-analysis surface: the live false positives at the operating point, unsolved hard cases the system currently gets wrong, and the tradeoff each failure represents. Failures stay published; fixing one requires adding a harder case to replace it.
 **Tradeoff accepted:** The project permanently displays its own mistakes. That is the point: an evaluation culture where 100% green is treated as a smell, not a goal.
 **Revisit when:** Never — the mechanism is permanent even as individual cases rotate.
+
+### 011 — Live traffic, aggregate-only by construction (Jul 2026)
+
+**Context:** The lab gained two live-firehose surfaces: an in-browser radar that scores the public Bluesky Jetstream stream client-side, and an offline calibration report that runs the full model over a stream sample. Real traffic makes the system credible at scale — and creates the first surface where real users' content flows through it.
+**Decision:** Both surfaces are aggregate-only by construction. Post text is scored in memory and discarded; no text, handle, DID, URI, or per-post record is ever stored, displayed, or transmitted. The radar runs entirely in the visitor's browser against a public read-only feed and has no action path. Decision 008 (the demo cannot act) extends unchanged to live data.
+**Tradeoff accepted:** The radar looks less dramatic than a scrolling feed of "caught" posts would. A scrolling feed would also be a public accusation surface with no reviewer, no notice, and no appeal — the exact failure mode this project exists to prevent. Counters over content, always.
+**Revisit when:** If a research use ever requires retaining stream content, it moves behind the local-only ingestion path with its existing retention rules — never into the public demo.
