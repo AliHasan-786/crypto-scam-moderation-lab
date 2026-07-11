@@ -16,6 +16,8 @@ import { errorAnalysis } from "./data/errorAnalysis.js";
 import { llmComparison } from "./data/llmComparison.js";
 import { scaleSimulation } from "./data/scaleSimulation.js";
 import { threatLandscape } from "./data/threatLandscape.js";
+import { liveStreamCalibration } from "./data/liveStreamCalibration.js";
+import { LiveRadar } from "./radar.js";
 
 const app = document.querySelector("#app");
 
@@ -141,6 +143,15 @@ const consoleModules = [
     group: "Console",
     title: "Test a post",
     description: "Try clean examples, borderline cases, and obfuscated variants against the same policy rubric and risk scorer.",
+  },
+  {
+    id: "radar",
+    label: "Live Radar",
+    subtitle: "Real firehose, scored in-browser",
+    group: "Console",
+    title: "Live radar",
+    description:
+      "Your browser connects to Bluesky's public Jetstream firehose and scores real posts with the same policy scorer as Test Post. Aggregates only — nothing is stored, displayed, or acted on.",
   },
   {
     id: "assurance",
@@ -3126,6 +3137,10 @@ function renderModuleContent(context) {
     `;
   }
 
+  if (state.activeModule === "radar") {
+    return LiveRadar.renderShell();
+  }
+
   const tabs = SUBTAB_DEFS[state.activeModule];
   if (tabs) {
     const active = state.subTabs[state.activeModule] || tabs[0].id;
@@ -3358,7 +3373,11 @@ function attachEvents() {
       render();
     });
   }
+
+  LiveRadar.attach();
 }
+
+LiveRadar.configure({ scoreText, calibration: liveStreamCalibration });
 
 window.addEventListener("hashchange", () => {
   const target = targetFromHash();

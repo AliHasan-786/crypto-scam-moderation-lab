@@ -1,5 +1,5 @@
 export const evalSummary = {
-  "generatedAt": "2026-07-04",
+  "generatedAt": "2026-07-11",
   "caseCount": 40,
   "baseCaseCount": 19,
   "adversarialCaseCount": 21,
