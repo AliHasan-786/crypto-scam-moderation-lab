@@ -18,3 +18,5 @@ audit_outputs/live_bsky_*.json
 audit_outputs/*.sqlite-shm
 audit_outputs/*.sqlite-wal
 
+.vercel
+.env*

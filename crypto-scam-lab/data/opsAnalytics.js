@@ -1,5 +1,5 @@
 export const opsAnalytics = {
-  "generatedAt": "2026-07-04T02:16:04.001986+00:00",
+  "generatedAt": "2026-07-10T04:34:38.322657+00:00",
   "summary": {
     "totalItems": 5,
     "reviewedItems": 3,

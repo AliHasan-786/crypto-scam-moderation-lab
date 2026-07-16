@@ -112,39 +112,39 @@ const calibrationActions = [
 const consoleModules = [
   {
     id: "welcome",
-    label: "Start Here",
-    subtitle: "Story, live demo, where to go",
-    group: "Start",
+    label: "Explore",
+    subtitle: "The central question",
+    group: "Case study",
     title: "Start here",
     description: "What this project is, why it exists, and a live demo you can try without reading anything else.",
   },
   {
     id: "overview",
-    label: "Project Overview",
-    subtitle: "The policy behind the product",
-    group: "Start",
+    label: "The approach",
+    subtitle: "Policy to product",
+    group: "Case study",
     title: "Crypto Scam Moderation Lab",
     description: "A browser-based safety product for deciding when crypto-related posts should be labeled, reviewed, escalated, or left alone.",
   },
   {
     id: "queue",
-    label: "Review Queue",
-    subtitle: "Ranked cases, evidence shown",
-    group: "Console",
-    title: "Review queue",
-    description: "Inspect ranked cases, evidence, ground truth, prediction errors, and the decision boundary used by the labeler.",
+    label: "Case archive",
+    subtitle: "Evidence behind decisions",
+    group: "Explore",
+    title: "Case archive",
+    description: "Browse annotated examples, their evidence, and the decision boundary used by the labeler.",
   },
   {
     id: "tester",
-    label: "Test Post",
-    subtitle: "Attack it, watch it decide",
-    group: "Console",
-    title: "Test a post",
+    label: "Decision studio",
+    subtitle: "Try the policy boundary",
+    group: "Explore",
+    title: "Decision studio",
     description: "Try clean examples, borderline cases, and obfuscated variants against the same policy rubric and risk scorer.",
   },
   {
     id: "assurance",
-    label: "Evals & Failures",
+    label: "Evidence",
     subtitle: "Proof, and published mistakes",
     group: "Console",
     title: "Assurance",
@@ -152,7 +152,7 @@ const consoleModules = [
   },
   {
     id: "intel",
-    label: "Intelligence",
+    label: "Campaigns",
     subtitle: "Campaigns and real-world fraud",
     group: "Console",
     title: "Intelligence",
@@ -160,7 +160,7 @@ const consoleModules = [
   },
   {
     id: "operations",
-    label: "Operations",
+    label: "At scale",
     subtitle: "Queues, staffing, incidents",
     group: "Console",
     title: "Operations",
@@ -168,7 +168,7 @@ const consoleModules = [
   },
   {
     id: "govern",
-    label: "Governance",
+    label: "Accountability",
     subtitle: "Appeals, audits, transparency",
     group: "Console",
     title: "Governance",
@@ -1953,7 +1953,7 @@ function renderQueue(queue, selected) {
   ];
   return `
     <section class="panel queue-panel" id="queue">
-      <div class="section-label">Reviewer queue</div>
+      <div class="section-label">Annotated examples</div>
       <div class="segmented queue-tabs">
         ${labels
           .map(
@@ -1965,7 +1965,7 @@ function renderQueue(queue, selected) {
           )
           .join("")}
       </div>
-      <div class="queue-count">${queue.length} visible cases</div>
+      <div class="queue-count">${queue.length} examples in this view</div>
       <div class="queue-list">
         ${queue.length ? queue.map((item) => renderQueueItem(item, selected)).join("") : "<p>No cases match this queue.</p>"}
       </div>
@@ -2228,41 +2228,40 @@ function renderWelcome() {
   return `
     <div class="welcome-shell">
       <section class="welcome-hero panel">
-        <span class="welcome-kicker">A Trust &amp; Safety portfolio system by Ali Hasan</span>
+        <span class="welcome-kicker">Crypto Scam Moderation Lab</span>
         <h1>Can a platform catch crypto scams without silencing everyone who talks about them?</h1>
         <p class="welcome-lede">
           Scammers, journalists, victims, comedians, and researchers all use the same words.
-          This lab is a working moderation system that tells them apart: it scores posts against a
-          written policy, sends uncertain cases to humans, publishes its own mistakes, and shows
-          what every threshold costs in reviewer payroll. Everything here runs in your browser on
-          sanitized data - it looks at posts, never at you.
+          This is a working moderation system that draws that boundary: it turns a written policy
+          into evidence, sends uncertainty to people, and makes its mistakes inspectable. Everything
+          runs in your browser on sanitized examples.
         </p>
         <div class="welcome-stats">
           <div class="welcome-stat">
-            <strong>${sim.corpus ? (sim.corpus.truePrevalence * 100).toFixed(1) + "%" : "1.5%"}</strong>
-            <span>of simulated posts are scams. The other ${sim.corpus ? (100 - sim.corpus.truePrevalence * 100).toFixed(1) : "98.5"}% is why this is hard.</span>
+            <strong>3 outcomes</strong>
+            <span>Label only with strong evidence. Review uncertainty. Leave protected speech alone.</span>
           </div>
           <div class="welcome-stat">
-            <strong>${errSummary.falsePositiveCount ?? 8}</strong>
-            <span>real false positives, published and explained instead of hidden.</span>
+            <strong>${errSummary.falsePositiveCount ?? 8} mistakes</strong>
+            <span>False positives published and explained instead of hidden.</span>
           </div>
           <div class="welcome-stat">
-            <strong>${errSummary.unsolvedStillFailing ?? 5}</strong>
-            <span>hard cases still failing - kept on display deliberately.</span>
+            <strong>${errSummary.unsolvedStillFailing ?? 5} open questions</strong>
+            <span>Hard cases still failing, kept visible as the next work to do.</span>
           </div>
         </div>
         <div class="welcome-paths">
           <button type="button" class="path-card" data-tour="start">
-            <strong>Take the 90-second tour</strong>
-            <span>Guided walk through the whole system. No background needed.</span>
+            <strong>Follow the story</strong>
+            <span>A short tour from policy question to accountable decision.</span>
           </button>
-          <button type="button" class="path-card" data-goto="queue">
-            <strong>Enter the console</strong>
-            <span>The full operator workbench: queue, evals, ops, governance.</span>
+          <button type="button" class="path-card" data-goto="tester">
+            <strong>Try the boundary</strong>
+            <span>Test a post and see the evidence that changes a decision.</span>
           </button>
           <button type="button" class="path-card" data-goto="failures">
-            <strong>Start with the failures</strong>
-            <span>For reviewers who know that 100% green means someone is hiding something.</span>
+            <strong>See what breaks</strong>
+            <span>The published mistakes and deliberately unsolved cases.</span>
           </button>
         </div>
       </section>
@@ -2823,13 +2822,11 @@ function renderPolicyCard() {
 }
 
 function renderConsoleNav() {
-  let currentGroup = "";
   return `
-    <aside class="console-sidebar" aria-label="Lab navigation">
+    <header class="console-sidebar" aria-label="Lab navigation">
       <div class="console-brand">
-        <span>Safety console</span>
-        <strong>Crypto Scam Moderation</strong>
-        <small>Policy, evidence, evals, and operations in one inspectable browser lab.</small>
+        <span>Interactive case study</span>
+        <strong>Crypto Scam<br />Moderation Lab</strong>
       </div>
       <label class="mobile-module-select" for="module-select">
         <span>Workspace</span>
@@ -2845,16 +2842,10 @@ function renderConsoleNav() {
             .join("")}
         </select>
       </label>
-      <nav class="console-nav">
+      <nav class="console-nav" aria-label="Project sections">
         ${consoleModules
           .map((module) => {
-            const groupLabel =
-              module.group !== currentGroup
-                ? `<span class="nav-group">${escapeHtml(module.group)}</span>`
-                : "";
-            currentGroup = module.group;
             return `
-              ${groupLabel}
               <button
                 type="button"
                 class="module-button ${state.activeModule === module.id ? "active" : ""}"
@@ -2862,13 +2853,13 @@ function renderConsoleNav() {
                 aria-current="${state.activeModule === module.id ? "page" : "false"}"
               >
                 <span>${escapeHtml(module.label)}</span>
-                ${module.subtitle ? `<small class="nav-subtitle">${escapeHtml(module.subtitle)}</small>` : ""}
               </button>
             `;
           })
           .join("")}
       </nav>
-    </aside>
+      <a class="source-link" href="${REPO_URL}" target="_blank" rel="noopener">Source &amp; methods</a>
+    </header>
   `;
 }
 

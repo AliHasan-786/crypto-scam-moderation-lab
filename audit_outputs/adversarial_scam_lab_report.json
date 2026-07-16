@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-04T02:15:56.515050+00:00",
+  "generatedAt": "2026-07-10T04:34:38.126913+00:00",
   "suite": "adversarial_scam_mutation_lab_v1",
   "caveat": "This is a controlled red-team suite over authored scam seeds. It measures model and policy sensitivity to realistic evasion patterns; it is not a live-abuse benchmark.",
   "casesPath": "evals/scenario_eval_cases.json",
@@ -39,7 +39,7 @@
       "escapeCount": 0,
       "downgradeCount": 7,
       "severeDowngradeCount": 0,
-      "avgProbabilityDelta": -0.0018187276333879096,
+      "avgProbabilityDelta": -0.0018187276333877986,
       "worstVariantId": "fraud_fake_exchange_support__screenshot_ocr",
       "worstAction": "send_to_human_review",
       "worstProbability": 0.6122643588954335
@@ -59,10 +59,10 @@
       "escapeCount": 0,
       "downgradeCount": 3,
       "severeDowngradeCount": 0,
-      "avgProbabilityDelta": -0.14876327623322605,
+      "avgProbabilityDelta": -0.1487632762332261,
       "worstVariantId": "fraud_fake_exchange_support__synonym_laundering",
       "worstAction": "send_to_human_review",
-      "worstProbability": 0.4535970994529193
+      "worstProbability": 0.45359709945291915
     },
     {
       "id": "context_laundering",
@@ -79,10 +79,10 @@
       "escapeCount": 0,
       "downgradeCount": 3,
       "severeDowngradeCount": 0,
-      "avgProbabilityDelta": -0.12006108849561356,
+      "avgProbabilityDelta": -0.12006108849561357,
       "worstVariantId": "fraud_fake_exchange_support__context_laundering",
       "worstAction": "send_to_human_review",
-      "worstProbability": 0.47592220957585596
+      "worstProbability": 0.47592220957585574
     },
     {
       "id": "leetspeak",
@@ -119,10 +119,10 @@
       "escapeCount": 0,
       "downgradeCount": 0,
       "severeDowngradeCount": 0,
-      "avgProbabilityDelta": -0.0033532359135676044,
+      "avgProbabilityDelta": -0.0033532359135675887,
       "worstVariantId": "fraud_fake_exchange_support__spaced_keywords",
       "worstAction": "high_confidence_escalation",
-      "worstProbability": 0.6284212675616402
+      "worstProbability": 0.6284212675616401
     },
     {
       "id": "punctuation_stuffing",
@@ -139,10 +139,10 @@
       "escapeCount": 0,
       "downgradeCount": 0,
       "severeDowngradeCount": 0,
-      "avgProbabilityDelta": -0.035574810687708416,
+      "avgProbabilityDelta": -0.03557481068770848,
       "worstVariantId": "fraud_fake_exchange_support__punctuation_stuffing",
       "worstAction": "apply_potential_crypto_fraud_label",
-      "worstProbability": 0.6030069437548354
+      "worstProbability": 0.6030069437548353
     },
     {
       "id": "defanged_url",
@@ -159,7 +159,7 @@
       "escapeCount": 0,
       "downgradeCount": 0,
       "severeDowngradeCount": 0,
-      "avgProbabilityDelta": 0.05848624912736146,
+      "avgProbabilityDelta": 0.05848624912736149,
       "worstVariantId": "fraud_fake_exchange_support__defanged_url",
       "worstAction": "high_confidence_escalation",
       "worstProbability": 0.7319034195543597
@@ -182,7 +182,7 @@
       "avgProbabilityDelta": 0.004971923948055711,
       "worstVariantId": "fraud_fake_exchange_support__brand_impersonation_shift",
       "worstAction": "apply_potential_crypto_fraud_label",
-      "worstProbability": 0.6098460134298528
+      "worstProbability": 0.6098460134298526
     }
   ],
   "categorySummary": {
@@ -282,9 +282,9 @@
       "category": "semantic_obfuscation",
       "baselineAction": "high_confidence_escalation",
       "mutatedAction": "send_to_human_review",
-      "baselineProbability": 0.8070956234308397,
-      "mutatedProbability": 0.4703006772354069,
-      "probabilityDelta": -0.3367949461954328,
+      "baselineProbability": 0.8070956234308396,
+      "mutatedProbability": 0.47030067723540675,
+      "probabilityDelta": -0.3367949461954329,
       "publicLabelDropped": true,
       "escaped": false,
       "mutatedText": "Final allocation window is open. sync your vault at secure-eth-allocation.xyz now to redeem complimentary ETH before eligibility expires."
@@ -296,9 +296,9 @@
       "category": "multimodal_placeholder",
       "baselineAction": "high_confidence_escalation",
       "mutatedAction": "send_to_human_review",
-      "baselineProbability": 0.6570928219100404,
+      "baselineProbability": 0.6570928219100403,
       "mutatedProbability": 0.662594294186746,
-      "probabilityDelta": 0.00550147227670561,
+      "probabilityDelta": 0.005501472276705721,
       "publicLabelDropped": true,
       "escaped": false,
       "mutatedText": "[Image OCR]\nScreenshot text: Lost crypto? Our verified recovery team can restore any wallet. Pay the processing fee in BTC upfront and your funds unlock today.\nQR code visible. Link is partially cropped. Source account not visible."
@@ -310,8 +310,8 @@
       "category": "multimodal_placeholder",
       "baselineAction": "high_confidence_escalation",
       "mutatedAction": "send_to_human_review",
-      "baselineProbability": 0.6965428989293474,
-      "mutatedProbability": 0.6921523085121176,
+      "baselineProbability": 0.6965428989293473,
+      "mutatedProbability": 0.6921523085121175,
       "probabilityDelta": -0.004390590417229778,
       "publicLabelDropped": true,
       "escaped": false,
@@ -338,9 +338,9 @@
       "category": "multimodal_placeholder",
       "baselineAction": "high_confidence_escalation",
       "mutatedAction": "send_to_human_review",
-      "baselineProbability": 0.8070956234308397,
+      "baselineProbability": 0.8070956234308396,
       "mutatedProbability": 0.8009397965426335,
-      "probabilityDelta": -0.006155826888206262,
+      "probabilityDelta": -0.006155826888206151,
       "publicLabelDropped": true,
       "escaped": false,
       "mutatedText": "[Image OCR]\nScreenshot text: Final airdrop window is open. Connect your wallet at secure-eth-airdrop.xyz now to claim free ETH before eligibility expires.\nQR code visible. Link is partially cropped. Source account not visible."
@@ -352,9 +352,9 @@
       "category": "multimodal_placeholder",
       "baselineAction": "high_confidence_escalation",
       "mutatedAction": "send_to_human_review",
-      "baselineProbability": 0.8471805721612381,
-      "mutatedProbability": 0.8351210290461561,
-      "probabilityDelta": -0.01205954311508195,
+      "baselineProbability": 0.847180572161238,
+      "mutatedProbability": 0.8351210290461564,
+      "probabilityDelta": -0.012059543115081617,
       "publicLabelDropped": true,
       "escaped": false,
       "mutatedText": "[Image OCR]\nScreenshot text: Private crypto pool now open. Guaranteed 300% monthly returns, risk-free, automated AI trading. Deposit USDT before midnight.\nQR code visible. Link is partially cropped. Source account not visible."
@@ -367,8 +367,8 @@
       "baselineAction": "high_confidence_escalation",
       "mutatedAction": "send_to_human_review",
       "baselineProbability": 0.8533431823192669,
-      "mutatedProbability": 0.8475889318136479,
-      "probabilityDelta": -0.005754250505618952,
+      "mutatedProbability": 0.8475889318136481,
+      "probabilityDelta": -0.00575425050561873,
       "publicLabelDropped": true,
       "escaped": false,
       "mutatedText": "[Image OCR]\nScreenshot text: Elon Musk official giveaway. Send 0.1 ETH to the verified wallet below and receive 1 ETH back instantly. Limited time.\nQR code visible. Link is partially cropped. Source account not visible."
@@ -381,8 +381,8 @@
       "baselineAction": "apply_potential_crypto_fraud_label",
       "mutatedAction": "send_to_human_review",
       "baselineProbability": 0.6014305011267607,
-      "mutatedProbability": 0.4535970994529193,
-      "probabilityDelta": -0.14783340167384135,
+      "mutatedProbability": 0.45359709945291915,
+      "probabilityDelta": -0.1478334016738415,
       "publicLabelDropped": true,
       "escaped": false,
       "mutatedText": "Coinbase support escalation: verify your vault address and transfer a small ETH fund so we can remove the account restriction."
@@ -427,7 +427,7 @@
         "urgency"
       ],
       "text": "Final airdrop window is open. Connect your wallet at secure-eth-airdrop.xyz now to claim free ETH before eligibility expires.",
-      "probability": 0.8070956234308397,
+      "probability": 0.8070956234308396,
       "action": "high_confidence_escalation",
       "actionRank": 3,
       "publicLabel": true,
@@ -455,7 +455,7 @@
         "wallet"
       ],
       "text": "Lost crypto? Our verified recovery team can restore any wallet. Pay the processing fee in BTC upfront and your funds unlock today.",
-      "probability": 0.6570928219100404,
+      "probability": 0.6570928219100403,
       "action": "high_confidence_escalation",
       "actionRank": 3,
       "publicLabel": true,
@@ -478,7 +478,7 @@
         "urgency"
       ],
       "text": "Private crypto pool now open. Guaranteed 300% monthly returns, risk-free, automated AI trading. Deposit USDT before midnight.",
-      "probability": 0.8471805721612381,
+      "probability": 0.847180572161238,
       "action": "high_confidence_escalation",
       "actionRank": 3,
       "publicLabel": true,
@@ -525,7 +525,7 @@
         "claim"
       ],
       "text": "Congratulations, your promo code unlocked 2 BTC. Send the small activation fee to the wallet address and claim your prize.",
-      "probability": 0.6965428989293474,
+      "probability": 0.6965428989293473,
       "action": "high_confidence_escalation",
       "actionRank": 3,
       "publicLabel": true,
@@ -740,7 +740,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.7656947062206418,
+        "probability": 0.7656947062206416,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -756,7 +756,7 @@
           "suspicious_giveaway"
         ]
       },
-      "probabilityDelta": -0.08764847609862503,
+      "probabilityDelta": -0.08764847609862525,
       "actionDowngrade": 0,
       "publicLabelDropped": false,
       "escaped": false,
@@ -1006,7 +1006,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.8475889318136479,
+        "probability": 0.8475889318136481,
         "action": "send_to_human_review",
         "actionRank": 1,
         "publicLabel": false,
@@ -1026,7 +1026,7 @@
           "urgency_or_scarcity"
         ]
       },
-      "probabilityDelta": -0.005754250505618952,
+      "probabilityDelta": -0.00575425050561873,
       "actionDowngrade": 2,
       "publicLabelDropped": true,
       "escaped": false,
@@ -1115,7 +1115,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.8070956234308397,
+        "probability": 0.8070956234308396,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -1154,7 +1154,7 @@
           "risky_link_surface"
         ]
       },
-      "probabilityDelta": 0.009400420141705279,
+      "probabilityDelta": 0.00940042014170539,
       "actionDowngrade": 0,
       "publicLabelDropped": false,
       "escaped": false,
@@ -1181,7 +1181,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.8070956234308397,
+        "probability": 0.8070956234308396,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -1201,7 +1201,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.7735669215620893,
+        "probability": 0.7735669215620892,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -1247,7 +1247,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.8070956234308397,
+        "probability": 0.8070956234308396,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -1267,7 +1267,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.7868952540232029,
+        "probability": 0.7868952540232028,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -1313,7 +1313,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.8070956234308397,
+        "probability": 0.8070956234308396,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -1333,7 +1333,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.8070523112624147,
+        "probability": 0.8070523112624146,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -1379,7 +1379,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.8070956234308397,
+        "probability": 0.8070956234308396,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -1419,7 +1419,7 @@
           "risky_link_surface"
         ]
       },
-      "probabilityDelta": 0.02278639118626058,
+      "probabilityDelta": 0.02278639118626069,
       "actionDowngrade": 0,
       "publicLabelDropped": false,
       "escaped": false,
@@ -1446,7 +1446,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.8070956234308397,
+        "probability": 0.8070956234308396,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -1466,7 +1466,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.4703006772354069,
+        "probability": 0.47030067723540675,
         "action": "send_to_human_review",
         "actionRank": 1,
         "publicLabel": false,
@@ -1481,7 +1481,7 @@
           "risky_link_surface"
         ]
       },
-      "probabilityDelta": -0.3367949461954328,
+      "probabilityDelta": -0.3367949461954329,
       "actionDowngrade": 2,
       "publicLabelDropped": true,
       "escaped": false,
@@ -1508,7 +1508,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.8070956234308397,
+        "probability": 0.8070956234308396,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -1547,7 +1547,7 @@
           "risky_link_surface"
         ]
       },
-      "probabilityDelta": -0.006155826888206262,
+      "probabilityDelta": -0.006155826888206151,
       "actionDowngrade": 2,
       "publicLabelDropped": true,
       "escaped": false,
@@ -1574,7 +1574,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.8070956234308397,
+        "probability": 0.8070956234308396,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -1611,7 +1611,7 @@
           "risky_link_surface"
         ]
       },
-      "probabilityDelta": -0.16051268461347246,
+      "probabilityDelta": -0.16051268461347235,
       "actionDowngrade": 0,
       "publicLabelDropped": false,
       "escaped": false,
@@ -1638,7 +1638,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.6570928219100404,
+        "probability": 0.6570928219100403,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -1667,7 +1667,7 @@
           "crypto_transfer_request"
         ]
       },
-      "probabilityDelta": -0.013263861717298875,
+      "probabilityDelta": -0.013263861717298764,
       "actionDowngrade": 0,
       "publicLabelDropped": false,
       "escaped": false,
@@ -1694,7 +1694,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.6570928219100404,
+        "probability": 0.6570928219100403,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -1722,7 +1722,7 @@
           "crypto_transfer_request"
         ]
       },
-      "probabilityDelta": -0.06294750803930016,
+      "probabilityDelta": -0.06294750803930005,
       "actionDowngrade": 1,
       "publicLabelDropped": false,
       "escaped": false,
@@ -1749,7 +1749,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.6570928219100404,
+        "probability": 0.6570928219100403,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -1778,7 +1778,7 @@
           "crypto_transfer_request"
         ]
       },
-      "probabilityDelta": -0.004280460535179498,
+      "probabilityDelta": -0.004280460535179387,
       "actionDowngrade": 0,
       "publicLabelDropped": false,
       "escaped": false,
@@ -1805,7 +1805,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.6570928219100404,
+        "probability": 0.6570928219100403,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -1838,7 +1838,7 @@
           "risky_link_surface"
         ]
       },
-      "probabilityDelta": 0.12054739162547978,
+      "probabilityDelta": 0.1205473916254799,
       "actionDowngrade": 0,
       "publicLabelDropped": false,
       "escaped": false,
@@ -1865,7 +1865,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.6570928219100404,
+        "probability": 0.6570928219100403,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -1894,7 +1894,7 @@
           "crypto_transfer_request"
         ]
       },
-      "probabilityDelta": -0.002373269397524025,
+      "probabilityDelta": -0.002373269397523914,
       "actionDowngrade": 0,
       "publicLabelDropped": false,
       "escaped": false,
@@ -1921,7 +1921,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.6570928219100404,
+        "probability": 0.6570928219100403,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -1936,7 +1936,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.6127133040304936,
+        "probability": 0.6127133040304935,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -1977,7 +1977,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.6570928219100404,
+        "probability": 0.6570928219100403,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -2006,7 +2006,7 @@
           "crypto_transfer_request"
         ]
       },
-      "probabilityDelta": 0.00550147227670561,
+      "probabilityDelta": 0.005501472276705721,
       "actionDowngrade": 2,
       "publicLabelDropped": true,
       "escaped": false,
@@ -2033,7 +2033,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.6570928219100404,
+        "probability": 0.6570928219100403,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -2062,7 +2062,7 @@
           "crypto_transfer_request"
         ]
       },
-      "probabilityDelta": -0.041929181823286865,
+      "probabilityDelta": -0.041929181823286754,
       "actionDowngrade": 0,
       "publicLabelDropped": false,
       "escaped": false,
@@ -2089,7 +2089,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.8471805721612381,
+        "probability": 0.847180572161238,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -2105,7 +2105,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.8030768542969554,
+        "probability": 0.8030768542969552,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -2118,7 +2118,7 @@
           "unrealistic_returns"
         ]
       },
-      "probabilityDelta": -0.04410371786428269,
+      "probabilityDelta": -0.0441037178642828,
       "actionDowngrade": 0,
       "publicLabelDropped": false,
       "escaped": false,
@@ -2145,7 +2145,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.8471805721612381,
+        "probability": 0.847180572161238,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -2161,7 +2161,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.7149660647222033,
+        "probability": 0.714966064722203,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -2174,7 +2174,7 @@
           "unrealistic_returns"
         ]
       },
-      "probabilityDelta": -0.13221450743903485,
+      "probabilityDelta": -0.13221450743903496,
       "actionDowngrade": 0,
       "publicLabelDropped": false,
       "escaped": false,
@@ -2201,7 +2201,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.8471805721612381,
+        "probability": 0.847180572161238,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -2217,7 +2217,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.7922064077705218,
+        "probability": 0.7922064077705215,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -2230,7 +2230,7 @@
           "unrealistic_returns"
         ]
       },
-      "probabilityDelta": -0.05497416439071634,
+      "probabilityDelta": -0.05497416439071645,
       "actionDowngrade": 0,
       "publicLabelDropped": false,
       "escaped": false,
@@ -2257,7 +2257,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.8471805721612381,
+        "probability": 0.847180572161238,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -2292,7 +2292,7 @@
           "risky_link_surface"
         ]
       },
-      "probabilityDelta": 0.05782117009517207,
+      "probabilityDelta": 0.05782117009517218,
       "actionDowngrade": 0,
       "publicLabelDropped": false,
       "escaped": false,
@@ -2319,7 +2319,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.8471805721612381,
+        "probability": 0.847180572161238,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -2351,7 +2351,7 @@
           "crypto_transfer_request"
         ]
       },
-      "probabilityDelta": 0.01634782105420418,
+      "probabilityDelta": 0.016347821054204292,
       "actionDowngrade": 0,
       "publicLabelDropped": false,
       "escaped": false,
@@ -2378,7 +2378,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.8471805721612381,
+        "probability": 0.847180572161238,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -2394,7 +2394,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.7420778916601467,
+        "probability": 0.7420778916601466,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -2434,7 +2434,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.8471805721612381,
+        "probability": 0.847180572161238,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -2450,7 +2450,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.8351210290461561,
+        "probability": 0.8351210290461564,
         "action": "send_to_human_review",
         "actionRank": 1,
         "publicLabel": false,
@@ -2465,7 +2465,7 @@
           "crypto_transfer_request"
         ]
       },
-      "probabilityDelta": -0.01205954311508195,
+      "probabilityDelta": -0.012059543115081617,
       "actionDowngrade": 2,
       "publicLabelDropped": true,
       "escaped": false,
@@ -2492,7 +2492,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.8471805721612381,
+        "probability": 0.847180572161238,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -2508,7 +2508,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.7905751385296635,
+        "probability": 0.7905751385296634,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -2563,7 +2563,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.6284212675616402,
+        "probability": 0.6284212675616401,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -2577,7 +2577,7 @@
           "crypto_transfer_request"
         ]
       },
-      "probabilityDelta": 0.02699076643487952,
+      "probabilityDelta": 0.02699076643487941,
       "actionDowngrade": 0,
       "publicLabelDropped": false,
       "escaped": false,
@@ -2619,7 +2619,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.6034406777489812,
+        "probability": 0.603440677748981,
         "action": "apply_potential_crypto_fraud_label",
         "actionRank": 2,
         "publicLabel": true,
@@ -2633,7 +2633,7 @@
           "crypto_transfer_request"
         ]
       },
-      "probabilityDelta": 0.002010176622220583,
+      "probabilityDelta": 0.002010176622220361,
       "actionDowngrade": 0,
       "publicLabelDropped": false,
       "escaped": false,
@@ -2675,7 +2675,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.6030069437548354,
+        "probability": 0.6030069437548353,
         "action": "apply_potential_crypto_fraud_label",
         "actionRank": 2,
         "publicLabel": true,
@@ -2689,7 +2689,7 @@
           "crypto_transfer_request"
         ]
       },
-      "probabilityDelta": 0.00157644262807477,
+      "probabilityDelta": 0.001576442628074659,
       "actionDowngrade": 0,
       "publicLabelDropped": false,
       "escaped": false,
@@ -2791,7 +2791,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.6098460134298528,
+        "probability": 0.6098460134298526,
         "action": "apply_potential_crypto_fraud_label",
         "actionRank": 2,
         "publicLabel": true,
@@ -2805,7 +2805,7 @@
           "crypto_transfer_request"
         ]
       },
-      "probabilityDelta": 0.00841551230309212,
+      "probabilityDelta": 0.008415512303091899,
       "actionDowngrade": 0,
       "publicLabelDropped": false,
       "escaped": false,
@@ -2847,7 +2847,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.4535970994529193,
+        "probability": 0.45359709945291915,
         "action": "send_to_human_review",
         "actionRank": 1,
         "publicLabel": false,
@@ -2858,7 +2858,7 @@
         ],
         "publicLabelRules": []
       },
-      "probabilityDelta": -0.14783340167384135,
+      "probabilityDelta": -0.1478334016738415,
       "actionDowngrade": 1,
       "publicLabelDropped": true,
       "escaped": false,
@@ -2956,7 +2956,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.47592220957585596,
+        "probability": 0.47592220957585574,
         "action": "send_to_human_review",
         "actionRank": 1,
         "publicLabel": false,
@@ -2967,7 +2967,7 @@
         ],
         "publicLabelRules": []
       },
-      "probabilityDelta": -0.1255082915509047,
+      "probabilityDelta": -0.12550829155090493,
       "actionDowngrade": 1,
       "publicLabelDropped": true,
       "escaped": false,
@@ -2994,7 +2994,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.6965428989293474,
+        "probability": 0.6965428989293473,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -3025,7 +3025,7 @@
           "suspicious_giveaway"
         ]
       },
-      "probabilityDelta": 0.00018815631204449623,
+      "probabilityDelta": 0.00018815631204460725,
       "actionDowngrade": 0,
       "publicLabelDropped": false,
       "escaped": false,
@@ -3052,7 +3052,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.6965428989293474,
+        "probability": 0.6965428989293473,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -3068,7 +3068,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.6828670247139137,
+        "probability": 0.6828670247139138,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -3083,7 +3083,7 @@
           "suspicious_giveaway"
         ]
       },
-      "probabilityDelta": -0.013675874215433703,
+      "probabilityDelta": -0.013675874215433481,
       "actionDowngrade": 0,
       "publicLabelDropped": false,
       "escaped": false,
@@ -3110,7 +3110,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.6965428989293474,
+        "probability": 0.6965428989293473,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -3126,7 +3126,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.6800779245012716,
+        "probability": 0.6800779245012715,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -3168,7 +3168,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.6965428989293474,
+        "probability": 0.6965428989293473,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -3184,7 +3184,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.7425031522412388,
+        "probability": 0.7425031522412386,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -3228,7 +3228,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.6965428989293474,
+        "probability": 0.6965428989293473,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -3244,7 +3244,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.7307662757259854,
+        "probability": 0.7307662757259853,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -3287,7 +3287,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.6965428989293474,
+        "probability": 0.6965428989293473,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -3303,7 +3303,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.5493263833066688,
+        "probability": 0.5493263833066686,
         "action": "apply_potential_crypto_fraud_label",
         "actionRank": 2,
         "publicLabel": true,
@@ -3316,7 +3316,7 @@
           "suspicious_giveaway"
         ]
       },
-      "probabilityDelta": -0.14721651562267857,
+      "probabilityDelta": -0.14721651562267868,
       "actionDowngrade": 1,
       "publicLabelDropped": false,
       "escaped": false,
@@ -3343,7 +3343,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.6965428989293474,
+        "probability": 0.6965428989293473,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -3359,7 +3359,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.6921523085121176,
+        "probability": 0.6921523085121175,
         "action": "send_to_human_review",
         "actionRank": 1,
         "publicLabel": false,
@@ -3401,7 +3401,7 @@
       ],
       "changed": true,
       "baseline": {
-        "probability": 0.6965428989293474,
+        "probability": 0.6965428989293473,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -3417,7 +3417,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.5612574131854814,
+        "probability": 0.5612574131854813,
         "action": "apply_potential_crypto_fraud_label",
         "actionRank": 2,
         "publicLabel": true,
@@ -3604,7 +3604,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.6879081231834447,
+        "probability": 0.6879081231834446,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -3620,7 +3620,7 @@
           "urgency_or_scarcity"
         ]
       },
-      "probabilityDelta": -0.0670316725818002,
+      "probabilityDelta": -0.06703167258180032,
       "actionDowngrade": 0,
       "publicLabelDropped": false,
       "escaped": false,
@@ -3732,7 +3732,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.7333438745679275,
+        "probability": 0.7333438745679274,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -3750,7 +3750,7 @@
           "urgency_or_scarcity"
         ]
       },
-      "probabilityDelta": -0.021595921197317458,
+      "probabilityDelta": -0.02159592119731757,
       "actionDowngrade": 0,
       "publicLabelDropped": false,
       "escaped": false,
@@ -3796,7 +3796,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.6787379740965626,
+        "probability": 0.6787379740965624,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -3812,7 +3812,7 @@
           "urgency_or_scarcity"
         ]
       },
-      "probabilityDelta": -0.07620182166868239,
+      "probabilityDelta": -0.0762018216686825,
       "actionDowngrade": 0,
       "publicLabelDropped": false,
       "escaped": false,
@@ -3922,7 +3922,7 @@
         ]
       },
       "mutated": {
-        "probability": 0.681144258079197,
+        "probability": 0.6811442580791969,
         "action": "high_confidence_escalation",
         "actionRank": 3,
         "publicLabel": true,
@@ -3938,7 +3938,7 @@
           "urgency_or_scarcity"
         ]
       },
-      "probabilityDelta": -0.07379553768604796,
+      "probabilityDelta": -0.07379553768604807,
       "actionDowngrade": 0,
       "publicLabelDropped": false,
       "escaped": false,

@@ -1,5 +1,5 @@
 export const llmComparison = {
-  "generatedAt": "2026-07-04",
+  "generatedAt": "2026-07-10",
   "provider": "claude-fable-5 (cached 2026-07-03)",
   "caseCount": 19,
   "llmExpectationPassRate": 0.9474,

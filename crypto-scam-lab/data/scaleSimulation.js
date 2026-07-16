@@ -1,5 +1,5 @@
 export const scaleSimulation = {
-  "generatedAt": "2026-07-04",
+  "generatedAt": "2026-07-10",
   "corpus": {
     "posts": 6000,
     "dailyVolume": 50000,

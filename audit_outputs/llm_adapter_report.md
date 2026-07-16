@@ -1,6 +1,6 @@
 # LLM Evidence Adapter — Baseline vs Hosted-Model Comparison
 
-Provider: **claude-fable-5 (cached 2026-07-03)** · 19 cases · generated 2026-07-04
+Provider: **claude-fable-5 (cached 2026-07-03)** · 19 cases · generated 2026-07-10
 
 - LLM expectation pass rate: **95%**
 - Baseline expectation pass rate: **100%**
