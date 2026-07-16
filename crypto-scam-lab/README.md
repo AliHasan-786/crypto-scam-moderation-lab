@@ -6,7 +6,7 @@ Interactive Trust & Safety workbench built from the CS 5342 Bluesky labeler proj
 
 ## What This Adds
 
-- Focused safety-console shell with routed workspaces, compact system status, and selected-case evidence rail.
+- Editorial case-study shell with four primary destinations: the story, decision studio, published failures, and a full-system appendix.
 - First-screen overview with the background problem, a five-part Assignment 2 policy brief, policy-to-product build path, static decision-flow preview, and concise terminology.
 - Reviewer queue over the existing train/test posts.
 - Explainable policy-rubric score for crypto scam indicators.

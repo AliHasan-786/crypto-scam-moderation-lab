@@ -29,7 +29,7 @@ const state = {
   heroText:
     "Elon Musk is giving away 1000 ETH to celebrate. Send 0.1 ETH to our verified wallet and get 0.5 ETH back instantly.",
   tourStep: null,
-  subTabs: { assurance: "evals", intel: "campaigns", operations: "ops", govern: "governance" },
+  subTabs: { assurance: "failures", intel: "campaigns", operations: "ops", govern: "governance" },
   agentStrategy: "airdrop-funnel",
   incidentId: "ir_wallet_drainer_campaign",
   incidentChoice: "route_review",
@@ -112,17 +112,18 @@ const calibrationActions = [
 const consoleModules = [
   {
     id: "welcome",
-    label: "Explore",
+    label: "The story",
     subtitle: "The central question",
-    group: "Case study",
-    title: "Start here",
+    group: "",
+    title: "The story",
     description: "What this project is, why it exists, and a live demo you can try without reading anything else.",
+    featured: true,
   },
   {
     id: "overview",
     label: "The approach",
     subtitle: "Policy to product",
-    group: "Case study",
+    group: "",
     title: "Crypto Scam Moderation Lab",
     description: "A browser-based safety product for deciding when crypto-related posts should be labeled, reviewed, escalated, or left alone.",
   },
@@ -130,31 +131,33 @@ const consoleModules = [
     id: "queue",
     label: "Case archive",
     subtitle: "Evidence behind decisions",
-    group: "Explore",
+    group: "Appendix",
     title: "Case archive",
     description: "Browse annotated examples, their evidence, and the decision boundary used by the labeler.",
   },
   {
     id: "tester",
-    label: "Decision studio",
+    label: "Try it",
     subtitle: "Try the policy boundary",
-    group: "Explore",
-    title: "Decision studio",
+    group: "",
+    title: "Try it",
     description: "Try clean examples, borderline cases, and obfuscated variants against the same policy rubric and risk scorer.",
+    featured: true,
   },
   {
     id: "assurance",
-    label: "Evidence",
+    label: "What breaks",
     subtitle: "Proof, and published mistakes",
-    group: "Console",
-    title: "Assurance",
+    group: "",
+    title: "What breaks",
     description: "The eval suites, the release gate, the published error analysis, the LLM comparison, and the GenAI abuse lab - together, because green checks mean nothing without visible failures.",
+    featured: true,
   },
   {
     id: "intel",
     label: "Campaigns",
     subtitle: "Campaigns and real-world fraud",
-    group: "Console",
+    group: "Appendix",
     title: "Intelligence",
     description: "Campaign infrastructure graphing across posts, and the documented fraud landscape this system models.",
   },
@@ -162,7 +165,7 @@ const consoleModules = [
     id: "operations",
     label: "At scale",
     subtitle: "Queues, staffing, incidents",
-    group: "Console",
+    group: "Appendix",
     title: "Operations",
     description: "Queue health, reviewer calibration, incident response, and what every threshold costs at 50,000 posts a day.",
   },
@@ -170,18 +173,27 @@ const consoleModules = [
     id: "govern",
     label: "Accountability",
     subtitle: "Appeals, audits, transparency",
-    group: "Console",
+    group: "Appendix",
     title: "Governance",
     description: "Notices, appeals, reversals, transparency reporting, and the model audit trail.",
+  },
+  {
+    id: "system",
+    label: "The full system",
+    subtitle: "Methods and operating artifacts",
+    group: "",
+    title: "The full system",
+    description: "The underlying policy, evaluations, investigations, operations, and governance artifacts.",
+    featured: true,
   },
 ];
 
 const SUBTAB_DEFS = {
   assurance: [
-    { id: "evals", label: "Eval Suite" },
-    { id: "failures", label: "Error Analysis" },
-    { id: "llm", label: "LLM vs Baseline" },
-    { id: "agentic", label: "GenAI Abuse" },
+    { id: "failures", label: "Published failures" },
+    { id: "evals", label: "Evaluation record" },
+    { id: "llm", label: "LLM evidence" },
+    { id: "agentic", label: "Agentic pressure tests" },
   ],
   intel: [
     { id: "campaigns", label: "Campaign Graph" },
@@ -390,6 +402,7 @@ const reportedMetrics = {
   operationalRecall: 1,
   operationalF1: 0.938,
   weightedF1: 0.953,
+  falsePositives: errorAnalysis.summary?.falsePositiveCount ?? 8,
 };
 
 const lenses = {
@@ -1018,6 +1031,7 @@ function renderMetrics(metrics, curvePoints) {
   return `
     <section class="panel metrics-panel" id="metrics">
       <div class="section-label">Threshold tuning</div>
+      <p class="metric-provenance">Browser rubric simulator for exploration. The held-out v2 artifact is reported separately in the model audit.</p>
       <label class="threshold-control">
         <span>Risk threshold ${percentage(state.threshold)}</span>
         <input id="threshold" type="range" min="0.2" max="0.9" step="0.01" value="${state.threshold}" />
@@ -1973,7 +1987,7 @@ function renderQueue(queue, selected) {
   `;
 }
 
-function renderProjectPrimer(metrics) {
+function renderProjectPrimer() {
   return `
     <section class="project-primer" id="overview">
       <div class="primer-hero">
@@ -1991,17 +2005,17 @@ function renderProjectPrimer(metrics) {
             protects legitimate speech when scammers change tactics.
           </p>
           <div class="primer-actions" aria-label="Project entry points">
-            <a href="#queue">Review a case</a>
-            <a href="#tester">Test a post</a>
-            <a href="#evals">Inspect evals</a>
+            <a href="#tester">Try a decision</a>
+            <a href="#failures">See the failures</a>
+            <a href="#system">Open the appendix</a>
           </div>
         </div>
         <div class="primer-case-file">
-          <span>Three possible outcomes</span>
+          <span>Held-out test artifact</span>
           <div class="snapshot-grid">
-            <div><strong>${posts.length}</strong><small>labeled examples</small></div>
-            <div><strong>${percentage(metrics.recall)}</strong><small>simulated recall</small></div>
-            <div><strong>${metrics.fp}</strong><small>false positives at this threshold</small></div>
+            <div><strong>${reportedMetrics.testRows}</strong><small>test posts</small></div>
+            <div><strong>${percentage(reportedMetrics.fraudRecall)}</strong><small>fraud recall</small></div>
+            <div><strong>${reportedMetrics.falsePositives}</strong><small>false positives</small></div>
           </div>
           <div class="signal-stage" aria-label="Moderation flow preview">
             <div class="flow-row risk">
@@ -2021,8 +2035,8 @@ function renderProjectPrimer(metrics) {
             </div>
           </div>
           <p>
-            The goal is not to maximize one model score. The goal is to decide when to label,
-            when to review, and when to leave speech alone.
+            This is the reproducible v2 held-out artifact, not the adjustable browser simulator.
+            The goal is not one model score: it is deciding when to label, review, or leave speech alone.
           </p>
         </div>
       </div>
@@ -2251,9 +2265,9 @@ function renderWelcome() {
           </div>
         </div>
         <div class="welcome-paths">
-          <button type="button" class="path-card" data-tour="start">
-            <strong>Follow the story</strong>
-            <span>A short tour from policy question to accountable decision.</span>
+          <button type="button" class="path-card" data-scroll-story>
+            <strong>Read the policy</strong>
+            <span>The original proposal, distilled into the decisions this system makes.</span>
           </button>
           <button type="button" class="path-card" data-goto="tester">
             <strong>Try the boundary</strong>
@@ -2822,28 +2836,15 @@ function renderPolicyCard() {
 }
 
 function renderConsoleNav() {
+  const featuredModules = consoleModules.filter((module) => module.featured);
   return `
     <header class="console-sidebar" aria-label="Lab navigation">
       <div class="console-brand">
         <span>Interactive case study</span>
         <strong>Crypto Scam<br />Moderation Lab</strong>
       </div>
-      <label class="mobile-module-select" for="module-select">
-        <span>Workspace</span>
-        <select id="module-select">
-          ${consoleModules
-            .map(
-              (module) => `
-                <option value="${escapeHtml(module.id)}" ${state.activeModule === module.id ? "selected" : ""}>
-                  ${escapeHtml(module.label)}
-                </option>
-              `,
-            )
-            .join("")}
-        </select>
-      </label>
       <nav class="console-nav" aria-label="Project sections">
-        ${consoleModules
+        ${featuredModules
           .map((module) => {
             return `
               <button
@@ -2900,7 +2901,7 @@ function renderModuleHeader() {
   const module = activeModule();
   return `
     <header class="module-header">
-      <span>${escapeHtml(module.group)}</span>
+      ${module.group ? `<span>${escapeHtml(module.group)}</span>` : ""}
       <h2>${escapeHtml(module.title)}</h2>
       <p>${escapeHtml(module.description)}</p>
     </header>
@@ -2914,6 +2915,36 @@ function renderSummaryStrip(metrics) {
       <div><strong>${posts.length}</strong><span>assignment posts</span></div>
       <div><strong>${percentage(metrics.recall)}</strong><span>simulated recall</span></div>
       <div><strong>${metrics.fp}</strong><span>false positives at current threshold</span></div>
+    </section>
+  `;
+}
+
+function renderSystemIndex() {
+  const sections = [
+    ["queue", "Case archive", "Annotated examples and the evidence behind each decision."],
+    ["intel", "Campaigns", "Shared infrastructure, campaign patterns, and the threat landscape."],
+    ["operations", "At scale", "Threshold tradeoffs, calibration, incidents, and capacity."],
+    ["govern", "Accountability", "Appeals, notices, transparency, and the model audit."],
+  ];
+  return `
+    <section class="system-index" aria-label="Full system appendix">
+      <p class="system-index-intro">
+        The public story focuses on the policy boundary and the project’s failures. These working artifacts
+        hold the deeper operating detail behind that argument.
+      </p>
+      <div class="system-index-grid">
+        ${sections
+          .map(
+            ([id, title, description], index) => `
+              <button type="button" class="system-index-item" data-goto="${id}">
+                <span>${String(index + 1).padStart(2, "0")}</span>
+                <strong>${title}</strong>
+                <p>${description}</p>
+              </button>
+            `,
+          )
+          .join("")}
+      </div>
     </section>
   `;
 }
@@ -3083,11 +3114,15 @@ function renderSubtabContent(tabId, { metrics, curvePoints, queue, selected }) {
 
 function renderModuleContent(context) {
   if (state.activeModule === "welcome") {
-    return renderWelcome();
+    return `${renderWelcome()}${renderProjectPrimer()}`;
   }
 
   if (state.activeModule === "overview") {
-    return renderProjectPrimer(context.metrics);
+    return `${renderWelcome()}${renderProjectPrimer()}`;
+  }
+
+  if (state.activeModule === "system") {
+    return renderSystemIndex();
   }
 
   if (state.activeModule === "queue") {
@@ -3140,7 +3175,7 @@ function renderModuleContent(context) {
 }
 
 const RAIL_MODULES = new Set(["queue", "tester"]);
-const SYSTEM_BAR_MODULES = new Set(["queue", "tester"]);
+const SYSTEM_BAR_MODULES = new Set();
 
 function renderConsoleWorkspace(context) {
   return `
@@ -3293,6 +3328,12 @@ function attachEvents() {
   document.querySelectorAll("[data-goto]").forEach((button) => {
     button.addEventListener("click", () => {
       activateModule(button.dataset.goto);
+    });
+  });
+
+  document.querySelectorAll("[data-scroll-story]").forEach((button) => {
+    button.addEventListener("click", () => {
+      document.querySelector("#overview")?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   });
 

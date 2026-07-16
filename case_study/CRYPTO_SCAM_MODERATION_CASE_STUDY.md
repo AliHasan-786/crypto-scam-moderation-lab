@@ -28,7 +28,7 @@ So the product question I built around: **when is evidence strong enough for a p
 
 **7. Built the operational shell real systems need.** Reviewer calibration with answer keys, ops analytics with SQL, campaign graphs over reused wallets/domains/phrasing, incident tabletops with severity tiers, appeals with reversal tracking, a transparency report, Santa Clara / NIST RMF mapping, and a DSA statement-of-reasons sample populated from actual pipeline outputs.
 
-**8. Rebuilt the front door for humans.** The operator console remains for people who want density. But the landing page now leads with the story and one interaction anyone can use: paste a post — or one-click between an obvious scam, a warning, a joke, and a skeptical question — and watch the decision and evidence change. A guided 8-step tour walks non-technical visitors through the whole system in 90 seconds.
+**8. Rebuilt the front door for humans.** The public experience is now an interactive case study rather than a simulated operations console: the story and policy boundary come first, the stance-aware post interaction proves the core idea, published failures form the climax, and the operating artifacts live in an explicit appendix. Visitors can paste a post — or switch among a scam, warning, joke, and skeptical question — and watch the decision and evidence change.
 
 ## Key numbers
 
