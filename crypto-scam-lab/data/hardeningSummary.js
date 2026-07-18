@@ -1,5 +1,5 @@
 export const hardeningSummary = {
-  "generatedAt": "2026-07-18T03:35:01.840728+00:00",
+  "generatedAt": "2026-07-18T06:23:51.987633+00:00",
   "caseCount": 12,
   "expectationPassRate": 1.0,
   "fraudPublicLabelRecall": 1.0,

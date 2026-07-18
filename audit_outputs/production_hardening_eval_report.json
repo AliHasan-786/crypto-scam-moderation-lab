@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-18T03:35:01.840728+00:00",
+  "generatedAt": "2026-07-18T06:23:51.987633+00:00",
   "suite": "production_hardening_eval_v1",
   "caveat": "This is an authored production-hardening suite. It is not an untouched benchmark; it probes known deployment risks such as canonicalization, URL evidence, OCR ambiguity, multilingual phrasing, and protected-context false positives.",
   "thresholds": {
