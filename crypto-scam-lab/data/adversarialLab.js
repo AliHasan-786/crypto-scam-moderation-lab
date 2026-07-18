@@ -1,5 +1,5 @@
 export const adversarialLab = {
-  "generatedAt": "2026-07-18T06:23:52.728424+00:00",
+  "generatedAt": "2026-07-18T23:09:10.864250+00:00",
   "suite": "adversarial_scam_mutation_lab_v1",
   "seedCount": 7,
   "mutationCount": 8,

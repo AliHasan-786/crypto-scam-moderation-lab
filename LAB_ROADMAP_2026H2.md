@@ -55,7 +55,7 @@ Timebox the pre-rebase audit to one day: inspect the branch's collection window,
 **Acceptance:** the branch audit is recorded in the data card; radar renders aggregate rates only; `rg -i "did:|handle" crypto-scam-lab/app.js` shows no per-post identity handling in the radar path; the calibration report is visible in "At scale" with its synthetic-vs-measured gap and collection window stated.
 
 ### 0.3 Provenance register and versioned evals
-- `data/DATA_CARD.md`: origin, collection dates, purpose, sampling method, label source, sanitization method, access controls, retention/deletion schedule, platform-terms posture, and known biases for every dataset (269-row train, 168-row held-out, firehose samples).
+- `data/DATA_CARD.md`: origin, collection dates, purpose, sampling method, label source, sanitization method, access controls, retention/deletion schedule, platform-terms posture, and known biases for every dataset (147-row parsed train, 168-row held-out, firehose samples).
 - `evals/MANIFEST.json`: for each suite (scenario, hardening, mutations, unsolved, guard cases) a semantic version, SHA-256 of the case file, case count, and last-modified date. The 15-step pipeline validates the manifest and stamps every generated report with the dataset + suite hashes it consumed.
 
 **Acceptance:** `bash scripts/run_all_checks.sh` fails if a suite file changes without a manifest bump; every `audit_outputs/*.json` report carries `dataset_hashes` and `suite_versions` fields.

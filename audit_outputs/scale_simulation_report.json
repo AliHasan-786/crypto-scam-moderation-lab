@@ -5,7 +5,7 @@
     "dailyVolume": 50000,
     "seed": 5342,
     "truePrevalence": 0.0155,
-    "note": "True prevalence is knowable here because the corpus is synthetic. In production this number requires labeled random sampling \u2014 detection-derived 'prevalence' measures what you catch, not what exists (see METRICS_DEFINITIONS.md)."
+    "note": "True prevalence is knowable here because the corpus is synthetic. In production this number requires labeled random sampling — detection-derived 'prevalence' measures what you catch, not what exists (see METRICS_DEFINITIONS.md)."
   },
   "assumptions": {
     "handleTimeSeconds": 90,
@@ -22,7 +22,7 @@
     },
     "flaggedShare": 0.1625,
     "falseLabelShareOnLegit": 0.0633,
-    "falseLabelNote": "Share of legitimate posts reaching label-candidate or escalation before reviewer confirmation. Driven overwhelmingly by warning, news, and skeptical-reportage content \u2014 the same class the error analysis documents. At this volume it is the single strongest argument for stance-aware assistance on the review slice.",
+    "falseLabelNote": "Share of legitimate posts reaching label-candidate or escalation before reviewer confirmation. Driven overwhelmingly by warning, news, and skeptical-reportage content — the same class the error analysis documents. At this volume it is the single strongest argument for stance-aware assistance on the review slice.",
     "reviewersNeededAtOperatingPoint": 18
   },
   "thresholdSweep": [
@@ -229,5 +229,49 @@
       "campaignWave": false
     }
   ],
-  "interpretation": "The sweep makes Decision Log 002 concrete: dropping the review threshold from 0.40 to 0.30 buys ~1 point of review-net recall and roughly doubles reviewer payroll. The campaign weeks in the series show the real staffing problem is burst capacity, not steady state \u2014 which is why the incident runbook exists and why campaign-level clustering beats per-post scoring during waves."
+  "interpretation": "The sweep makes Decision Log 002 concrete: dropping the review threshold from 0.40 to 0.30 buys ~1 point of review-net recall and roughly doubles reviewer payroll. The campaign weeks in the series show the real staffing problem is burst capacity, not steady state — which is why the incident runbook exists and why campaign-level clustering beats per-post scoring during waves.",
+  "provenance": {
+    "stampedAt": "2026-07-18T23:09:15.618967+00:00",
+    "manifest": {
+      "path": "evals/MANIFEST.json",
+      "manifestVersion": "1.0.0",
+      "sha256": "e00420bfc96bd92dc708bbb882ff909318236a6d519d5b2db694549483b9653c"
+    },
+    "dataset_hashes": {
+      "train": "575947d4629cddecde2023128fc6bfe1cbaae81eac936ff2f4624d94cb5111be",
+      "held-out-test": "b886ac28c805e6ed8cabb74f6fa24551467bb2d7bdba5cfda2ecec0392685a14"
+    },
+    "suite_versions": {
+      "scenario": {
+        "semanticVersion": "1.0.0",
+        "sha256": "d7de6a0c132977c454925c5d009e934fa8c75b45464b39e18c4f5da7eb4df28d",
+        "caseCount": 19
+      },
+      "hardening": {
+        "semanticVersion": "1.0.0",
+        "sha256": "3660e09caadac6221113a42df82170ebd6fa7745a74417d12152214df0e40a86",
+        "caseCount": 12
+      },
+      "unsolved": {
+        "semanticVersion": "1.0.0",
+        "sha256": "28c16a63faa7e097bad608dabed1e1f2bca01f664b58a03ecf6bd7213bbde397",
+        "caseCount": 10
+      },
+      "reviewer-calibration": {
+        "semanticVersion": "1.0.0",
+        "sha256": "789a4b83322828442613b0bd3cc5af6bc253bcba1f6aff6c193c55168b5a73f0",
+        "caseCount": 12
+      },
+      "appeals": {
+        "semanticVersion": "1.0.0",
+        "sha256": "34c642164b90934dc7fdff56c65f28a90d9d8612ccdb1fb38fb101c2de4608f8",
+        "caseCount": 4
+      },
+      "incident-tabletop": {
+        "semanticVersion": "1.0.0",
+        "sha256": "59ba0ff5d3474499007a9d4386e337cbca6c5ec900f2d252f8a3003f312159e9",
+        "caseCount": 3
+      }
+    }
+  }
 }

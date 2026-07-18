@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-18T06:23:53.000025+00:00",
+  "generatedAt": "2026-07-18T23:09:11.134752+00:00",
   "suite": "crypto_scam_incident_tabletop_v1",
   "scenarioCount": 3,
   "severityCounts": {
@@ -175,5 +175,49 @@
         "Which evals need new screenshot examples?"
       ]
     }
-  ]
+  ],
+  "provenance": {
+    "stampedAt": "2026-07-18T23:09:15.618967+00:00",
+    "manifest": {
+      "path": "evals/MANIFEST.json",
+      "manifestVersion": "1.0.0",
+      "sha256": "e00420bfc96bd92dc708bbb882ff909318236a6d519d5b2db694549483b9653c"
+    },
+    "dataset_hashes": {
+      "train": "575947d4629cddecde2023128fc6bfe1cbaae81eac936ff2f4624d94cb5111be",
+      "held-out-test": "b886ac28c805e6ed8cabb74f6fa24551467bb2d7bdba5cfda2ecec0392685a14"
+    },
+    "suite_versions": {
+      "scenario": {
+        "semanticVersion": "1.0.0",
+        "sha256": "d7de6a0c132977c454925c5d009e934fa8c75b45464b39e18c4f5da7eb4df28d",
+        "caseCount": 19
+      },
+      "hardening": {
+        "semanticVersion": "1.0.0",
+        "sha256": "3660e09caadac6221113a42df82170ebd6fa7745a74417d12152214df0e40a86",
+        "caseCount": 12
+      },
+      "unsolved": {
+        "semanticVersion": "1.0.0",
+        "sha256": "28c16a63faa7e097bad608dabed1e1f2bca01f664b58a03ecf6bd7213bbde397",
+        "caseCount": 10
+      },
+      "reviewer-calibration": {
+        "semanticVersion": "1.0.0",
+        "sha256": "789a4b83322828442613b0bd3cc5af6bc253bcba1f6aff6c193c55168b5a73f0",
+        "caseCount": 12
+      },
+      "appeals": {
+        "semanticVersion": "1.0.0",
+        "sha256": "34c642164b90934dc7fdff56c65f28a90d9d8612ccdb1fb38fb101c2de4608f8",
+        "caseCount": 4
+      },
+      "incident-tabletop": {
+        "semanticVersion": "1.0.0",
+        "sha256": "59ba0ff5d3474499007a9d4386e337cbca6c5ec900f2d252f8a3003f312159e9",
+        "caseCount": 3
+      }
+    }
+  }
 }

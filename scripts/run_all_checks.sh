@@ -6,6 +6,9 @@ cd "$ROOT_DIR"
 
 PYTHON_BIN="${PYTHON_BIN:-python3}"
 
+echo "[preflight] Validating versioned evaluation inputs"
+"$PYTHON_BIN" evals/validate_manifest.py
+
 echo "[1/15] Auditing the original labeler"
 "$PYTHON_BIN" audit_original_labeler.py > audit_outputs/original_labeler_audit.json
 
@@ -113,6 +116,9 @@ echo "[15/15] Enforcing the release gate"
   --markdown-out audit_outputs/eval_regression_gate_report.md \
   --lab-summary crypto-scam-lab/data/evalGate.js
 
+echo "[provenance] Stamping generated reports with manifest and dataset hashes"
+"$PYTHON_BIN" scripts/stamp_report_provenance.py
+
 node --check crypto-scam-lab/app.js
 "$PYTHON_BIN" -m compileall -q \
   adversarial_lab \
@@ -127,4 +133,3 @@ node --check crypto-scam-lab/app.js
   policy_proposal_labeler_v2.py
 
 echo "All release checks passed."
-

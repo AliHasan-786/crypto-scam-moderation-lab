@@ -12,10 +12,11 @@ take platform action.
 
 | Asset | Rows | Purpose | Label source | SHA-256 |
 | --- | ---: | --- | --- | --- |
-| `data.csv` | 269 | Training the reproducible v2 baseline | Coursework labels inherited from the original project; not independently re-adjudicated | `575947d4629cddecde2023128fc6bfe1cbaae81eac936ff2f4624d94cb5111be` |
+| `data.csv` | 147 | Training the reproducible v2 baseline | Coursework labels inherited from the original project; not independently re-adjudicated | `575947d4629cddecde2023128fc6bfe1cbaae81eac936ff2f4624d94cb5111be` |
 | `test.csv` | 168 | Frozen held-out v2 evaluation and standing error analysis | Coursework labels inherited from the original project; never used for v2 threshold selection | `b886ac28c805e6ed8cabb74f6fa24551467bb2d7bdba5cfda2ecec0392685a14` |
 
-Both files contain post-like text and binary crypto-fraud labels. They are
+Row counts are parser-level examples, not physical file lines; quoted post
+content can span multiple lines. Both files contain post-like text and binary crypto-fraud labels. They are
 small, mostly English, and reflect the coverage and annotation choices of the
 coursework project. They are not a prevalence sample, a representative sample
 of Bluesky, or evidence of production performance. The original labeler's
