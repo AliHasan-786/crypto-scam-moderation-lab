@@ -85,6 +85,13 @@ blockquote {
   margin-top: 0;
 }
 
+h1,
+h2,
+h3 {
+  font-family: Iowan Old Style, Baskerville, Georgia, serif;
+  font-weight: 600;
+}
+
 h1 {
   margin-bottom: 0;
   font-size: clamp(1.4rem, 3vw, 2.35rem);
@@ -609,7 +616,7 @@ h3 {
 }
 
 .flow-row small {
-  border-radius: 999px;
+  border-radius: 2px;
   padding: 5px 8px;
   color: var(--muted);
   font-size: 0.68rem;
@@ -2533,12 +2540,6 @@ blockquote {
   color: var(--muted, #64708a);
 }
 
-.welcome-hero h1 {
-  font-size: clamp(24px, 3.4vw, 34px);
-  line-height: 1.16;
-  margin: 10px 0 12px;
-}
-
 .welcome-lede {
   font-size: 15px;
   line-height: 1.6;
@@ -2623,7 +2624,7 @@ blockquote {
 
 .hero-preset {
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: 2px;
   background: var(--panel);
   padding: 7px 13px;
   font-size: 12.5px;
@@ -2680,7 +2681,7 @@ blockquote {
 
 .hero-evidence-chip {
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: 2px;
   padding: 4px 10px;
   font-size: 12px;
   background: rgba(194, 69, 95, 0.07);
@@ -2825,7 +2826,7 @@ blockquote {
 }
 
 .status-chip {
-  border-radius: 999px;
+  border-radius: 2px;
   padding: 3px 10px;
   font-size: 11px;
   font-weight: 700;
@@ -3005,7 +3006,7 @@ blockquote {
 .tour-card {
   background: var(--ink, #172033);
   color: #fff;
-  border-radius: 14px;
+  border-radius: 2px;
   padding: 18px;
   display: grid;
   gap: 8px;
@@ -3089,7 +3090,7 @@ blockquote {
 .subtab {
   border: 1px solid var(--line);
   background: var(--panel);
-  border-radius: 999px;
+  border-radius: 2px;
   padding: 8px 16px;
   font-size: 13px;
   font-weight: 600;
@@ -3110,9 +3111,9 @@ blockquote {
 /* --- Caveat banner --- */
 .caveat-banner {
   border: 1px solid #f0d58c;
-  background: linear-gradient(180deg, #fffaf0, #fff6e2);
+  background: #fff8e5;
   border-left: 4px solid var(--orange);
-  border-radius: 10px;
+  border-radius: 2px;
   padding: 13px 16px;
   font-size: 13.5px;
   line-height: 1.55;
@@ -3136,14 +3137,14 @@ blockquote {
   font-weight: 700;
   color: var(--muted);
   border: 1px dashed var(--line);
-  border-radius: 999px;
+  border-radius: 2px;
   padding: 4px 12px;
   cursor: help;
 }
 
 .stance-chip {
   justify-self: start;
-  border-radius: 999px;
+  border-radius: 2px;
   padding: 5px 13px;
   font-size: 12px;
   font-weight: 700;
@@ -3172,7 +3173,7 @@ blockquote {
 
 .showdown-card {
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: 2px;
   padding: 14px;
   display: grid;
   gap: 10px;
@@ -3219,14 +3220,6 @@ blockquote {
    ============================================================ */
 body {
   background: var(--bg);
-}
-
-h1,
-h2,
-.primer-copy h2,
-.module-header h2 {
-  font-family: Iowan Old Style, Baskerville, Georgia, serif;
-  font-weight: 600;
 }
 
 .console-shell,
@@ -3422,7 +3415,7 @@ h2,
 .welcome-hero > h1,
 .welcome-hero > .welcome-lede { grid-column: 1; }
 .welcome-hero .welcome-kicker { color: var(--accent-strong); }
-.welcome-hero h1 { color: var(--ink); font-size: clamp(2.35rem, 5.2vw, 5rem); line-height: 0.98; }
+.welcome-hero h1 { color: var(--ink); font-size: clamp(2rem, 5.2vw, 5rem); line-height: 0.98; }
 .welcome-hero .welcome-lede { color: var(--muted); font-size: clamp(1rem, 1.4vw, 1.15rem); }
 .welcome-stats {
   grid-column: 2;
@@ -3503,6 +3496,81 @@ h2,
 .caveat-banner { border-radius: 2px; background: #fff8e5; }
 .section-label { color: var(--accent-strong); }
 
+/* The full appendix shares the same square-corner editorial language. */
+.queue-item,
+.stat-card,
+.fp-category,
+.unsolved-card,
+.cost-grid > div,
+.disagreement-card,
+.typology-card,
+.model-compare-table,
+.verdict,
+.tour-card button {
+  border-radius: 2px;
+}
+
+/* Shared editorial treatment for the story artifact and the standalone tester. */
+.story-artifact {
+  max-width: 880px;
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+}
+
+.story-artifact .primer-case-file {
+  border-radius: 2px;
+  box-shadow: none;
+}
+
+.story-artifact h2 {
+  max-width: 21ch;
+  font-size: clamp(1.75rem, 3.8vw, 3.15rem);
+  line-height: 1.04;
+}
+
+.tester-panel {
+  max-width: 900px;
+}
+
+.tester-panel .panel-intro {
+  max-width: 62ch;
+}
+
+.tester-presets {
+  margin-top: 14px;
+}
+
+.tester-verdict {
+  margin-top: 24px;
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+}
+
+.tester-verdict .section-label {
+  margin-bottom: 10px;
+}
+
+.appendix-link {
+  display: inline-flex;
+  gap: 7px;
+  align-items: baseline;
+  margin-bottom: 12px;
+  color: var(--accent-strong);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.appendix-link span {
+  color: var(--muted);
+  font-size: inherit;
+}
+
+.appendix-link:hover span {
+  color: var(--accent-strong);
+}
+
 @media (max-width: 940px) {
   .console-sidebar { gap: 12px; padding: 9px 18px; }
   .console-brand { min-width: 130px; }
@@ -3518,11 +3586,16 @@ h2,
   .console-sidebar { align-items: flex-start; min-height: 0; }
   .console-brand { min-width: 100px; padding-top: 4px; }
   .console-brand strong { font-size: 0.76rem; }
-  .console-nav { gap: 0; }
+  .console-nav {
+    gap: 0;
+    padding-right: 22px;
+    scroll-padding-inline: 12px;
+    scroll-snap-type: x proximity;
+  }
   .module-button { padding: 6px 7px; }
+  .module-button { scroll-snap-align: start; }
   .module-button > span { font-size: 0.7rem; }
   .console-main { padding: 24px 18px 52px; }
-  .welcome-hero h1 { font-size: clamp(2rem, 10vw, 2.75rem); }
   .welcome-stats, .welcome-paths, .how-steps { grid-template-columns: 1fr; }
   .welcome-hero .welcome-stat, .welcome-hero .path-card, .how-step { min-height: 0; border-right: 0; border-bottom: 1px solid var(--line); }
   .welcome-hero .welcome-stat:last-child, .welcome-hero .path-card:last-child, .how-step:last-child { border-bottom: 0; }

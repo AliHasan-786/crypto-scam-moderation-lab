@@ -22,9 +22,9 @@ This is a menu of evidence-building tracks, not a promise to ship every phase in
 
 1. Finish the public narrative and make its existing claims internally consistent.
 2. Bring in real-world measurement safely: the firehose calibration artifact, a data card, and versioned eval manifests.
-3. Benchmark the system against current guard models through a preregistered label/action mapping.
-4. Execute the red-team scenarios already designed for the reviewer assistant.
-5. Operate a shadow service only after the preceding evidence is in place.
+3. Pass the shadow-service gate and begin observation-only collection in parallel; calendar time is evidence.
+4. Benchmark the system against current guard models through a preregistered label/action mapping.
+5. Execute the red-team scenarios already designed for the reviewer assistant.
 6. Treat a public labeler as an optional, later decision — not as the definition of success.
 
 No phase may add a public claim, model, or live-data integration without a provenance note, retention rule, owner, and rollback path.
@@ -50,7 +50,7 @@ Complete `COLLABORATION_HANDOFF.md` items using the resolved decisions: keep one
 ### 0.2 Audit, then rebase and land the firehose branch
 `origin/scale/live-firehose-radar` predates the editorial redesign. Rebase onto `main`, resolving all UI conflicts **in favor of the editorial system** (serif/2px/four destinations). Re-home the Live Radar module: it becomes a section of **Try it** ("Watch it read the real firehose"), below the tester — not a fifth destination. Keep Decision Log 011 (aggregates only, no post text/handles/DIDs stored or displayed) linked from the radar UI.
 
-Before rebasing, inspect the branch's collection window, sampling logic, source terms, data retention, calibration labels (if any), and the exact definition of "review-tier." Do not repeat the 7.10% figure until that audit confirms the report and its denominator.
+Timebox the pre-rebase audit to one day: inspect the branch's collection window, sampling logic, source terms, data retention, calibration labels (if any), and the exact definition of "review-tier." Do not repeat the 7.10% figure until that audit confirms the report and its denominator. If it does not, rerun `stream_calibration.py` with corrected accounting rather than opening an indefinite forensic investigation.
 
 **Acceptance:** the branch audit is recorded in the data card; radar renders aggregate rates only; `rg -i "did:|handle" crypto-scam-lab/app.js` shows no per-post identity handling in the radar path; the calibration report is visible in "At scale" with its synthetic-vs-measured gap and collection window stated.
 
@@ -72,12 +72,13 @@ New module `model_comparison/guard_model_bench.py`. Run the following systems ov
 | Lab baseline (TF-IDF + policy features + tiers) | local | the incumbent cheap tier |
 | OpenAI Moderation API (omni-moderation-latest) | API, free | industry default second opinion |
 | Llama Guard 4 | Groq or Together API | current Meta guard gen |
-| ShieldGemma 2 | only if modality and deployment path fit the text task | do not force a vision model into a text-only comparison |
+| ShieldGemma text classifiers (2B/9B) | exact Hugging Face model IDs pinned in config | text-task comparator; ShieldGemma 2 is image safety and out of scope |
 | gpt-oss-safeguard-20b | Groq/Together | **run with the lab's own `policy/CRYPTO_INVESTMENT_SCAM_POLICY.md` as the policy input** — policy-as-artifact is the point |
 | Existing Claude evidence adapter | cached + regeneration script | already built |
 
 Requirements:
 - Cached, provenance-labeled outputs in `model_comparison/cache/` following the `llm_evidence/cache` pattern (model id, version/date, prompt hash). Config-pinned model identifiers in one `model_comparison/config.json`.
+- Before the first API call, commit `model_comparison/PREREGISTRATION.md`: each model's output-to-action mapping, input preprocessing, the skeptical-reportage false-positive hypothesis, and the commitment to publish losses and incompatible mappings. Every benchmark report cites that commit hash.
 - Capture per-call latency and computed cost per 1K posts for each system.
 - Preregister the mapping from each model's native output into this lab's three actions: public-label candidate, human review, or no label. "No compatible action mapping" is a valid reported outcome, not a reason to coerce a result.
 - **Per-false-positive-class breakdown**: does each guard model also punish the Skeptical Third Party Report class? Whether industry models share the baseline's worst failure mode is the headline question — report it either way.
@@ -154,10 +155,11 @@ Generate ~200 paraphrase/localization variants of 10 synthetic seed scams (cache
 
 ```
 Week 1:      0.1 handoff → 0.2 branch audit/rebase decision → 0.3 provenance
-Weeks 2–3:   1.1 benchmark protocol + first compatible-model run → 1.2 Inspect packaging
+             pass the shadow-service gate and start observation-only collection in parallel
+Weeks 2–3:   1.1 preregistration + first compatible-model run → 1.2 Inspect packaging
              4.1 blind holdout protocol frozen in parallel
 Weeks 3–4:   3.1 reviewer-assistant red team → 3.2 applicable garak probes
-Week 5:      Decide whether the quality of Phase 0–3 evidence justifies shadow mode
+Week 5:      Reassess publication of shadow findings and any public-labeler go/no-go
 Ongoing:     Shadow operations, reviewer study, and any public labeler remain separately gated
 ```
 

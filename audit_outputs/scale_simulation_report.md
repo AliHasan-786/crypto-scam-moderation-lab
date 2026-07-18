@@ -1,6 +1,6 @@
 # Scale Simulation — Thresholds as Staffing Decisions
 
-50,000 posts/day (scored sample: 6,000) · true prevalence 1.55% · generated 2026-07-10
+50,000 posts/day (scored sample: 6,000) · true prevalence 1.55% · generated 2026-07-18
 
 | Review threshold | Queue/day | Review-net recall | Reviewers | Daily cost | Cost per caught scam |
 | --- | --- | --- | --- | --- | --- |

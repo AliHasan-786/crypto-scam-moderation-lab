@@ -1,6 +1,6 @@
 # Error Analysis — What This System Gets Wrong
 
-Generated 2026-07-10. 8 decision-level false positives, 0 full misses on the held-out test set; 5 of 9 authored hard cases still failing (published deliberately — see Decision Log 010).
+Generated 2026-07-18. 8 decision-level false positives, 0 full misses on the held-out test set; 5 of 9 authored hard cases still failing (published deliberately — see Decision Log 010).
 
 ## Decision-level false positives (held-out test set)
 

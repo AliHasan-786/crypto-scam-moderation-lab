@@ -21,7 +21,7 @@ const app = document.querySelector("#app");
 
 const state = {
   threshold: 0.48,
-  queue: "flagged",
+  queue: "falsePositive",
   selectedId: null,
   selectedMode: "dataset",
   activeLens: "content",
@@ -150,7 +150,7 @@ const consoleModules = [
     subtitle: "Proof, and published mistakes",
     group: "",
     title: "What breaks",
-    description: "The eval suites, the release gate, the published error analysis, the LLM comparison, and the GenAI abuse lab - together, because green checks mean nothing without visible failures.",
+    description: "Authored suites that pass 100% prove only that the boundary holds. This is what the system actually gets wrong, published on purpose.",
     featured: true,
   },
   {
@@ -430,7 +430,7 @@ const lenses = {
 const testerMutations = [
   {
     id: "space",
-    label: "Space",
+    label: "Space out letters",
     apply: (text) =>
       text
         .replace(/\bwallet\b/gi, "w a l l e t")
@@ -440,7 +440,7 @@ const testerMutations = [
   },
   {
     id: "leet",
-    label: "Leet",
+    label: "Swap lookalike characters",
     apply: (text) =>
       text
         .replace(/\bofficial\b/gi, "0fficial")
@@ -451,7 +451,7 @@ const testerMutations = [
   },
   {
     id: "defang",
-    label: "Defang",
+    label: "Defang the link",
     apply: (text) => {
       const defanged = text
         .replace(/https?:\/\//gi, "hxxps://")
@@ -461,7 +461,7 @@ const testerMutations = [
   },
   {
     id: "ocr",
-    label: "OCR",
+    label: "Move the ask into an image",
     apply: (text) =>
       `[Image OCR]\nScreenshot text: ${cleanText(text)}\nQR code visible. Link is cropped. Source account not visible.`,
   },
@@ -1000,20 +1000,35 @@ function renderSelected(item) {
 }
 
 function renderTester() {
+  const extraPresets = scenarioTexts.filter(
+    (scenario) => !heroPresets.some((preset) => preset.text === scenario.text),
+  );
   return `
     <section class="panel tester-panel" id="tester">
       <div class="section-label">Try a post</div>
+      <p class="panel-intro">The verdict updates as you type. Change the context, then watch how the same scam vocabulary can mean something different.</p>
       <textarea id="custom-text" rows="6">${escapeHtml(state.customText)}</textarea>
-      <div class="scenario-row">
-        ${scenarioTexts
+      <div class="hero-presets tester-presets" aria-label="Example posts">
+        ${heroPresets
           .map(
-            (scenario) => `
-              <button type="button" data-scenario="${escapeHtml(scenario.id)}">${escapeHtml(scenario.label)}</button>
+            (preset) => `
+              <button type="button" class="hero-preset ${state.customText === preset.text ? "active" : ""}" data-tester-preset="${escapeHtml(preset.id)}">
+                ${escapeHtml(preset.label)}
+              </button>
+            `,
+          )
+          .join("")}
+        ${extraPresets
+          .map(
+            (preset) => `
+              <button type="button" class="hero-preset ${state.customText === preset.text ? "active" : ""}" data-tester-preset="${escapeHtml(preset.id)}">
+                ${escapeHtml(preset.label)}
+              </button>
             `,
           )
           .join("")}
       </div>
-      <div class="mutation-row">
+      <div class="mutation-row" aria-label="Evasion experiments">
         ${testerMutations
           .map(
             (mutation) => `
@@ -1022,7 +1037,10 @@ function renderTester() {
           )
           .join("")}
       </div>
-      <button type="button" class="primary-action" id="evaluate-custom">Evaluate draft</button>
+      <section class="tester-verdict" aria-live="polite">
+        <div class="section-label">Verdict</div>
+        <div id="custom-result">${renderHeroResult(state.customText)}</div>
+      </section>
     </section>
   `;
 }
@@ -1990,28 +2008,10 @@ function renderQueue(queue, selected) {
 function renderProjectPrimer() {
   return `
     <section class="project-primer" id="overview">
-      <div class="primer-hero">
-        <div class="primer-copy">
-          <span class="section-label">The problem</span>
-          <h2>Catch scams without silencing crypto conversation</h2>
-          <p>
-            On social platforms, investment scams often appear as giveaways, wallet recovery, support replies,
-            guaranteed returns, or urgent connection prompts. The same words also appear in warnings, news,
-            technical help, satire, and honest questions.
-          </p>
-          <p>
-            This project turns a policy proposal and coursework labeler into a working safety system. It separates
-            public labels from human review, exposes the evidence behind each decision, and tests whether the system
-            protects legitimate speech when scammers change tactics.
-          </p>
-          <div class="primer-actions" aria-label="Project entry points">
-            <a href="#tester">Try a decision</a>
-            <a href="#failures">See the failures</a>
-            <a href="#system">Open the appendix</a>
-          </div>
-        </div>
+      <section class="story-artifact" aria-labelledby="artifact-title">
         <div class="primer-case-file">
           <span>Held-out test artifact</span>
+          <h2 id="artifact-title">The system catches every held-out scam. It still gets eight legitimate posts wrong.</h2>
           <div class="snapshot-grid">
             <div><strong>${reportedMetrics.testRows}</strong><small>test posts</small></div>
             <div><strong>${percentage(reportedMetrics.fraudRecall)}</strong><small>fraud recall</small></div>
@@ -2039,7 +2039,7 @@ function renderProjectPrimer() {
             The goal is not one model score: it is deciding when to label, review, or leave speech alone.
           </p>
         </div>
-      </div>
+      </section>
 
       <section class="policy-brief" aria-labelledby="policy-brief-title">
         <header class="policy-brief-head">
@@ -2101,6 +2101,17 @@ function renderProjectPrimer() {
             )
             .join("")}
         </dl>
+      </section>
+
+      <section class="welcome-provenance story-provenance">
+        <div class="section-label">Provenance</div>
+        <p>
+          Started as Cornell Tech Trust &amp; Safety coursework (CS 5342); rebuilt solo into this system after
+          auditing the original model and finding its evaluation flaws. The
+          <a href="${REPO_URL}" target="_blank" rel="noopener">repository</a> contains the policy pack,
+          eval suites, decision log, and release gate. Deliberate limits: sanitized public data, no enforcement
+          capability, and no tracking of visitors.
+        </p>
       </section>
     </section>
   `;
@@ -2309,16 +2320,6 @@ function renderWelcome() {
         </div>
       </section>
 
-      <section class="panel welcome-provenance">
-        <div class="section-label">Provenance</div>
-        <p>
-          Started as Cornell Tech Trust &amp; Safety coursework (CS 5342); rebuilt solo into this system after
-          auditing my own original model and finding its evaluation flaws. The
-          <a href="${REPO_URL}" target="_blank" rel="noopener">repository</a> contains the full policy pack,
-          eval suites, decision log, and a CI release gate that regenerates everything on every commit.
-          Deliberate limits: sanitized public data, no enforcement capability, no tracking of visitors.
-        </p>
-      </section>
     </div>
   `;
 }
@@ -2846,12 +2847,14 @@ function renderConsoleNav() {
       <nav class="console-nav" aria-label="Project sections">
         ${featuredModules
           .map((module) => {
+            const isAppendix = activeModule().group === "Appendix";
+            const isActive = state.activeModule === module.id || (module.id === "system" && isAppendix);
             return `
               <button
                 type="button"
-                class="module-button ${state.activeModule === module.id ? "active" : ""}"
+                class="module-button ${isActive ? "active" : ""}"
                 data-module="${escapeHtml(module.id)}"
-                aria-current="${state.activeModule === module.id ? "page" : "false"}"
+                aria-current="${isActive ? "page" : "false"}"
               >
                 <span>${escapeHtml(module.label)}</span>
               </button>
@@ -2901,7 +2904,7 @@ function renderModuleHeader() {
   const module = activeModule();
   return `
     <header class="module-header">
-      ${module.group ? `<span>${escapeHtml(module.group)}</span>` : ""}
+      ${module.group === "Appendix" ? '<a class="appendix-link" href="#system">Appendix <span>&larr; The full system</span></a>' : module.group ? `<span>${escapeHtml(module.group)}</span>` : ""}
       <h2>${escapeHtml(module.title)}</h2>
       <p>${escapeHtml(module.description)}</p>
     </header>
@@ -3142,9 +3145,9 @@ function renderModuleContent(context) {
       <div class="module-grid two-column">
         <div class="module-stack">
           ${renderTester()}
-          ${renderSelected(context.selected)}
         </div>
         <div class="module-stack">
+          ${renderPolicyCard()}
           ${renderEvidenceExtractor()}
           ${renderAdversarialLab()}
         </div>
@@ -3174,7 +3177,7 @@ function renderModuleContent(context) {
   return renderWelcome();
 }
 
-const RAIL_MODULES = new Set(["queue", "tester"]);
+const RAIL_MODULES = new Set(["queue"]);
 const SYSTEM_BAR_MODULES = new Set();
 
 function renderConsoleWorkspace(context) {
@@ -3213,6 +3216,8 @@ function render() {
 }
 
 function attachEvents() {
+  document.querySelector(".module-button.active")?.scrollIntoView({ block: "nearest", inline: "center" });
+
   document.querySelectorAll("[data-module]").forEach((button) => {
     button.addEventListener("click", () => {
       activateModule(button.dataset.module);
@@ -3293,6 +3298,16 @@ function attachEvents() {
       if (scenario) {
         state.customText = scenario.text;
         state.selectedMode = "custom";
+        render();
+      }
+    });
+  });
+
+  document.querySelectorAll("[data-tester-preset]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const preset = [...heroPresets, ...scenarioTexts].find((item) => item.id === button.dataset.testerPreset);
+      if (preset) {
+        state.customText = preset.text;
         render();
       }
     });
@@ -3382,12 +3397,13 @@ function attachEvents() {
   }
 
   const customText = document.querySelector("#custom-text");
-  const evaluate = document.querySelector("#evaluate-custom");
-  if (customText && evaluate) {
-    evaluate.addEventListener("click", () => {
+  if (customText) {
+    customText.addEventListener("input", () => {
       state.customText = customText.value;
-      state.selectedMode = "custom";
-      render();
+      const container = document.querySelector("#custom-result");
+      if (container) {
+        container.innerHTML = renderHeroResult(state.customText);
+      }
     });
   }
 }
