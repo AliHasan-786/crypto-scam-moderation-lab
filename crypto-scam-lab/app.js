@@ -16,6 +16,8 @@ import { errorAnalysis } from "./data/errorAnalysis.js";
 import { llmComparison } from "./data/llmComparison.js";
 import { scaleSimulation } from "./data/scaleSimulation.js";
 import { threatLandscape } from "./data/threatLandscape.js";
+import { liveStreamCalibration } from "./data/liveStreamCalibration.js";
+import { attachLiveRadar, configureLiveRadar, renderLiveRadar, stopLiveRadar } from "./radar.js";
 
 const app = document.querySelector("#app");
 
@@ -607,6 +609,7 @@ function scrollToConsoleTop() {
 
 function activateModule(rawId, updateHash = true) {
   const target = resolveTarget(rawId);
+  if (target.module !== "tester") stopLiveRadar();
   applyTarget(target);
   if (updateHash) {
     window.history.replaceState(null, "", `#${rawId}`);
@@ -669,6 +672,8 @@ function scoreText(text) {
     ruleResults,
   };
 }
+
+configureLiveRadar(scoreText);
 
 function decideAction(score) {
   const threshold = state.threshold;
@@ -3145,6 +3150,7 @@ function renderModuleContent(context) {
       <div class="module-grid two-column">
         <div class="module-stack">
           ${renderTester()}
+          ${renderLiveRadar(liveStreamCalibration)}
         </div>
         <div class="module-stack">
           ${renderPolicyCard()}
@@ -3217,6 +3223,7 @@ function render() {
 
 function attachEvents() {
   document.querySelector(".module-button.active")?.scrollIntoView({ block: "nearest", inline: "center" });
+  if (state.activeModule === "tester") attachLiveRadar();
 
   document.querySelectorAll("[data-module]").forEach((button) => {
     button.addEventListener("click", () => {

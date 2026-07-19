@@ -73,3 +73,10 @@ Dated record of the judgment calls behind the system, with the tradeoff each one
 **Decision:** Add a standing error-analysis surface: the live false positives at the operating point, unsolved hard cases the system currently gets wrong, and the tradeoff each failure represents. Failures stay published; fixing one requires adding a harder case to replace it.
 **Tradeoff accepted:** The project permanently displays its own mistakes. That is the point: an evaluation culture where 100% green is treated as a smell, not a goal.
 **Revisit when:** Never — the mechanism is permanent even as individual cases rotate.
+
+### 011 — Public stream measurement is aggregate-only and bounded (Jul 2026)
+
+**Context:** A public Bluesky Jetstream relay can make routing behavior observable at scale, but showing or retaining real posts would create an unreviewed accusation surface.
+**Decision:** The browser radar scores only in the visitor's browser and displays aggregate counters. The offline calibration command persists aggregates only, requires a named operator, terms-review date, and kill-switch owner, and records a language-filtered denominator. No public surface can publish a label or retain text, handles, DIDs, URIs, or per-post decisions.
+**Tradeoff accepted:** The experience is less dramatic than a feed of alleged scams. That restraint is the product requirement: observed real-user content cannot become a portfolio display or an enforcement decision.
+**Revisit when:** A separate, approved retention and access-control program exists for local research. It never authorizes public display of live user content.
