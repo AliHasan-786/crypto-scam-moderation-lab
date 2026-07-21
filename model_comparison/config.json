@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "runMode": "cache_only",
+  "budgetCapUsd": 80,
+  "systems": [
+    {"id": "lab-baseline", "kind": "local", "status": "available", "actionMapping": "native"},
+    {"id": "openai-moderation", "kind": "api", "candidateModel": "omni-moderation-latest", "status": "unavailable_pending_access"},
+    {"id": "llama-guard", "kind": "hosted", "candidateModel": "provider-resolved-before-run", "status": "unavailable_pending_access"},
+    {"id": "shieldgemma-text", "kind": "hosted", "candidateModel": "provider-resolved-before-run", "status": "unavailable_pending_access"},
+    {"id": "gpt-oss-safeguard", "kind": "hosted", "candidateModel": "provider-resolved-before-run", "status": "unavailable_pending_access"}
+  ]
+}

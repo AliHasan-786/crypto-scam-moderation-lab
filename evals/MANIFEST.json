@@ -56,6 +56,15 @@
       "sha256": "59ba0ff5d3474499007a9d4386e337cbca6c5ec900f2d252f8a3003f312159e9",
       "lastModified": "2026-07-18",
       "purpose": "Synthetic incident-response tabletop scenarios."
+    },
+    {
+      "id": "reviewer-assistant-red-team",
+      "path": "red_team/reviewer_assistant_cases.json",
+      "semanticVersion": "1.0.0",
+      "caseCount": 12,
+      "sha256": "be68b00b7ce855a44bfdab3f301f78871656fb0dc8e8cbddcf75df01e58bf579",
+      "lastModified": "2026-07-20",
+      "purpose": "Authored content-as-data prompt-injection and protected-context attacks against the reviewer assistant."
     }
   ],
   "datasets": [

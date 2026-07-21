@@ -116,6 +116,15 @@ echo "[15/15] Enforcing the release gate"
   --markdown-out audit_outputs/eval_regression_gate_report.md \
   --lab-summary crypto-scam-lab/data/evalGate.js
 
+echo "[shadow controls] Verifying build-only service guardrails"
+SHADOW_ENABLED=true "$PYTHON_BIN" -m unittest labeler_service.test_shadow_controls
+
+echo "[benchmark scaffold] Regenerating cache-only comparator report"
+"$PYTHON_BIN" model_comparison/guard_model_bench.py
+
+echo "[reviewer red team] Running hostile-content fixture suite"
+"$PYTHON_BIN" red_team/reviewer_assistant_red_team.py
+
 echo "[provenance] Stamping generated reports with manifest and dataset hashes"
 "$PYTHON_BIN" scripts/stamp_report_provenance.py
 
@@ -129,6 +138,9 @@ node --check crypto-scam-lab/app.js
   llm_evidence \
   ops_analytics \
   quality \
+  labeler_service \
+  model_comparison \
+  red_team \
   audit_original_labeler.py \
   policy_proposal_labeler_v2.py
 
