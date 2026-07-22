@@ -1,6 +1,8 @@
-# Reviewer-Assistant Red Team
+# Reviewer-Assistant Red Team — Deterministic Pilot
 
 Authored content-as-data attacks against the deterministic extractor only; hosted-model paths remain unrun without approved access.
+
+This is a 12-case pilot, not a completed hosted-model red team.
 
 | Metric | Result |
 | --- | ---: |

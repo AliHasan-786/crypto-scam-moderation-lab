@@ -52,6 +52,16 @@ Honest answers to the "what breaks at 5M posts/day" question:
 
 The dataset is small and mostly English. The suites are authored (the error-analysis surface exists precisely because of this). Campaign examples are sanitized and deterministic. OCR, live URL resolution, and account-history enrichment are simulated or future work. The public demo cannot take any platform action, by design. None of this is hidden — the failure page is a top-level navigation item.
 
+## Current operating-work status (July 2026)
+
+The live browser radar is aggregate-only: it is capped, retains no post text or
+identifiers, and cannot act on accounts. Shadow-service work is fixture-only
+until a named operator, retention plan, terms review, and incident duties are
+approved. The guard-model comparison is preregistered but cache-only until
+model access is approved. The reviewer-assistant red team is a 12-case
+deterministic pilot that retains one protected-context review-routing failure as
+an open issue. These are evidence-building tracks, not deployment claims.
+
 ## Screenshots
 
 ![Landing page](assets/lab-desktop-overview.png)

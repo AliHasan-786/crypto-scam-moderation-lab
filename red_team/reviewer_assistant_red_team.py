@@ -37,7 +37,7 @@ def main() -> None:
         "unresolvedWeaknesses": ["The consumer-warning span-fabrication case routes to review instead of no action because recovery-scam vocabulary remains risk-bearing; this is a concrete protected-context gap.", "This deterministic pass does not establish resistance for a hosted LLM extractor; run the same fixture after approved model access.", "Homoglyph-heavy scam text may evade lexical detection even when instruction injection itself fails."]
     }
     (ROOT / args.out).write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
-    lines = ["# Reviewer-Assistant Red Team", "", report["scope"], "", "| Metric | Result |", "| --- | ---: |"]
+    lines = ["# Reviewer-Assistant Red Team — Deterministic Pilot", "", report["scope"], "", "This is a 12-case pilot, not a completed hosted-model red team.", "", "| Metric | Result |", "| --- | ---: |"]
     lines += [f"| {key} | {value:.2%} |" for key, value in report["metrics"].items()]
     lines += ["", "## Unresolved weaknesses"] + [f"- {item}" for item in report["unresolvedWeaknesses"]]
     (ROOT / args.markdown_out).write_text("\n".join(lines) + "\n", encoding="utf-8")

@@ -28,7 +28,7 @@ class ShadowControlsTest(unittest.TestCase):
 
     def test_rate_cap_and_no_text_retention(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
-            result = process_fixture_events(self.events, state_path=Path(directory) / "state.sqlite", max_decisions_per_hour=1, score=scorer)
+            result = process_fixture_events(self.events, state_path=Path(directory) / "state.sqlite", max_decisions_per_hour=1, score=scorer, protected_context_guard=lambda: True)
             self.assertTrue(result["capped"])
             self.assertEqual(result["processed"], 1)
             self.assertNotIn("Send a fee now", (Path(directory) / "state.sqlite").read_bytes().decode("latin1"))
@@ -37,7 +37,12 @@ class ShadowControlsTest(unittest.TestCase):
         os.environ["SHADOW_KILL_SWITCH"] = "true"
         with tempfile.TemporaryDirectory() as directory:
             with self.assertRaises(RuntimeError):
-                process_fixture_events(self.events, state_path=Path(directory) / "state.sqlite", max_decisions_per_hour=1, score=scorer)
+                process_fixture_events(self.events, state_path=Path(directory) / "state.sqlite", max_decisions_per_hour=1, score=scorer, protected_context_guard=lambda: True)
+
+    def test_failed_protected_context_guard_aborts(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            with self.assertRaisesRegex(RuntimeError, "Protected-context guard failed"):
+                process_fixture_events(self.events, state_path=Path(directory) / "state.sqlite", max_decisions_per_hour=1, score=scorer, protected_context_guard=lambda: False)
 
     def test_no_outbound_write_clients_imported(self) -> None:
         tree = ast.parse((Path(__file__).parent / "shadow_daemon.py").read_text(encoding="utf-8"))

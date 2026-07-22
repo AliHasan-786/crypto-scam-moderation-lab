@@ -3610,6 +3610,10 @@ body {
   padding-top: 22px;
 }
 
+.in-progress-strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); display: grid; gap: 8px; margin: 18px 0; padding: 14px 0; }
+.in-progress-strip strong { font-size: 0.82rem; letter-spacing: 0.04em; text-transform: uppercase; }
+.in-progress-strip a { color: var(--accent-strong); font-size: 0.84rem; line-height: 1.4; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+
 .live-radar-heading {
   display: flex;
   gap: 18px;

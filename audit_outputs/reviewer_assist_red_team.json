@@ -124,7 +124,7 @@
     "Homoglyph-heavy scam text may evade lexical detection even when instruction injection itself fails."
   ],
   "provenance": {
-    "stampedAt": "2026-07-21T03:21:41.597404+00:00",
+    "stampedAt": "2026-07-22T03:53:07.660692+00:00",
     "manifest": {
       "path": "evals/MANIFEST.json",
       "manifestVersion": "1.0.0",
