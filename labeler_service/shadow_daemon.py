@@ -53,9 +53,12 @@ def process_fixture_events(
     state_path: Path,
     max_decisions_per_hour: int,
     score: Callable[[str], dict],
+    protected_context_guard: Callable[[], bool],
 ) -> dict:
     """Process authored fixtures with a capped, aggregate-only local state."""
     require_enabled()
+    if not protected_context_guard():
+        raise RuntimeError("Protected-context guard failed; shadow processing aborted.")
     if max_decisions_per_hour <= 0:
         raise ValueError("max_decisions_per_hour must be positive")
     actions: Counter[str] = Counter()

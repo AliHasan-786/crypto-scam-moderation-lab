@@ -1299,6 +1299,12 @@ function renderAgenticAbuseLab() {
   return `
     <section class="panel agentic-panel" id="agentic-abuse-lab">
       <div class="section-label">GenAI abuse lab</div>
+      <div class="in-progress-strip" aria-label="In progress, gated work">
+        <strong>In progress, gated</strong>
+        <a href="https://github.com/AliHasan-786/crypto-scam-moderation-lab/blob/main/audit_outputs/reviewer_assist_red_team.md" target="_blank" rel="noreferrer">Reviewer-assistant red team: deterministic pilot, 12 cases, one protected-context route kept open.</a>
+        <a href="https://github.com/AliHasan-786/crypto-scam-moderation-lab/blob/main/model_comparison/PREREGISTRATION.md" target="_blank" rel="noreferrer">Guard-model comparison: preregistered; awaiting approved model access.</a>
+        <a href="https://github.com/AliHasan-786/crypto-scam-moderation-lab/blob/main/docs/SHADOW_SERVICE_GATE_BRIEF.md" target="_blank" rel="noreferrer">Shadow service: build-only by decision; controls tested, no live collection.</a>
+      </div>
       <div class="agentic-control-row">
         <div>
           <h3>${escapeHtml(strategy.label)}</h3>
