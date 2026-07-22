@@ -5,6 +5,7 @@ import argparse
 import csv
 import hashlib
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -18,6 +19,16 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def load_local_env(path: Path) -> None:
+    """Load only local key/value pairs; this cache-only harness never sends them."""
+    if not path.exists():
+        return
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if "=" in line and not line.lstrip().startswith("#"):
+            key, value = line.split("=", 1)
+            os.environ.setdefault(key.strip(), value.strip())
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", default="model_comparison/config.json")
@@ -27,6 +38,7 @@ def main() -> None:
     parser.add_argument("--markdown-out", default="audit_outputs/guard_model_benchmark.md")
     args = parser.parse_args()
     config_path, test_path, model_path = ROOT / args.config, ROOT / args.test, ROOT / args.model_path
+    load_local_env(ROOT / "model_comparison/.env")
     config = json.loads(config_path.read_text(encoding="utf-8"))
     rows = list(csv.DictReader(test_path.open(encoding="utf-8-sig")))
     artifact = joblib.load(model_path)
@@ -42,6 +54,7 @@ def main() -> None:
         "claim": "Only the local baseline was executed. External systems are explicitly unavailable pending approved, version-resolved access.",
         "inputs": {"testSha256": sha256(test_path), "rows": len(rows), "preprocessing": "original post text only"},
         "preregistration": {"path": "model_comparison/PREREGISTRATION.md", "sha256": sha256(ROOT / "model_comparison/PREREGISTRATION.md")},
+        "credentialReadiness": {system["id"]: bool(os.environ.get(system["requiredEnv"])) for system in config["systems"] if system.get("requiredEnv")},
         "systems": [{"id": "lab-baseline", "status": "executed", "threshold": threshold, "tp": tp, "fp": fp, "fn": fn}] + [system for system in config["systems"] if system["id"] != "lab-baseline"],
         "notComparableYet": [system["id"] for system in config["systems"] if system["id"] != "lab-baseline"],
     }

@@ -5,7 +5,7 @@ Only the local baseline was executed. External systems are explicitly unavailabl
 | System | Status |
 | --- | --- |
 | lab-baseline | executed |
-| openai-moderation | unavailable_pending_access |
-| llama-guard | unavailable_pending_access |
-| shieldgemma-text | unavailable_pending_access |
-| gpt-oss-safeguard | unavailable_pending_access |
+| openai-moderation | pending_owner_go |
+| llama-guard-4 | pending_owner_go |
+| shieldgemma-text | pending_local_model_setup |
+| gpt-oss-safeguard | pending_owner_go |

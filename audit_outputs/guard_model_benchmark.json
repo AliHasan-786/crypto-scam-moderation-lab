@@ -8,7 +8,12 @@
   },
   "preregistration": {
     "path": "model_comparison/PREREGISTRATION.md",
-    "sha256": "1af107847949bb05a299732407d2b9297d477122c83d960db8917abe860b078a"
+    "sha256": "36c561d0da96e7d08f3e359da7920689379072cdb6fba083855239975441e61d"
+  },
+  "credentialReadiness": {
+    "openai-moderation": false,
+    "llama-guard-4": false,
+    "gpt-oss-safeguard": false
   },
   "systems": [
     {
@@ -22,36 +27,43 @@
     {
       "id": "openai-moderation",
       "kind": "api",
-      "candidateModel": "omni-moderation-latest",
-      "status": "unavailable_pending_access"
+      "provider": "openai",
+      "modelId": "omni-moderation-latest",
+      "requiredEnv": "OPENAI_API_KEY",
+      "status": "pending_owner_go"
     },
     {
-      "id": "llama-guard",
-      "kind": "hosted",
-      "candidateModel": "provider-resolved-before-run",
-      "status": "unavailable_pending_access"
+      "id": "llama-guard-4",
+      "kind": "api",
+      "provider": "groq",
+      "modelId": "meta-llama/llama-guard-4-12b",
+      "requiredEnv": "GROQ_API_KEY",
+      "status": "pending_owner_go"
     },
     {
       "id": "shieldgemma-text",
-      "kind": "hosted",
-      "candidateModel": "provider-resolved-before-run",
-      "status": "unavailable_pending_access"
+      "kind": "local",
+      "provider": "local",
+      "modelId": "google/shieldgemma-2b",
+      "status": "pending_local_model_setup"
     },
     {
       "id": "gpt-oss-safeguard",
-      "kind": "hosted",
-      "candidateModel": "provider-resolved-before-run",
-      "status": "unavailable_pending_access"
+      "kind": "api",
+      "provider": "groq",
+      "modelId": "gpt-oss-safeguard-20b",
+      "requiredEnv": "GROQ_API_KEY",
+      "status": "pending_owner_go"
     }
   ],
   "notComparableYet": [
     "openai-moderation",
-    "llama-guard",
+    "llama-guard-4",
     "shieldgemma-text",
     "gpt-oss-safeguard"
   ],
   "provenance": {
-    "stampedAt": "2026-07-21T03:21:41.597404+00:00",
+    "stampedAt": "2026-07-22T17:02:50.299105+00:00",
     "manifest": {
       "path": "evals/MANIFEST.json",
       "manifestVersion": "1.0.0",
