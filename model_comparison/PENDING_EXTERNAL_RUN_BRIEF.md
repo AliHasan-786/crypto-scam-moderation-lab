@@ -12,7 +12,9 @@ its free account accepted a `gpt-oss` smoke request, while it had decommissioned
 the Llama Guard route. The provider deviation is recorded in the
 preregistration; no model was silently substituted.
 
-The run records the preregistration hash, model identifier, provider-resolved
-identifier, prompt hash, input hash, raw response, usage, and latency in a
-local ignored cache. Public reporting uses only aggregate metrics and selected
-documented error-class counts.
+The completed cache records model identifier, provider-resolved identifier,
+input hash, raw response, usage, latency, timestamp, and request parameters.
+The exact prompt is reconstructable from the checked-in runner and policy; its
+SHA-256 is recorded in `EXTERNAL_RUN_PROVENANCE.md`. Future runs also write the
+prompt hash per record. Public reporting uses only aggregate metrics and
+selected documented error-class counts.

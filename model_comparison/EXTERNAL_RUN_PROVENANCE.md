@@ -29,10 +29,14 @@ deviation record.
   amended preregistration SHA-256 is
   `0e689f6661d68a5ae49314a227209de3b8eae2eba442e31edf0a784d78c29ee6`.
 
-The local cache stores case index, input hash, response, provider-resolved
-model, request parameters, usage, latency, timestamp, and retry attempt. It is
-intentionally ignored because raw third-party responses and operational details
-do not belong in the public repository.
+The completed local cache stores case index, input hash, response,
+provider-resolved model, request parameters, usage, latency, timestamp, and
+retry attempt. The exact static prompt used for both models has SHA-256
+`994837f3d384b4cc4634b7395c5f24e0030f13caf99132c92e21e790f3c2029d`,
+reconstructed from the checked-in runner and policy. The original cache did not
+write that value per record; future runs do. It is intentionally ignored because
+raw third-party responses and operational details do not belong in the public
+repository.
 
 ## Limits
 

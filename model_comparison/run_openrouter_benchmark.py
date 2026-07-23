@@ -48,12 +48,13 @@ def policy_prompt() -> str:
 
 
 def request_model(key: str, model: str, text: str, gpt_max_tokens: int) -> tuple[dict, float]:
+    prompt = policy_prompt()
     body: dict[str, object] = {
         "model": model,
         "temperature": 0,
         "max_tokens": gpt_max_tokens if model.startswith("openai/gpt-oss") else 256,
         "messages": [
-            {"role": "system", "content": policy_prompt()},
+            {"role": "system", "content": prompt},
             {"role": "user", "content": text},
         ],
     }
@@ -82,7 +83,11 @@ def request_model(key: str, model: str, text: str, gpt_max_tokens: int) -> tuple
                 "output": {"route": route, "rawVerdict": raw},
                 "usage": payload.get("usage", {}),
                 "providerModel": payload.get("model", model),
-                "request": {"maxTokens": body["max_tokens"], "reasoningEffort": body.get("reasoning_effort")},
+                "request": {
+                    "maxTokens": body["max_tokens"],
+                    "reasoningEffort": body.get("reasoning_effort"),
+                    "promptSha256": sha256(prompt.encode("utf-8")),
+                },
             }, time.perf_counter() - started
         except urllib.error.HTTPError as exc:
             if exc.code not in {429, 502, 503, 504} or attempt == 5:

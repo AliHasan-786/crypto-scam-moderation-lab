@@ -98,3 +98,11 @@ zero rate or claim support for H1; it reports the six-case skeptical-reportage
 *review* rate as a descriptive, non-primary result. A future study must either
 pre-register a compatible shared action mapping or make review rate the primary
 metric before collection.
+
+**2026-07-23:** the completed cache contains model IDs, input hashes, outputs,
+usage, timestamps, and latency, but did not initially persist a per-record
+prompt hash or immutable provider price snapshot. The exact prompt is
+reconstructable from the checked-in runner and policy and is hash-recorded in
+the execution provenance; dollar-cost metrics are omitted. Future runner
+records include a per-record prompt hash. This provenance gap is retained as a
+method limitation, not backfilled as if it had been collected at request time.
