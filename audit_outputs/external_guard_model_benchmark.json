@@ -13,8 +13,9 @@
     "hostedActionMapping": "SAFE -> no_action; UNSAFE -> human_review; incompatible -> excluded from action metrics. No hosted output can create a public-label candidate."
   },
   "cost": {
-    "status": "not_reported",
-    "reason": "Provider usage was cached, but no immutable provider price snapshot was captured."
+    "status": "reconstructed_list_price_estimate",
+    "priceSnapshot": "model_comparison/OPENROUTER_PRICE_SNAPSHOT_2026-07-23.md",
+    "limitation": "Uses dated public list rates and retained final-response usage; it is not an invoice and excludes unknown usage from three blank responses that were retried."
   },
   "systems": {
     "lab-baseline": {
@@ -71,6 +72,11 @@
         "completion_tokens": 693,
         "total_tokens": 318692
       },
+      "estimatedListCost": {
+        "usdForRetainedFinalResponses": 0.057365,
+        "usdPer1KPosts": 0.3415,
+        "note": "List-price estimate from retained final responses."
+      },
       "providerResolvedModelIds": [
         "meta-llama/llama-guard-4-12b"
       ]
@@ -106,6 +112,11 @@
         "completion_tokens": 43501,
         "total_tokens": 340206
       },
+      "estimatedListCost": {
+        "usdForRetainedFinalResponses": 0.035303,
+        "usdPer1KPosts": 0.2101,
+        "note": "Lower-bound list-price estimate: excludes billable usage from three blank gpt-oss responses that were retried."
+      },
       "providerResolvedModelIds": [
         "openai/gpt-oss-safeguard-20b"
       ]
@@ -113,8 +124,9 @@
   },
   "interpretation": [
     "The six-case skeptical-reportage slice was documented before this hosted run. It is a targeted error-analysis slice, not a complete protected-context taxonomy.",
-    "H1's public-label comparison is not estimable because the hosted mapping intentionally has no public-label action. The six-case hosted review rates are descriptive, non-primary evidence only.",
-    "Llama Guard reaches 60/60 review-or-label recall with three legitimate review routes. gpt-oss reaches 59/60 with three legitimate review routes. These are offline policy-conditioned observations, not production performance claims."
+    "The preregistered prediction that hosted guards would over-flag the documented skeptical-reportage cases was not supported on this slice: Llama Guard routed 0/6 and gpt-oss routed 1/6 to review, versus the baseline's 6/6. The slice is directional, not conclusive (n=6).",
+    "The two-action hosted mapping and three-action baseline mapping are not like-for-like. The report therefore does not treat legitimate review-route counts or review precision as a model-quality ranking. V2 pre-registers a shared three-action contract before any additional calls.",
+    "Llama Guard reaches 60/60 direct-scam review-or-label recall; gpt-oss reaches 59/60 and clears one direct scam. Llama Guard's mean observed latency was about three times lower. These are offline policy-conditioned observations, not production performance claims."
   ],
   "provenance": "model_comparison/EXTERNAL_RUN_PROVENANCE.md"
 }

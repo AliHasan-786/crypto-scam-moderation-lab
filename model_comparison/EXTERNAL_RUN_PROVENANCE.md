@@ -43,5 +43,7 @@ repository.
 This is a controlled offline comparison, not a production safety claim. The
 headline stance slice is the six skeptical-reportage cases pre-documented in
 the error analysis; it is not a newly labeled complete taxonomy of all
-legitimate test items. OpenRouter usage was retained; a provider price snapshot
-was not, so the public report does not claim dollar cost or cost-per-1K.
+legitimate test items. The report now includes a dated, reconstructed list-price
+estimate from retained final-response usage; it is not an invoice and excludes
+unretained usage from the three blank gpt-oss attempts. See
+`model_comparison/OPENROUTER_PRICE_SNAPSHOT_2026-07-23.md`.

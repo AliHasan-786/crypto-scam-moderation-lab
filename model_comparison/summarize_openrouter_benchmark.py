@@ -14,6 +14,10 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 SEED = 20260723
 RESAMPLES = 10_000
+LIST_PRICES = {
+    "meta-llama/llama-guard-4-12b": {"input": 0.18, "output": 0.18},
+    "openai/gpt-oss-safeguard-20b": {"input": 0.075, "output": 0.30},
+}
 
 
 def sha256(path: Path) -> str:
@@ -76,6 +80,8 @@ def main() -> None:
         indexed = {record["caseIndex"]: record for record in records}
         decisions = [indexed[index]["output"]["route"] == "human_review" for index in range(len(rows))]
         slice_decisions = [decisions[index] for index in slice_indices]
+        usage = {key: sum(int(record["usage"].get(key, 0) or 0) for record in records) for key in ("prompt_tokens", "completion_tokens", "total_tokens")}
+        estimated_cost = (usage["prompt_tokens"] * LIST_PRICES[model]["input"] + usage["completion_tokens"] * LIST_PRICES[model]["output"]) / 1_000_000
         systems[model] = {
             "modelId": model,
             "route": "OpenRouter",
@@ -89,7 +95,12 @@ def main() -> None:
             },
             "actionDistribution": {route: sum(record["output"]["route"] == route for record in records) for route in ("no_action", "human_review", "incompatible")},
             "meanLatencyMs": round(sum(record["latencyMs"] for record in records) / len(records), 2),
-            "usage": {key: sum(int(record["usage"].get(key, 0) or 0) for record in records) for key in ("prompt_tokens", "completion_tokens", "total_tokens")},
+            "usage": usage,
+            "estimatedListCost": {
+                "usdForRetainedFinalResponses": round(estimated_cost, 6),
+                "usdPer1KPosts": round(estimated_cost / len(rows) * 1000, 4),
+                "note": "List-price estimate from retained final responses." if model.startswith("meta-llama") else "Lower-bound list-price estimate: excludes billable usage from three blank gpt-oss responses that were retried.",
+            },
             "providerResolvedModelIds": sorted({record["providerModel"] for record in records}),
         }
     report = {
@@ -97,12 +108,13 @@ def main() -> None:
         "scope": "Aggregate-only, authorized hosted comparison; raw outputs remain ignored locally.",
         "inputs": {"testRows": len(rows), "testSha256": sha256(ROOT / "test.csv"), "documentedSliceRows": len(slice_indices), "documentedSlicePath": "model_comparison/documented_skeptical_reportage_slice.json"},
         "method": {"bootstrapResamples": RESAMPLES, "bootstrapSeed": SEED, "hostedActionMapping": "SAFE -> no_action; UNSAFE -> human_review; incompatible -> excluded from action metrics. No hosted output can create a public-label candidate."},
-        "cost": {"status": "not_reported", "reason": "Provider usage was cached, but no immutable provider price snapshot was captured."},
+        "cost": {"status": "reconstructed_list_price_estimate", "priceSnapshot": "model_comparison/OPENROUTER_PRICE_SNAPSHOT_2026-07-23.md", "limitation": "Uses dated public list rates and retained final-response usage; it is not an invoice and excludes unknown usage from three blank responses that were retried."},
         "systems": systems,
         "interpretation": [
             "The six-case skeptical-reportage slice was documented before this hosted run. It is a targeted error-analysis slice, not a complete protected-context taxonomy.",
-            "H1's public-label comparison is not estimable because the hosted mapping intentionally has no public-label action. The six-case hosted review rates are descriptive, non-primary evidence only.",
-            "Llama Guard reaches 60/60 review-or-label recall with three legitimate review routes. gpt-oss reaches 59/60 with three legitimate review routes. These are offline policy-conditioned observations, not production performance claims.",
+            "The preregistered prediction that hosted guards would over-flag the documented skeptical-reportage cases was not supported on this slice: Llama Guard routed 0/6 and gpt-oss routed 1/6 to review, versus the baseline's 6/6. The slice is directional, not conclusive (n=6).",
+            "The two-action hosted mapping and three-action baseline mapping are not like-for-like. The report therefore does not treat legitimate review-route counts or review precision as a model-quality ranking. V2 pre-registers a shared three-action contract before any additional calls.",
+            "Llama Guard reaches 60/60 direct-scam review-or-label recall; gpt-oss reaches 59/60 and clears one direct scam. Llama Guard's mean observed latency was about three times lower. These are offline policy-conditioned observations, not production performance claims.",
         ],
         "provenance": "model_comparison/EXTERNAL_RUN_PROVENANCE.md",
     }
@@ -114,21 +126,30 @@ def main() -> None:
         "",
         "An authorized, aggregate-only comparison over the hash-pinned 168-row held-out set. Raw provider responses stay in an ignored local cache.",
         "",
-        "| System | Review-or-label recall | Review precision | Legitimate review routes | Documented skeptical-reportage review rate | Mean latency |",
-        "| --- | ---: | ---: | ---: | ---: | ---: |",
+        "## Headline Finding",
+        "",
+        "**I predicted the industry models would share my system's skeptical-reportage weakness. They did not.** On the six pre-documented cases, the baseline escalated 6/6 (all crossed its public-label threshold), Llama Guard routed 0/6 to human review, and gpt-oss routed 1/6 to human review. This directional result does not support the preregistered prediction (`n=6`).",
+        "",
+        "The hosted systems had a two-action mapping while the local baseline used three actions. The table reports observed routes, not a like-for-like quality ranking; in particular, it intentionally omits review precision.",
+        "",
+        "| System | Current action surface | Direct-scam recall under current mapping | Legitimate posts entering action queue | Skeptical-reportage escalation (`n=6`) | Mean latency | Est. list USD / 1K posts |",
+        "| --- | --- | ---: | ---: | ---: | ---: | ---: |",
     ]
     for name, system in systems.items():
         values = system["metrics"]
         slice_rate = system["documentedSkepticalReportage"]["reviewRate"]
         latency = system.get("meanLatencyMs")
-        table.append(f"| {name} | {values['reviewOrLabelRecall']:.1%} | {values['reviewPrecision']:.1%} | {values['fp']} | {slice_rate:.1%} | {f'{latency:.0f} ms' if latency else 'local'} |")
+        action_surface = "three actions" if name == "lab-baseline" else "two actions; not like-for-like"
+        reviewed_legitimate = f"{values['fp']}/108"
+        cost = system.get("estimatedListCost", {}).get("usdPer1KPosts")
+        table.append(f"| {name} | {action_surface} | {values['reviewOrLabelRecall']:.1%} | {reviewed_legitimate} | {slice_rate:.1%} | {f'{latency:.0f} ms' if latency else 'local'} | {f'${cost:.4f}' if cost is not None else 'n/a'} |")
     table += [
         "",
         "## Reading the result",
         "",
-        "The local baseline routes all six previously documented skeptical-reportage false positives to review and scores all six as public-label candidates. Llama Guard clears all six; gpt-oss routes one of six to review. Hosted systems never produce public-label candidates under the frozen mapping, so their public-label rate is intentionally not compared as a generic classifier output.",
+        "Llama Guard reached 60/60 direct-scam recall. gpt-oss reached 59/60: it cleared one direct scam that the baseline caught. Llama Guard's observed mean latency was 557 ms versus gpt-oss at 1,656 ms. Those differences, and the stance result, are reportable dimensions; none establishes production superiority.",
         "",
-        "The result is useful, not conclusive: the error slice has six cases, dollar cost is intentionally omitted because no immutable provider price snapshot was captured, and this offline text-only run is not evidence of production safety. See `model_comparison/EXTERNAL_RUN_PROVENANCE.md` for routing, retries, hashes, and limits.",
+        "The list-price column is reconstructed from retained final-response tokens and OpenRouter rates retrieved on 2026-07-23; it excludes unretained usage from the three blank gpt-oss attempts and is not an invoice. See `model_comparison/OPENROUTER_PRICE_SNAPSHOT_2026-07-23.md`, `model_comparison/PREREGISTRATION_V2_SHARED_ACTIONS.md`, and `model_comparison/EXTERNAL_RUN_PROVENANCE.md` for costs, the planned shared mapping, routing, retries, hashes, and limits.",
     ]
     markdown_path.write_text("\n".join(table) + "\n", encoding="utf-8")
 
