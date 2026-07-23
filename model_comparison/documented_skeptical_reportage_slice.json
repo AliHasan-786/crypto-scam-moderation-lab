@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "purpose": "A hash-pinned extraction of the six skeptical-reportage false positives documented in audit_outputs/error_analysis_report.json before the hosted run. It is not a tag for every legitimate test item.",
+  "source": {
+    "path": "audit_outputs/error_analysis_report.json",
+    "generatedAt": "2026-07-18",
+    "category": "skeptical_third_party_report"
+  },
+  "cases": [
+    {"caseId": "test-fp-045", "caseIndex": 45, "textSha256": "e0283df4a23f33950aa23442e69afb3fde369c82230ea8da6ce793cd744b9d89"},
+    {"caseId": "test-fp-132", "caseIndex": 132, "textSha256": "7fcbab7b2f84d695777d5968f383f0404917d6c673a0adc5c23af846338d1223"},
+    {"caseId": "test-fp-135", "caseIndex": 135, "textSha256": "7ec2cc130dd8a266f9c4a58152a7fc79aff1a3d717ef5e8fc37f726eaccef0da"},
+    {"caseId": "test-fp-136", "caseIndex": 136, "textSha256": "7b51e16f258ef6272fdf7f0ac33f577380233e0af3fcbed54d1423c87f4b4370"},
+    {"caseId": "test-fp-144", "caseIndex": 144, "textSha256": "61373e5b89a3e71462ee871237e73ebb70400338552c59f25f9258e3ae5e642f"},
+    {"caseId": "test-fp-146", "caseIndex": 146, "textSha256": "4f42f0c77b3f7042dca4f13d963d0cde29fedc4a65d0a046c861ec914df61ae0"}
+  ]
+}

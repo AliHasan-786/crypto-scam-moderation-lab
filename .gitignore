@@ -21,3 +21,4 @@ audit_outputs/*.sqlite-wal
 
 .vercel
 .env*
+model_comparison/cache/

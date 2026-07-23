@@ -51,12 +51,12 @@ def main() -> None:
     fn = sum(p == 0 and y == 1 for p, y in zip(predictions, labels))
     report = {
         "mode": "cache_only",
-        "claim": "Only the local baseline was executed. External systems are explicitly unavailable pending approved, version-resolved access.",
+        "claim": "This cache-only harness executes only the local baseline. Hosted results, when a system status is executed, are published separately in audit_outputs/external_guard_model_benchmark.md.",
         "inputs": {"testSha256": sha256(test_path), "rows": len(rows), "preprocessing": "original post text only"},
         "preregistration": {"path": "model_comparison/PREREGISTRATION.md", "sha256": sha256(ROOT / "model_comparison/PREREGISTRATION.md")},
         "credentialReadiness": {system["id"]: bool(os.environ.get(system["requiredEnv"])) for system in config["systems"] if system.get("requiredEnv")},
         "systems": [{"id": "lab-baseline", "status": "executed", "threshold": threshold, "tp": tp, "fp": fp, "fn": fn}] + [system for system in config["systems"] if system["id"] != "lab-baseline"],
-        "notComparableYet": [system["id"] for system in config["systems"] if system["id"] != "lab-baseline"],
+        "notComparableYet": [system["id"] for system in config["systems"] if system["id"] != "lab-baseline" and system["status"] != "executed"],
     }
     (ROOT / args.out).write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     lines = ["# Guard-Model Benchmark (Cache-Only)", "", report["claim"], "", "| System | Status |", "| --- | --- |"]

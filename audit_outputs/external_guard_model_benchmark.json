@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "scope": "Aggregate-only, authorized hosted comparison; raw outputs remain ignored locally.",
+  "inputs": {
+    "testRows": 168,
+    "testSha256": "b886ac28c805e6ed8cabb74f6fa24551467bb2d7bdba5cfda2ecec0392685a14",
+    "documentedSliceRows": 6,
+    "documentedSlicePath": "model_comparison/documented_skeptical_reportage_slice.json"
+  },
+  "method": {
+    "bootstrapResamples": 10000,
+    "bootstrapSeed": 20260723,
+    "hostedActionMapping": "SAFE -> no_action; UNSAFE -> human_review; incompatible -> excluded from action metrics. No hosted output can create a public-label candidate."
+  },
+  "cost": {
+    "status": "not_reported",
+    "reason": "Provider usage was cached, but no immutable provider price snapshot was captured."
+  },
+  "systems": {
+    "lab-baseline": {
+      "modelId": "crypto-lab-tfidf-baseline",
+      "route": "local",
+      "metrics": {
+        "tp": 60,
+        "fp": 27,
+        "fn": 0,
+        "reviewOrLabelRecall": 1.0,
+        "reviewPrecision": 0.6897
+      },
+      "documentedSkepticalReportage": {
+        "reviewRate": 1.0,
+        "reviewRate95Ci": [
+          1.0,
+          1.0
+        ],
+        "publicLabelCandidateRate": 1.0,
+        "publicLabelCandidateRate95Ci": [
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "meta-llama/llama-guard-4-12b": {
+      "modelId": "meta-llama/llama-guard-4-12b",
+      "route": "OpenRouter",
+      "metrics": {
+        "tp": 60,
+        "fp": 3,
+        "fn": 0,
+        "reviewOrLabelRecall": 1.0,
+        "reviewPrecision": 0.9524
+      },
+      "documentedSkepticalReportage": {
+        "reviewRate": 0.0,
+        "reviewRate95Ci": [
+          0.0,
+          0.0
+        ],
+        "publicLabelCandidateRate": null,
+        "publicLabelCandidateRate95Ci": null,
+        "note": "The preregistered hosted mapping never assigns a public-label candidate; unsafe routes go to human review."
+      },
+      "actionDistribution": {
+        "no_action": 105,
+        "human_review": 63,
+        "incompatible": 0
+      },
+      "meanLatencyMs": 556.67,
+      "usage": {
+        "prompt_tokens": 317999,
+        "completion_tokens": 693,
+        "total_tokens": 318692
+      },
+      "providerResolvedModelIds": [
+        "meta-llama/llama-guard-4-12b"
+      ]
+    },
+    "openai/gpt-oss-safeguard-20b": {
+      "modelId": "openai/gpt-oss-safeguard-20b",
+      "route": "OpenRouter",
+      "metrics": {
+        "tp": 59,
+        "fp": 3,
+        "fn": 1,
+        "reviewOrLabelRecall": 0.9833,
+        "reviewPrecision": 0.9516
+      },
+      "documentedSkepticalReportage": {
+        "reviewRate": 0.1667,
+        "reviewRate95Ci": [
+          0.0,
+          0.5
+        ],
+        "publicLabelCandidateRate": null,
+        "publicLabelCandidateRate95Ci": null,
+        "note": "The preregistered hosted mapping never assigns a public-label candidate; unsafe routes go to human review."
+      },
+      "actionDistribution": {
+        "no_action": 106,
+        "human_review": 62,
+        "incompatible": 0
+      },
+      "meanLatencyMs": 1655.92,
+      "usage": {
+        "prompt_tokens": 296705,
+        "completion_tokens": 43501,
+        "total_tokens": 340206
+      },
+      "providerResolvedModelIds": [
+        "openai/gpt-oss-safeguard-20b"
+      ]
+    }
+  },
+  "interpretation": [
+    "The six-case skeptical-reportage slice was documented before this hosted run. It is a targeted error-analysis slice, not a complete protected-context taxonomy.",
+    "H1's public-label comparison is not estimable because the hosted mapping intentionally has no public-label action. The six-case hosted review rates are descriptive, non-primary evidence only.",
+    "Llama Guard reaches 60/60 review-or-label recall with three legitimate review routes. gpt-oss reaches 59/60 with three legitimate review routes. These are offline policy-conditioned observations, not production performance claims."
+  ],
+  "provenance": "model_comparison/EXTERNAL_RUN_PROVENANCE.md"
+}

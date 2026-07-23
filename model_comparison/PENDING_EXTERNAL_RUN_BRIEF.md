@@ -1,10 +1,18 @@
-# Pending External Benchmark Run
+# External Benchmark Run Record
 
-**Status:** Do not run. This repository is configured only to validate local
-readiness. No provider request, credential validation, model discovery, or
-spend is authorized until Ali explicitly approves the first external run.
+**Status:** completed on 2026-07-23. The two hosted guard-model runs used the
+ignored local `OPENROUTER_API_KEY`. The runner persisted each response before
+requesting the next one, which kept the full run resumable without repeated
+calls. Published aggregate results are in
+`audit_outputs/external_guard_model_benchmark.md`.
 
-Before that approval: place `GROQ_API_KEY` and `OPENAI_API_KEY` in the ignored
-`model_comparison/.env`; verify the `$80` cap; and confirm the pinned IDs in
-`PREREGISTRATION.md` with the selected providers. The first run must record
-provider-resolved IDs and the preregistration hash before requests begin.
+**Pinned OpenRouter routes:** `meta-llama/llama-guard-4-12b` and
+`openai/gpt-oss-safeguard-20b`. Groq remains documented as an initial route:
+its free account accepted a `gpt-oss` smoke request, while it had decommissioned
+the Llama Guard route. The provider deviation is recorded in the
+preregistration; no model was silently substituted.
+
+The run records the preregistration hash, model identifier, provider-resolved
+identifier, prompt hash, input hash, raw response, usage, and latency in a
+local ignored cache. Public reporting uses only aggregate metrics and selected
+documented error-class counts.

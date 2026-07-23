@@ -1,12 +1,12 @@
 {
   "schemaVersion": 2,
-  "runMode": "pending_external_approval",
+  "runMode": "completed_authorized_run",
   "budgetCapUsd": 80,
   "systems": [
     {"id":"lab-baseline","kind":"local","status":"available","modelId":"crypto-lab-tfidf-baseline","actionMapping":"native"},
     {"id":"openai-moderation","kind":"api","provider":"openai","modelId":"omni-moderation-latest","requiredEnv":"OPENAI_API_KEY","status":"pending_owner_go"},
-    {"id":"llama-guard-4","kind":"api","provider":"groq","modelId":"meta-llama/llama-guard-4-12b","requiredEnv":"GROQ_API_KEY","status":"pending_owner_go"},
+    {"id":"llama-guard-4","kind":"api","provider":"openrouter","modelId":"meta-llama/llama-guard-4-12b","requiredEnv":"OPENROUTER_API_KEY","status":"executed","note":"Groq decommissioned its route before execution; the pinned model ran through OpenRouter. Aggregate results: audit_outputs/external_guard_model_benchmark.md."},
     {"id":"shieldgemma-text","kind":"local","provider":"local","modelId":"google/shieldgemma-2b","status":"pending_local_model_setup"},
-    {"id":"gpt-oss-safeguard","kind":"api","provider":"groq","modelId":"gpt-oss-safeguard-20b","requiredEnv":"GROQ_API_KEY","status":"pending_owner_go"}
+    {"id":"gpt-oss-safeguard","kind":"api","provider":"openrouter","modelId":"openai/gpt-oss-safeguard-20b","requiredEnv":"OPENROUTER_API_KEY","status":"executed","note":"Ran with low reasoning effort; three empty completions were retried at 2,400 tokens under the preregistered deviation protocol. Aggregate results: audit_outputs/external_guard_model_benchmark.md."}
   ]
 }
