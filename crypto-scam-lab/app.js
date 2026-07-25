@@ -1302,7 +1302,7 @@ function renderAgenticAbuseLab() {
       <div class="in-progress-strip" aria-label="In progress, gated work">
         <strong>In progress, gated</strong>
         <a href="https://github.com/AliHasan-786/crypto-scam-moderation-lab/blob/main/audit_outputs/reviewer_assist_red_team.md" target="_blank" rel="noreferrer">Reviewer-assistant red team: deterministic pilot, 12 cases, one protected-context route kept open.</a>
-        <a href="https://github.com/AliHasan-786/crypto-scam-moderation-lab/blob/main/model_comparison/PREREGISTRATION.md" target="_blank" rel="noreferrer">Guard-model comparison: preregistered; awaiting approved model access.</a>
+        <a href="https://github.com/AliHasan-786/crypto-scam-moderation-lab/blob/main/audit_outputs/external_guard_model_benchmark.md" target="_blank" rel="noreferrer">Guard-model benchmark: published result, provenance, and the planned shared-action follow-up.</a>
         <a href="https://github.com/AliHasan-786/crypto-scam-moderation-lab/blob/main/docs/SHADOW_SERVICE_GATE_BRIEF.md" target="_blank" rel="noreferrer">Shadow service: build-only by decision; controls tested, no live collection.</a>
       </div>
       <div class="agentic-control-row">
@@ -2345,6 +2345,10 @@ function renderErrorAnalysisPanel() {
         Authored eval suites that pass 100% are indistinguishable from suites written to pass.
         This page is the antidote: the system's real mistakes on held-out data, plus hard cases it
         still fails, kept public on purpose (Decision Log 010).
+      </p>
+      <p class="panel-intro">
+        I predicted hosted guard models would share this system's skeptical-reportage weakness. On six
+        pre-documented cases, that prediction was not supported. <a href="https://github.com/AliHasan-786/crypto-scam-moderation-lab/blob/main/audit_outputs/external_guard_model_benchmark.md" target="_blank" rel="noreferrer">Read the directional result and its limits.</a>
       </p>
       <div class="stat-grid">
         <div class="stat-card"><strong>${summary.falsePositiveCount ?? 0}</strong><span>false positives at the operating point</span></div>
