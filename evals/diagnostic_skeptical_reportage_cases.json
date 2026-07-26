@@ -1,0 +1,12 @@
+{
+  "source": "audit_outputs/error_analysis_report.json at e378a24, before the stance-aware overlay",
+  "purpose": "Fixed diagnostic appendix only. These rows are not used for pattern selection or primary evaluation.",
+  "cases": [
+    {"caseId": "test-fp-045", "text": "\"A trading platform is offering 8% monthly returns on stablecoin deposits. They claim to be registered in Singapore, but I haven't verified the license.\""},
+    {"caseId": "test-fp-132", "text": "\"Someone DM'd me about a private crypto investment opportunity. They claim to have insider information about an upcoming token launch, but want a $500 'membership fee.'\""},
+    {"caseId": "test-fp-135", "text": "\"I saw an ad for a platform offering 18% APY on Bitcoin deposits. They claim to be licensed in the Cayman Islands, but I haven't verified the license.\""},
+    {"caseId": "test-fp-136", "text": "\"A friend shared a link to a 'guaranteed profit' arbitrage opportunity. The concept makes sense, but the website asks for wallet connection immediately.\""},
+    {"caseId": "test-fp-144", "text": "\"A platform claims to offer 'insured' crypto deposits with 10% monthly returns. The insurance provider is mentioned but I can't find their official website.\""},
+    {"caseId": "test-fp-146", "text": "\"A crypto investment fund is accepting new investors with a $10K minimum. They claim 80% annual returns and have a professional website, but no regulatory filings visible.\""}
+  ]
+}

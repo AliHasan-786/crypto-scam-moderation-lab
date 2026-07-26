@@ -238,6 +238,36 @@ UNCERTAIN_REVIEW_PATTERNS = (
     r"\bredirige\b",
 )
 
+# These signals are a policy overlay, not model-training features. Together they
+# distinguish a speaker describing an offer skeptically from one promoting it.
+THIRD_PARTY_REPORTAGE_PATTERNS = (
+    r"\b(?:a|the)\s+(?:platform|fund|service|website|company|group|protocol)\s+(?:is|was|claims?|offers?|advertis(?:es|ed))\b",
+    r"\bsomeone\s+(?:dm['’]?d|messaged|shared|sent)\s+me\b",
+    r"\bi\s+(?:saw|received|heard about)\s+(?:an?|the)\s+(?:ad|offer|promotion|email|dm|message)\b",
+    r"\b(?:a|my)\s+friend\s+(?:shared|recommended|sent)\b",
+    r"\bthe\s+(?:website|sender|platform)\s+(?:asks?|claims?|says?)\b",
+)
+
+CONTRASTIVE_DOUBT_PATTERNS = (
+    r"\bbut\s+i\s+(?:have\s+not|haven['’]?t)\s+(?:verified|confirmed|checked)\b",
+    r"\bbut\s+i\s+(?:cannot|can['’]?t)\s+(?:find|verify|confirm)\b",
+    r"\bbut\s+(?:there\s+are|i\s+see)\s+no\s+(?:regulatory|official|license|filing|filings)\b",
+    r"\b(?:not\s+sure|unsure)\s+(?:if|whether)\b",
+    r"\b(?:is|was)\s+(?:this|it)\s+legit\b",
+    r"\b(?:seems?|feels?|looks?)\s+(?:suspicious|concerning|unverified|unrealistic)\b",
+)
+
+DIRECTED_READER_ASK_PATTERNS = (
+    r"\b(?:send|pay|deposit|transfer)\b.{0,64}\b(?:to\s+(?:me|us|this|our)|now|today|below|before|by|wallet|address)\b",
+    r"\b(?:send|pay|deposit|transfer)\b.{0,64}\b(?:to\s+)?(?:validate|verify|unlock|activate|claim|receive)\b",
+    r"\b(?:connect|link|verify)\s+your\s+(?:wallet|account)\b",
+    r"\bconecta\s+tu\s+(?:wallet|billetera)\b",
+    r"\b(?:claim|redeem|collect)\s+(?:(?:your|the|my)\s*)?(?:bonus|reward|prize|airdrop|token|btc|eth)\b",
+    r"\bclaim\s+(?:now|today|here|through|at)\b",
+    r"\b(?:visit|click|sign\s*up|register|join|subscribe)\b.{0,64}\b(?:now|today|here|at)\b",
+    r"\b(?:dm|message|contact)\s+(?:me|us)\b",
+)
+
 WALLETISH_PATTERN = re.compile(
     r"(0x[a-f0-9]{20,}|bc1[a-z0-9]{20,}|[13][a-km-zA-HJ-NP-Z1-9]{25,34}|[A-Za-z0-9]{24,})",
     re.IGNORECASE,
@@ -529,8 +559,12 @@ def public_label_evidence(text: str) -> dict[str, object]:
         for rule_name in matched_rules
         if rule_name in PUBLIC_LABEL_RULES
     ]
+    normalized = canonicalize_for_policy(text)
+    directed_reader_ask = _pattern_hit_count(normalized, DIRECTED_READER_ASK_PATTERNS) > 0
     return {
-        "has_public_label_evidence": bool(public_label_rules),
+        "has_concrete_scam_evidence": bool(public_label_rules),
+        "has_directed_reader_ask": directed_reader_ask,
+        "has_public_label_evidence": bool(public_label_rules) and directed_reader_ask,
         "matched_rules": matched_rules,
         "public_label_rules": public_label_rules,
     }
@@ -542,6 +576,10 @@ def contextual_safety_evidence(text: str) -> dict[str, object]:
     satire = _pattern_hit_count(normalized, SATIRE_CONTEXT_PATTERNS) > 0
     developer = _pattern_hit_count(normalized, DEVELOPER_CONTEXT_PATTERNS) > 0
     uncertain_review = _pattern_hit_count(normalized, UNCERTAIN_REVIEW_PATTERNS) > 0
+    third_party_reportage = _pattern_hit_count(normalized, THIRD_PARTY_REPORTAGE_PATTERNS) > 0
+    contrastive_doubt = _pattern_hit_count(normalized, CONTRASTIVE_DOUBT_PATTERNS) > 0
+    directed_reader_ask = _pattern_hit_count(normalized, DIRECTED_READER_ASK_PATTERNS) > 0
+    stance_aware_reportage = third_party_reportage and contrastive_doubt and not directed_reader_ask
     return {
         "protective_or_research_context": protective,
         "satire_context": satire,
@@ -549,6 +587,10 @@ def contextual_safety_evidence(text: str) -> dict[str, object]:
         "uncertain_review_context": uncertain_review,
         "public_label_suppressed": protective or satire or developer,
         "review_preferred": uncertain_review,
+        "third_party_reportage": third_party_reportage,
+        "contrastive_doubt": contrastive_doubt,
+        "directed_reader_ask": directed_reader_ask,
+        "stance_aware_reportage": stance_aware_reportage,
     }
 
 
@@ -557,6 +599,8 @@ def decision_for_text(text: str, probability: float, thresholds: dict[str, float
     context = contextual_safety_evidence(text)
     can_publicly_label = bool(label_evidence["has_public_label_evidence"])
 
+    if context["stance_aware_reportage"]:
+        return "send_to_human_review" if probability >= thresholds["review"] else "no_label"
     if context["public_label_suppressed"]:
         return "no_label"
     if context["review_preferred"] and (

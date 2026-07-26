@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-18",
+  "generated_at": "2026-07-26",
   "suite": "crypto_scam_policy_eval_v1",
   "caveat": "This is an authored scenario and adversarial eval suite, not an untouched benchmark. It is designed to make policy boundaries, review-routing expectations, and false-positive risks inspectable.",
   "thresholds": {
@@ -432,7 +432,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -479,7 +483,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -521,7 +529,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -564,7 +576,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -606,7 +622,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -649,7 +669,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -695,7 +719,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -738,7 +766,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -776,7 +808,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": false,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -818,7 +854,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": true,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": false,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -857,7 +897,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": true,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": false,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -895,7 +939,11 @@
         "developer_context": false,
         "uncertain_review_context": true,
         "public_label_suppressed": false,
-        "review_preferred": true
+        "review_preferred": true,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": false,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -932,7 +980,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": true,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": false,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -968,7 +1020,11 @@
         "developer_context": true,
         "uncertain_review_context": false,
         "public_label_suppressed": true,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": false,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -1003,7 +1059,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": false,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -1045,7 +1105,11 @@
         "developer_context": false,
         "uncertain_review_context": true,
         "public_label_suppressed": false,
-        "review_preferred": true
+        "review_preferred": true,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": false,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -1081,7 +1145,11 @@
         "developer_context": false,
         "uncertain_review_context": true,
         "public_label_suppressed": false,
-        "review_preferred": true
+        "review_preferred": true,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": false,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -1122,7 +1190,11 @@
         "developer_context": false,
         "uncertain_review_context": true,
         "public_label_suppressed": false,
-        "review_preferred": true
+        "review_preferred": true,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": false,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -1163,7 +1235,11 @@
         "developer_context": false,
         "uncertain_review_context": true,
         "public_label_suppressed": false,
-        "review_preferred": true
+        "review_preferred": true,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -1215,7 +1291,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -1267,7 +1347,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -1321,7 +1405,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -1372,7 +1460,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -1423,7 +1515,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -1474,7 +1570,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -1520,7 +1620,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -1566,7 +1670,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -1616,7 +1724,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -1663,7 +1775,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -1710,7 +1826,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -1761,7 +1881,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -1807,7 +1931,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -1853,7 +1981,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -1903,7 +2035,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -1950,7 +2086,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -1997,7 +2137,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -2046,7 +2190,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -2096,7 +2244,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -2146,7 +2298,11 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
@@ -2198,18 +2354,22 @@
         "developer_context": false,
         "uncertain_review_context": false,
         "public_label_suppressed": false,
-        "review_preferred": false
+        "review_preferred": false,
+        "third_party_reportage": false,
+        "contrastive_doubt": false,
+        "directed_reader_ask": true,
+        "stance_aware_reportage": false
       },
       "passed_expectations": true,
       "failures": []
     }
   ],
   "provenance": {
-    "stampedAt": "2026-07-18T23:09:15.618967+00:00",
+    "stampedAt": "2026-07-26T20:20:02.801894+00:00",
     "manifest": {
       "path": "evals/MANIFEST.json",
       "manifestVersion": "1.0.0",
-      "sha256": "e00420bfc96bd92dc708bbb882ff909318236a6d519d5b2db694549483b9653c"
+      "sha256": "178bd99ab0ce53362981ef26fa99c6df860cf7cb9f22bd3ab2220a8fb44a6f8b"
     },
     "dataset_hashes": {
       "train": "575947d4629cddecde2023128fc6bfe1cbaae81eac936ff2f4624d94cb5111be",
@@ -2245,6 +2405,11 @@
         "semanticVersion": "1.0.0",
         "sha256": "59ba0ff5d3474499007a9d4386e337cbca6c5ec900f2d252f8a3003f312159e9",
         "caseCount": 3
+      },
+      "reviewer-assistant-red-team": {
+        "semanticVersion": "1.0.0",
+        "sha256": "be68b00b7ce855a44bfdab3f301f78871656fb0dc8e8cbddcf75df01e58bf579",
+        "caseCount": 12
       }
     }
   }

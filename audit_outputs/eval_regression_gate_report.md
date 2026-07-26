@@ -1,6 +1,6 @@
 # Trust & Safety Regression Gate
 
-Generated: `2026-07-18T23:09:15.585820+00:00`
+Generated: `2026-07-26T20:20:01.314882+00:00`
 
 Overall result: **PASS**
 

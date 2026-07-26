@@ -119,6 +119,9 @@ echo "[15/15] Enforcing the release gate"
 echo "[shadow controls] Verifying build-only service guardrails"
 SHADOW_ENABLED=true "$PYTHON_BIN" -m unittest labeler_service.test_shadow_controls
 
+echo "[stance overlay] Verifying skeptical-reportage routing guardrails"
+"$PYTHON_BIN" -m unittest evals.test_stance_aware_policy
+
 echo "[benchmark scaffold] Regenerating cache-only comparator report"
 "$PYTHON_BIN" model_comparison/guard_model_bench.py
 

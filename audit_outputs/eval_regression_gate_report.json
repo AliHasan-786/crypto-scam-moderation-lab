@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-18T23:09:15.585820+00:00",
+  "generatedAt": "2026-07-26T20:20:01.314882+00:00",
   "suite": "trust_safety_portfolio_regression_gate_v1",
   "passed": true,
   "checkCount": 11,
@@ -86,11 +86,11 @@
   "failedChecks": [],
   "purpose": "This gate protects false-positive control, review routing, evidence faithfulness, calibration coverage, and incident readiness.",
   "provenance": {
-    "stampedAt": "2026-07-18T23:09:15.618967+00:00",
+    "stampedAt": "2026-07-26T20:20:02.801894+00:00",
     "manifest": {
       "path": "evals/MANIFEST.json",
       "manifestVersion": "1.0.0",
-      "sha256": "e00420bfc96bd92dc708bbb882ff909318236a6d519d5b2db694549483b9653c"
+      "sha256": "178bd99ab0ce53362981ef26fa99c6df860cf7cb9f22bd3ab2220a8fb44a6f8b"
     },
     "dataset_hashes": {
       "train": "575947d4629cddecde2023128fc6bfe1cbaae81eac936ff2f4624d94cb5111be",
@@ -126,6 +126,11 @@
         "semanticVersion": "1.0.0",
         "sha256": "59ba0ff5d3474499007a9d4386e337cbca6c5ec900f2d252f8a3003f312159e9",
         "caseCount": 3
+      },
+      "reviewer-assistant-red-team": {
+        "semanticVersion": "1.0.0",
+        "sha256": "be68b00b7ce855a44bfdab3f301f78871656fb0dc8e8cbddcf75df01e58bf579",
+        "caseCount": 12
       }
     }
   }
