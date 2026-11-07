@@ -4,6 +4,15 @@
 request. This document does not authorize public-label publication or live
 platform action.
 
+**Contribution boundary:** this is a platform-routing evaluation, not a
+general-purpose chat-safety result. The current primary-source comparison and
+explicit non-claims are recorded in
+[`CURRENT_RELEVANCE_AND_CONTRIBUTION_BOUNDARY.md`](CURRENT_RELEVANCE_AND_CONTRIBUTION_BOUNDARY.md).
+In particular, this work does not borrow, reproduce, or infer validation from
+MLCommons AILuminate Safety 1.2.1 scores, whose single-turn English
+text-to-text hazardous-response scope is different from stance-aware
+user-generated-content moderation.
+
 ## Question
 
 Can a deterministic policy overlay reduce public-label candidacy for skeptical
@@ -23,6 +32,10 @@ generalizable signals:
 The six documented `skeptical_third_party_report` failures motivate the
 problem but are **diagnostic only**. They are not a tuning target, are not used
 to select patterns or thresholds, and cannot support the primary result.
+
+The frozen StanceBench suite is the evaluation surface for this overlay. Its
+results must not be used to revise patterns or thresholds. Any future revision
+requires a dated deviation and a fresh holdout before its result is interpreted.
 
 ## Frozen Decision Rule
 

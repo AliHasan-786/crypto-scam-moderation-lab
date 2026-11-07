@@ -2,6 +2,12 @@
 
 **Status:** Preregistered protocol only. No new live posts have been collected.
 
+The counter-speech-specific extension that consumes this general collection
+protocol is [`COUNTERSPEECH_GENERALIZATION_EXECUTION_GATE.md`](COUNTERSPEECH_GENERALIZATION_EXECUTION_GATE.md).
+It adds frozen-system identity, development-versus-holdout separation, and
+precommitted protected-context, scam-recall, and review-load reporting. Neither
+document authorizes collection by itself.
+
 Before collection, approve a private retention schedule, terms posture, named
 operator, kill-switch owner, exact UTC window, and access-controlled storage.
 Commit only collection metadata, item hashes, aggregate counts, and the release
