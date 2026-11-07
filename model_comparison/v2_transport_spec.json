@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "benchmarkNamespace": "crypto-scam-v2-shared-actions",
+  "testSha256": "b886ac28c805e6ed8cabb74f6fa24551467bb2d7bdba5cfda2ecec0392685a14",
+  "testRows": 168,
+  "policyPath": "policy/CRYPTO_INVESTMENT_SCAM_POLICY.md",
+  "policySha256": "8773681725d9ac560647a0197d297dec0d3d226cc1df82b80ea1c552641cabd4",
+  "promptSha256": "135eb2cf8a1210ea236774852e3b9ed489d65d6ca6e5c4f61c42e31246049e06",
+  "systems": {
+    "llama-guard-4": "meta-llama/llama-guard-4-12b",
+    "gpt-oss-safeguard": "openai/gpt-oss-safeguard-20b"
+  },
+  "notes": "Offline transport preparation only. This file is not access, budget, or provider authorization."
+}
