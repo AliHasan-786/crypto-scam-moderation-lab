@@ -125,6 +125,10 @@ echo "[stance overlay] Verifying skeptical-reportage routing guardrails"
 echo "[benchmark scaffold] Regenerating cache-only comparator report"
 "$PYTHON_BIN" model_comparison/guard_model_bench.py
 
+echo "[v2 shared-action comparator] Verifying offline adapter and fixture replay"
+"$PYTHON_BIN" -m unittest model_comparison.test_shared_action_v2
+"$PYTHON_BIN" model_comparison/replay_shared_action_v2.py
+
 echo "[reviewer red team] Running hostile-content fixture suite"
 "$PYTHON_BIN" red_team/reviewer_assistant_red_team.py
 

@@ -1,0 +1,42 @@
+{
+  "mode": "fixture_only_not_measured",
+  "purpose": "Deterministic adapter regression fixture. These are authored test responses, not provider output and not V2 results.",
+  "records": [
+    {
+      "caseIndex": 0,
+      "inputSha256": "ecb7dde51289e3f43723850c56482da86a2f8942121233a1f009f61d2d250b1a",
+      "system": "fixture-valid-candidate",
+      "rawOutput": {
+        "action": "public_label_candidate",
+        "speaker_originated_evidence": ["Send payment to this wallet"],
+        "risk_indicators": ["crypto_transfer_request", "urgency_or_scarcity"],
+        "protected_context": [],
+        "rationale": "Authoritative fixture with a direct solicitation."
+      }
+    },
+    {
+      "caseIndex": 45,
+      "inputSha256": "e0283df4a23f33950aa23442e69afb3fde369c82230ea8da6ce793cd744b9d89",
+      "system": "fixture-protected-context",
+      "rawOutput": {
+        "action": "public_label_candidate",
+        "speaker_originated_evidence": ["Quoted offer language"],
+        "risk_indicators": ["unrealistic_returns", "crypto_transfer_request"],
+        "protected_context": ["reportage"],
+        "rationale": "Authoritative fixture showing the required downgrade."
+      }
+    },
+    {
+      "caseIndex": 1,
+      "inputSha256": "228a8b1c8ed22637ac12b936208bf8b02fba9967e70a5a7aba435a3baef605f5",
+      "system": "fixture-invalid-action",
+      "rawOutput": {
+        "action": "block_now",
+        "speaker_originated_evidence": [],
+        "risk_indicators": [],
+        "protected_context": [],
+        "rationale": "Authoritative fixture showing incompatible output handling."
+      }
+    }
+  ]
+}

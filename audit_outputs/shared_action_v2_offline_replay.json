@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "mode": "offline_fixture_replay_not_measured",
+  "externalCallsMade": false,
+  "interpretation": "Fixture adapter validation only. This is not a V2 hosted run and contains no provider measurement.",
+  "inputs": {
+    "testRows": 168,
+    "testSha256": "b886ac28c805e6ed8cabb74f6fa24551467bb2d7bdba5cfda2ecec0392685a14"
+  },
+  "preregistration": "model_comparison/PREREGISTRATION_V2_SHARED_ACTIONS.md",
+  "baselinePreflight": {
+    "status": "local_preflight_not_a_v2_comparison",
+    "rows": 168,
+    "actionCounts": {
+      "human_review": 67,
+      "no_action": 81,
+      "public_label_candidate": 20
+    },
+    "adjustmentCounts": {
+      "downgraded_insufficient_public_label_evidence": 46,
+      "downgraded_protected_context": 2
+    }
+  },
+  "fixtureRecords": [
+    {
+      "caseIndex": 0,
+      "inputSha256": "ecb7dde51289e3f43723850c56482da86a2f8942121233a1f009f61d2d250b1a",
+      "system": "fixture-valid-candidate",
+      "result": {
+        "action": "public_label_candidate",
+        "compatible": true,
+        "incompatibility_reason": null,
+        "speaker_originated_evidence": [
+          "Send payment to this wallet"
+        ],
+        "risk_indicators": [
+          "crypto_transfer_request",
+          "urgency_or_scarcity"
+        ],
+        "protected_context": [],
+        "rationale": "Authoritative fixture with a direct solicitation.",
+        "adjustment": null
+      }
+    },
+    {
+      "caseIndex": 45,
+      "inputSha256": "e0283df4a23f33950aa23442e69afb3fde369c82230ea8da6ce793cd744b9d89",
+      "system": "fixture-protected-context",
+      "result": {
+        "action": "human_review",
+        "compatible": true,
+        "incompatibility_reason": null,
+        "speaker_originated_evidence": [
+          "Quoted offer language"
+        ],
+        "risk_indicators": [
+          "unrealistic_returns",
+          "crypto_transfer_request"
+        ],
+        "protected_context": [
+          "reportage"
+        ],
+        "rationale": "Authoritative fixture showing the required downgrade.",
+        "adjustment": "downgraded_protected_context"
+      }
+    },
+    {
+      "caseIndex": 1,
+      "inputSha256": "228a8b1c8ed22637ac12b936208bf8b02fba9967e70a5a7aba435a3baef605f5",
+      "system": "fixture-invalid-action",
+      "result": {
+        "action": null,
+        "compatible": false,
+        "incompatibility_reason": "unsupported action",
+        "speaker_originated_evidence": [],
+        "risk_indicators": [],
+        "protected_context": [],
+        "rationale": null,
+        "adjustment": null
+      }
+    }
+  ],
+  "fixtureSummary": {
+    "records": 3,
+    "compatible": 2,
+    "incompatible": 1
+  },
+  "provenance": {
+    "stampedAt": "2026-11-07T14:30:55.616436+00:00",
+    "manifest": {
+      "path": "evals/MANIFEST.json",
+      "manifestVersion": "1.0.0",
+      "sha256": "178bd99ab0ce53362981ef26fa99c6df860cf7cb9f22bd3ab2220a8fb44a6f8b"
+    },
+    "dataset_hashes": {
+      "train": "575947d4629cddecde2023128fc6bfe1cbaae81eac936ff2f4624d94cb5111be",
+      "held-out-test": "b886ac28c805e6ed8cabb74f6fa24551467bb2d7bdba5cfda2ecec0392685a14"
+    },
+    "suite_versions": {
+      "scenario": {
+        "semanticVersion": "1.0.0",
+        "sha256": "d7de6a0c132977c454925c5d009e934fa8c75b45464b39e18c4f5da7eb4df28d",
+        "caseCount": 19
+      },
+      "hardening": {
+        "semanticVersion": "1.0.0",
+        "sha256": "3660e09caadac6221113a42df82170ebd6fa7745a74417d12152214df0e40a86",
+        "caseCount": 12
+      },
+      "unsolved": {
+        "semanticVersion": "1.0.0",
+        "sha256": "28c16a63faa7e097bad608dabed1e1f2bca01f664b58a03ecf6bd7213bbde397",
+        "caseCount": 10
+      },
+      "reviewer-calibration": {
+        "semanticVersion": "1.0.0",
+        "sha256": "789a4b83322828442613b0bd3cc5af6bc253bcba1f6aff6c193c55168b5a73f0",
+        "caseCount": 12
+      },
+      "appeals": {
+        "semanticVersion": "1.0.0",
+        "sha256": "34c642164b90934dc7fdff56c65f28a90d9d8612ccdb1fb38fb101c2de4608f8",
+        "caseCount": 4
+      },
+      "incident-tabletop": {
+        "semanticVersion": "1.0.0",
+        "sha256": "59ba0ff5d3474499007a9d4386e337cbca6c5ec900f2d252f8a3003f312159e9",
+        "caseCount": 3
+      },
+      "reviewer-assistant-red-team": {
+        "semanticVersion": "1.0.0",
+        "sha256": "be68b00b7ce855a44bfdab3f301f78871656fb0dc8e8cbddcf75df01e58bf579",
+        "caseCount": 12
+      }
+    }
+  }
+}
