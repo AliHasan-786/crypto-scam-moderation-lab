@@ -3,9 +3,10 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import os
 import tempfile
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any, Protocol
@@ -26,7 +27,19 @@ def sha256(value: bytes) -> str:
 
 
 def canonical_json(value: Any) -> str:
-    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False)
+
+
+def _finite_nonnegative(value: Any) -> bool:
+    return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value) and value >= 0
+
+
+def _json_safe(value: Any) -> Any:
+    try:
+        json.dumps(value, allow_nan=False)
+    except (TypeError, ValueError):
+        return {"unserializableRepresentation": repr(value)}
+    return value
 
 
 def load_spec(path: Path | None = None) -> dict[str, Any]:
@@ -85,7 +98,7 @@ def load_current_access_context(path: Path, spec: dict[str, Any], test_path: Pat
     if issued_on > date.today() or expires_on < date.today() or expires_on < issued_on:
         raise V2AccessDenied("V2 transport blocked: current access context is expired or invalid")
     budget = context.get("budgetCapUsd")
-    if not isinstance(budget, (int, float)) or budget <= 0:
+    if not _finite_nonnegative(budget) or budget <= 0:
         raise V2AccessDenied("V2 transport blocked: a positive current budget cap is absent")
     if context.get("testSha256") != sha256(test_path.read_bytes()):
         raise V2AccessDenied("V2 transport blocked: access context corpus identity does not match")
@@ -120,15 +133,19 @@ def _record_key(model_id: str, case_index: int, input_hash: str, spec_hash: str)
     return sha256("\0".join((model_id, str(case_index), input_hash, spec_hash)).encode("utf-8"))
 
 
-def _atomic_json(path: Path, value: dict[str, Any]) -> None:
+def _atomic_create_json(path: Path, value: dict[str, Any]) -> None:
+    """Create a completed attempt atomically without overwriting a prior attempt."""
     path.parent.mkdir(parents=True, exist_ok=True)
     fd, temporary = tempfile.mkstemp(prefix=".v2-attempt-", suffix=".json", dir=path.parent)
     try:
         with os.fdopen(fd, "w", encoding="utf-8") as handle:
-            handle.write(json.dumps(value, indent=2, sort_keys=True) + "\n")
+            handle.write(json.dumps(value, indent=2, sort_keys=True, allow_nan=False) + "\n")
             handle.flush()
             os.fsync(handle.fileno())
-        os.replace(temporary, path)
+        try:
+            os.link(temporary, path)
+        except FileExistsError as exc:
+            raise V2TransportError(f"refusing to overwrite immutable V2 attempt: {path}") from exc
     finally:
         if os.path.exists(temporary):
             os.unlink(temporary)
@@ -158,7 +175,7 @@ class V2AttemptStore:
         directory = self._attempt_dir(record["requestedModelId"], record["caseIndex"], record["inputSha256"])
         attempt = int(record["attempt"])
         path = directory / f"attempt-{attempt:03d}.json"
-        _atomic_json(path, record)
+        _atomic_create_json(path, record)
         return path
 
     def all_records(self) -> list[dict[str, Any]]:
@@ -175,6 +192,20 @@ class V2AttemptStore:
                 raise V2TransportError(f"V2 replay rejected an unknown attempt status: {path}")
             records.append(record)
         return records
+
+    def accounted_spend_usd(self) -> float:
+        records = self.all_records()
+        total = 0.0
+        for record in records:
+            if record.get("costKnown") is not True:
+                raise V2TransportError(
+                    "V2 transport blocked: an earlier attempt has unknown billed cost; reconcile it before resuming"
+                )
+            cost = record.get("costUsd")
+            if not _finite_nonnegative(cost):
+                raise V2TransportError("V2 transport blocked: an earlier attempt has invalid billed cost")
+            total += float(cost)
+        return total
 
 
 def replay_attempt_inventory(store: V2AttemptStore, spec: dict[str, Any]) -> dict[str, Any]:
@@ -211,6 +242,7 @@ def _attempt_record(
     error: Exception | None,
 ) -> dict[str, Any]:
     result: SharedActionResult | None = normalize_hosted_output(response.raw_output) if response else None
+    cost_known = response is not None and _finite_nonnegative(response.cost_usd)
     return {
         "schemaVersion": 1,
         "benchmarkNamespace": spec["benchmarkNamespace"],
@@ -224,15 +256,32 @@ def _attempt_record(
         "promptSha256": prompt_hash,
         "policySha256": spec["policySha256"],
         "specSha256": spec_hash,
-        "status": "completed" if response else "transport_error",
-        "rawOutput": response.raw_output if response else None,
+        "status": "completed" if error is None else "transport_error",
+        "responseReceived": response is not None,
+        "rawOutput": _json_safe(response.raw_output) if response else None,
         "adapter": result.to_dict() if result else None,
-        "usage": response.usage if response else None,
-        "latencyMs": response.latency_ms if response else None,
-        "costUsd": response.cost_usd if response else None,
+        "usage": _json_safe(response.usage) if response else None,
+        "latencyMs": response.latency_ms if response and _finite_nonnegative(response.latency_ms) else None,
+        "costUsd": response.cost_usd if cost_known else None,
+        "costKnown": cost_known,
+        "returnedCostUsdRepresentation": None if cost_known or response is None else repr(response.cost_usd),
         "error": None if error is None else {"type": type(error).__name__, "message": str(error)},
         "recordedAt": datetime.now(timezone.utc).isoformat(),
     }
+
+
+def _validate_response(response: TransportResponse, model_id: str, budget_remaining: float) -> None:
+    if response.resolved_model_id != model_id:
+        raise V2TransportError("transport resolved a model outside the pinned identity")
+    if not _finite_nonnegative(response.cost_usd) or response.cost_usd > budget_remaining:
+        raise V2TransportError("transport response cost is outside the remaining budget")
+    if not _finite_nonnegative(response.latency_ms):
+        raise V2TransportError("transport response latency is invalid")
+    if not isinstance(response.usage, dict) or any(
+        not isinstance(value, int) or isinstance(value, bool) or value < 0
+        for value in response.usage.values()
+    ):
+        raise V2TransportError("transport response usage is invalid")
 
 
 def execute_prepared(
@@ -255,11 +304,15 @@ def execute_prepared(
     allowed_models = set(spec["systems"].values())
     if not set(model_ids).issubset(allowed_models):
         raise V2AccessDenied("V2 transport blocked: requested model is not pinned by the V2 spec")
-    budget_remaining = float(context["budgetCapUsd"])
+    budget_cap = float(context["budgetCapUsd"])
     rows = load_pinned_test_rows(corpus_path)
     spec_hash = sha256(canonical_json(spec).encode("utf-8"))
     if store.spec_hash != spec_hash:
         raise V2TransportError("attempt store spec identity does not match the V2 spec")
+    prior_spend = store.accounted_spend_usd()
+    if prior_spend > budget_cap:
+        raise V2TransportError("V2 transport blocked: prior recorded spend exceeds the current budget cap")
+    budget_remaining = budget_cap - prior_spend
     prompt = shared_action_prompt()
     written: list[Path] = []
     for model_id in model_ids:
@@ -276,14 +329,12 @@ def execute_prepared(
             if prior and prior[-1]["status"] == "completed":
                 continue
             estimated = transport.estimate_cost_usd(text=text, model_id=model_id)
-            if not isinstance(estimated, (int, float)) or estimated < 0 or estimated > budget_remaining:
+            if not _finite_nonnegative(estimated) or estimated > budget_remaining:
                 raise V2TransportError("next transport attempt would exceed the current budget")
+            response: TransportResponse | None = None
             try:
                 response = transport.invoke(text=text, model_id=model_id, prompt=prompt)
-                if response.resolved_model_id != model_id:
-                    raise V2TransportError("transport resolved a model outside the pinned identity")
-                if response.cost_usd < 0 or response.cost_usd > budget_remaining:
-                    raise V2TransportError("transport response cost is outside the remaining budget")
+                _validate_response(response, model_id, budget_remaining)
                 record = _attempt_record(
                     spec=spec, spec_hash=spec_hash, model_id=model_id, case_index=case_index,
                     text=text, prompt_hash=prompt_hash, attempt=len(prior) + 1,
@@ -294,8 +345,15 @@ def execute_prepared(
                 record = _attempt_record(
                     spec=spec, spec_hash=spec_hash, model_id=model_id, case_index=case_index,
                     text=text, prompt_hash=prompt_hash, attempt=len(prior) + 1,
-                    response=None, error=exc,
+                    response=response, error=exc,
                 )
             written.append(store.write(record))
+            if record["status"] == "transport_error":
+                if record["costKnown"]:
+                    budget_remaining -= float(record["costUsd"])
+                    raise V2TransportError("transport attempt failed after recorded billed cost")
+                raise V2TransportError(
+                    "transport attempt failed with unknown billed cost; manual reconciliation is required before resume"
+                )
             completed += 1
     return written

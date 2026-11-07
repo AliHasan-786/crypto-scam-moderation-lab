@@ -9,6 +9,7 @@ from model_comparison.v2_transport import (
     TransportResponse,
     V2AccessDenied,
     V2AttemptStore,
+    V2TransportError,
     canonical_json,
     execute_prepared,
     load_spec,
@@ -20,12 +21,22 @@ from model_comparison.v2_transport import (
 
 
 class FakeTransport:
-    def __init__(self, *, fail: bool = False):
+    def __init__(
+        self,
+        *,
+        fail: bool = False,
+        estimate: object = 0.01,
+        cost: object = 0.01,
+        resolved_model_id: str | None = None,
+    ):
         self.calls = 0
         self.fail = fail
+        self.estimate = estimate
+        self.cost = cost
+        self.resolved_model_id = resolved_model_id
 
-    def estimate_cost_usd(self, *, text: str, model_id: str) -> float:
-        return 0.01
+    def estimate_cost_usd(self, *, text: str, model_id: str):
+        return self.estimate
 
     def invoke(self, *, text: str, model_id: str, prompt: str) -> TransportResponse:
         self.calls += 1
@@ -39,10 +50,10 @@ class FakeTransport:
                 "protected_context": [],
                 "rationale": "fixture-only response",
             },
-            resolved_model_id=model_id,
+            resolved_model_id=self.resolved_model_id or model_id,
             usage={"input_tokens": 5, "output_tokens": 5, "total_tokens": 10},
             latency_ms=1.25,
-            cost_usd=0.01,
+            cost_usd=self.cost,
         )
 
 
@@ -142,7 +153,7 @@ class V2TransportTests(unittest.TestCase):
                 )
         self.assertEqual(transport.calls, 0)
 
-    def test_transport_error_is_atomically_recorded_for_resume(self):
+    def test_unknown_cost_transport_error_is_recorded_and_blocks_resume(self):
         spec = load_spec()
         spec_hash = sha256(canonical_json(spec).encode("utf-8"))
         model_id = next(iter(spec["systems"].values()))
@@ -150,17 +161,177 @@ class V2TransportTests(unittest.TestCase):
             directory_path = Path(directory)
             context_path = directory_path / "context.json"
             write_context(context_path, spec)
+            store = V2AttemptStore(directory_path / "cache", spec_hash)
+            failing = FakeTransport(fail=True)
+            with self.assertRaisesRegex(V2TransportError, "unknown billed cost"):
+                execute_prepared(
+                    access_context_path=context_path,
+                    store=store,
+                    transports={model_id: failing},
+                    model_ids=[model_id],
+                    max_cases_per_model=1,
+                )
+            record = store.all_records()[0]
+            resumed = FakeTransport()
+            with self.assertRaisesRegex(V2TransportError, "unknown billed cost"):
+                execute_prepared(
+                    access_context_path=context_path,
+                    store=store,
+                    transports={model_id: resumed},
+                    model_ids=[model_id],
+                    max_cases_per_model=1,
+                )
+        self.assertEqual(record["status"], "transport_error")
+        self.assertEqual(record["error"]["type"], "RuntimeError")
+        self.assertIsNone(record["rawOutput"])
+        self.assertFalse(record["costKnown"])
+        self.assertEqual(failing.calls, 1)
+        self.assertEqual(resumed.calls, 0)
+
+    def test_resume_counts_prior_spend_against_the_same_cap(self):
+        spec = load_spec()
+        spec_hash = sha256(canonical_json(spec).encode("utf-8"))
+        model_id = next(iter(spec["systems"].values()))
+        transport = FakeTransport()
+        with tempfile.TemporaryDirectory() as directory:
+            directory_path = Path(directory)
+            context_path = directory_path / "context.json"
+            write_context(context_path, spec, budget=0.01)
+            store = V2AttemptStore(directory_path / "cache", spec_hash)
+            execute_prepared(
+                access_context_path=context_path,
+                store=store,
+                transports={model_id: transport},
+                model_ids=[model_id],
+                max_cases_per_model=1,
+            )
+            with self.assertRaisesRegex(V2TransportError, "exceed the current budget"):
+                execute_prepared(
+                    access_context_path=context_path,
+                    store=store,
+                    transports={model_id: transport},
+                    model_ids=[model_id],
+                    max_cases_per_model=1,
+                )
+        self.assertEqual(transport.calls, 1)
+
+    def test_validation_failure_preserves_received_response_and_billed_cost(self):
+        spec = load_spec()
+        spec_hash = sha256(canonical_json(spec).encode("utf-8"))
+        model_id = next(iter(spec["systems"].values()))
+        transport = FakeTransport(cost=0.01, resolved_model_id="wrong-model")
+        with tempfile.TemporaryDirectory() as directory:
+            directory_path = Path(directory)
+            context_path = directory_path / "context.json"
+            write_context(context_path, spec, budget=0.01)
+            store = V2AttemptStore(directory_path / "cache", spec_hash)
+            with self.assertRaisesRegex(V2TransportError, "recorded billed cost"):
+                execute_prepared(
+                    access_context_path=context_path,
+                    store=store,
+                    transports={model_id: transport},
+                    model_ids=[model_id],
+                    max_cases_per_model=1,
+                )
+            record = store.all_records()[0]
+            resumed = FakeTransport()
+            with self.assertRaisesRegex(V2TransportError, "exceed the current budget"):
+                execute_prepared(
+                    access_context_path=context_path,
+                    store=store,
+                    transports={model_id: resumed},
+                    model_ids=[model_id],
+                    max_cases_per_model=1,
+                )
+        self.assertTrue(record["responseReceived"])
+        self.assertEqual(record["resolvedModelId"], "wrong-model")
+        self.assertEqual(record["usage"]["total_tokens"], 10)
+        self.assertEqual(record["costUsd"], 0.01)
+        self.assertTrue(record["costKnown"])
+        self.assertEqual(resumed.calls, 0)
+
+    def test_invalid_budget_and_estimated_cost_are_rejected_before_invoke(self):
+        spec = load_spec()
+        spec_hash = sha256(canonical_json(spec).encode("utf-8"))
+        model_id = next(iter(spec["systems"].values()))
+        with tempfile.TemporaryDirectory() as directory:
+            directory_path = Path(directory)
+            context_path = directory_path / "context.json"
+            write_context(context_path, spec, budget=True)
+            invalid_budget_transport = FakeTransport()
+            with self.assertRaises(V2AccessDenied):
+                execute_prepared(
+                    access_context_path=context_path,
+                    store=V2AttemptStore(directory_path / "cache-a", spec_hash),
+                    transports={model_id: invalid_budget_transport},
+                    model_ids=[model_id],
+                    max_cases_per_model=1,
+                )
+            write_context(context_path, spec)
+            invalid_estimate_transport = FakeTransport(estimate=True)
+            with self.assertRaisesRegex(V2TransportError, "current budget"):
+                execute_prepared(
+                    access_context_path=context_path,
+                    store=V2AttemptStore(directory_path / "cache-b", spec_hash),
+                    transports={model_id: invalid_estimate_transport},
+                    model_ids=[model_id],
+                    max_cases_per_model=1,
+                )
+        self.assertEqual(invalid_budget_transport.calls, 0)
+        self.assertEqual(invalid_estimate_transport.calls, 0)
+
+    def test_invalid_returned_cost_is_preserved_as_unknown_and_blocks_resume(self):
+        spec = load_spec()
+        spec_hash = sha256(canonical_json(spec).encode("utf-8"))
+        model_id = next(iter(spec["systems"].values()))
+        with tempfile.TemporaryDirectory() as directory:
+            directory_path = Path(directory)
+            context_path = directory_path / "context.json"
+            write_context(context_path, spec)
+            store = V2AttemptStore(directory_path / "cache", spec_hash)
+            invalid_cost_transport = FakeTransport(cost=True)
+            with self.assertRaisesRegex(V2TransportError, "unknown billed cost"):
+                execute_prepared(
+                    access_context_path=context_path,
+                    store=store,
+                    transports={model_id: invalid_cost_transport},
+                    model_ids=[model_id],
+                    max_cases_per_model=1,
+                )
+            record = store.all_records()[0]
+            resumed = FakeTransport()
+            with self.assertRaisesRegex(V2TransportError, "unknown billed cost"):
+                execute_prepared(
+                    access_context_path=context_path,
+                    store=store,
+                    transports={model_id: resumed},
+                    model_ids=[model_id],
+                    max_cases_per_model=1,
+                )
+        self.assertTrue(record["responseReceived"])
+        self.assertFalse(record["costKnown"])
+        self.assertEqual(record["returnedCostUsdRepresentation"], "True")
+        self.assertEqual(resumed.calls, 0)
+
+    def test_attempt_store_refuses_overwrite(self):
+        spec = load_spec()
+        spec_hash = sha256(canonical_json(spec).encode("utf-8"))
+        model_id = next(iter(spec["systems"].values()))
+        with tempfile.TemporaryDirectory() as directory:
+            directory_path = Path(directory)
+            context_path = directory_path / "context.json"
+            write_context(context_path, spec)
+            store = V2AttemptStore(directory_path / "cache", spec_hash)
             paths = execute_prepared(
                 access_context_path=context_path,
-                store=V2AttemptStore(directory_path / "cache", spec_hash),
-                transports={model_id: FakeTransport(fail=True)},
+                store=store,
+                transports={model_id: FakeTransport()},
                 model_ids=[model_id],
                 max_cases_per_model=1,
             )
             record = json.loads(paths[0].read_text(encoding="utf-8"))
-        self.assertEqual(record["status"], "transport_error")
-        self.assertEqual(record["error"]["type"], "RuntimeError")
-        self.assertIsNone(record["rawOutput"])
+            with self.assertRaisesRegex(V2TransportError, "overwrite"):
+                store.write(record)
 
 
 if __name__ == "__main__":
