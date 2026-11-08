@@ -23,3 +23,4 @@ audit_outputs/*.sqlite-wal
 .env*
 model_comparison/cache/
 model_comparison/v2_cache/
+.v2_transport_control/

@@ -6,6 +6,8 @@ import json
 import math
 import os
 import tempfile
+import fcntl
+import uuid
 from dataclasses import dataclass
 from datetime import date, datetime, timezone
 from pathlib import Path
@@ -100,6 +102,14 @@ def load_current_access_context(path: Path, spec: dict[str, Any], test_path: Pat
     budget = context.get("budgetCapUsd")
     if not _finite_nonnegative(budget) or budget <= 0:
         raise V2AccessDenied("V2 transport blocked: a positive current budget cap is absent")
+    liability = context.get("maxInvocationLiabilityUsd")
+    if not _finite_nonnegative(liability) or liability <= 0 or liability > budget:
+        raise V2AccessDenied(
+            "V2 transport blocked: a positive configured maximum invocation liability is absent or invalid"
+        )
+    authorization_id = context.get("authorizationId")
+    if not isinstance(authorization_id, str) or not authorization_id.strip():
+        raise V2AccessDenied("V2 transport blocked: a stable authorization identity is absent")
     if context.get("testSha256") != sha256(test_path.read_bytes()):
         raise V2AccessDenied("V2 transport blocked: access context corpus identity does not match")
     if context.get("promptSha256") != spec.get("promptSha256"):
@@ -129,6 +139,21 @@ class PreparedTransport(Protocol):
         ...
 
 
+def _authorization_binding(context: dict[str, Any], spec_hash: str) -> dict[str, Any]:
+    """Stable control identity; cache location and expiry do not reset spending."""
+    return {
+        "authorizationId": context["authorizationId"],
+        "benchmarkNamespace": context["benchmarkNamespace"],
+        "budgetCapUsd": context["budgetCapUsd"],
+        "maxInvocationLiabilityUsd": context["maxInvocationLiabilityUsd"],
+        "testSha256": context["testSha256"],
+        "promptSha256": context["promptSha256"],
+        "policySha256": context["policySha256"],
+        "allowedModelIds": sorted(context["allowedModelIds"]),
+        "specSha256": spec_hash,
+    }
+
+
 def _record_key(model_id: str, case_index: int, input_hash: str, spec_hash: str) -> str:
     return sha256("\0".join((model_id, str(case_index), input_hash, spec_hash)).encode("utf-8"))
 
@@ -144,6 +169,11 @@ def _atomic_create_json(path: Path, value: dict[str, Any]) -> None:
             os.fsync(handle.fileno())
         try:
             os.link(temporary, path)
+            directory_fd = os.open(path.parent, os.O_RDONLY)
+            try:
+                os.fsync(directory_fd)
+            finally:
+                os.close(directory_fd)
         except FileExistsError as exc:
             raise V2TransportError(f"refusing to overwrite immutable V2 attempt: {path}") from exc
     finally:
@@ -151,12 +181,224 @@ def _atomic_create_json(path: Path, value: dict[str, Any]) -> None:
             os.unlink(temporary)
 
 
+class V2ProcessLock:
+    """Exclusive lock covering reservation, invocation, and result persistence."""
+
+    def __init__(self, path: Path):
+        self.path = path
+        self._handle: Any | None = None
+
+    def __enter__(self) -> "V2ProcessLock":
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        self._handle = self.path.open("a+", encoding="utf-8")
+        fcntl.flock(self._handle.fileno(), fcntl.LOCK_EX)
+        return self
+
+    def __exit__(self, exc_type: object, exc: object, traceback: object) -> None:
+        if self._handle is not None:
+            fcntl.flock(self._handle.fileno(), fcntl.LOCK_UN)
+            self._handle.close()
+            self._handle = None
+
+
+class V2ReservationJournal:
+    """Immutable reservation events; state is rebuilt rather than overwritten."""
+
+    def __init__(self, root: Path, binding: dict[str, Any]):
+        self.root = root
+        self.binding = binding
+        self.binding_hash = sha256(canonical_json(binding).encode("utf-8"))
+        self.events_root = root / "events"
+        self.manifest_path = root / "authorization-binding.json"
+
+    @classmethod
+    def for_context(
+        cls,
+        context: dict[str, Any],
+        spec_hash: str,
+        control_root: Path,
+    ) -> "V2ReservationJournal":
+        binding = _authorization_binding(context, spec_hash)
+        # This control plane is independent of both the authorization file and
+        # mutable attempt-cache paths so neither can reset the liability ledger.
+        root = control_root / sha256(
+            canonical_json(
+                {
+                    "authorizationId": binding["authorizationId"],
+                    "benchmarkNamespace": binding["benchmarkNamespace"],
+                    "specSha256": binding["specSha256"],
+                }
+            ).encode("utf-8")
+        )
+        return cls(root, binding)
+
+    @property
+    def lock_path(self) -> Path:
+        return self.root / "single-writer.lock"
+
+    def initialize(self) -> None:
+        if self.manifest_path.exists():
+            try:
+                existing = json.loads(self.manifest_path.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError) as exc:
+                raise V2TransportError("V2 transport blocked: authorization journal manifest is unreadable") from exc
+            if existing != {"schemaVersion": 1, "binding": self.binding, "bindingSha256": self.binding_hash}:
+                raise V2TransportError(
+                    "V2 transport blocked: authorization identity or configured cap conflicts with its journal"
+                )
+            return
+        _atomic_create_json(
+            self.manifest_path,
+            {"schemaVersion": 1, "binding": self.binding, "bindingSha256": self.binding_hash},
+        )
+
+    def _events(self) -> list[dict[str, Any]]:
+        if not self.events_root.exists():
+            return []
+        events: list[dict[str, Any]] = []
+        paths = sorted(self.events_root.glob("event-*.json"))
+        for expected_sequence, path in enumerate(paths, start=1):
+            try:
+                event = json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError) as exc:
+                raise V2TransportError(f"V2 transport blocked: reservation journal event is unreadable: {path}") from exc
+            if event.get("schemaVersion") != 1 or event.get("bindingSha256") != self.binding_hash:
+                raise V2TransportError(f"V2 transport blocked: reservation journal event identity is invalid: {path}")
+            if event.get("sequence") != expected_sequence:
+                raise V2TransportError(f"V2 transport blocked: reservation journal sequence is invalid: {path}")
+            events.append(event)
+        return events
+
+    def _append(self, kind: str, payload: dict[str, Any]) -> dict[str, Any]:
+        events = self._events()
+        event = {
+            "schemaVersion": 1,
+            "bindingSha256": self.binding_hash,
+            "sequence": len(events) + 1,
+            "kind": kind,
+            "recordedAt": datetime.now(timezone.utc).isoformat(),
+            **payload,
+        }
+        filename = f"event-{event['sequence']:06d}-{kind}-{sha256(canonical_json(event).encode('utf-8'))[:10]}.json"
+        _atomic_create_json(self.events_root / filename, event)
+        return event
+
+    def reservations(self) -> dict[str, dict[str, Any]]:
+        states: dict[str, dict[str, Any]] = {}
+        for event in self._events():
+            kind = event.get("kind")
+            reservation_id = event.get("reservationId")
+            if not isinstance(reservation_id, str):
+                raise V2TransportError("V2 transport blocked: reservation event has no identity")
+            if kind == "reserved":
+                if reservation_id in states:
+                    raise V2TransportError("V2 transport blocked: duplicate reservation identity")
+                amount = event.get("maximumLiabilityUsd")
+                if not _finite_nonnegative(amount) or amount <= 0:
+                    raise V2TransportError("V2 transport blocked: reservation liability is invalid")
+                states[reservation_id] = {**event, "state": "reserved"}
+            elif kind == "invocation_started":
+                state = states.get(reservation_id)
+                if state is None or state["state"] != "reserved":
+                    raise V2TransportError("V2 transport blocked: invalid invocation-start transition")
+                state["state"] = "in_flight"
+            elif kind == "requires_reconciliation":
+                state = states.get(reservation_id)
+                if state is None or state["state"] not in {"reserved", "in_flight"}:
+                    raise V2TransportError("V2 transport blocked: invalid reconciliation transition")
+                state["state"] = "requires_reconciliation"
+                state["reconciliationReason"] = event.get("reason")
+            elif kind in {"settled", "reconciled"}:
+                state = states.get(reservation_id)
+                if state is None or state["state"] not in {"reserved", "in_flight", "requires_reconciliation"}:
+                    raise V2TransportError("V2 transport blocked: invalid settlement transition")
+                cost = event.get("costUsd")
+                if not _finite_nonnegative(cost):
+                    raise V2TransportError("V2 transport blocked: settlement cost is invalid")
+                state["state"] = "settled" if kind == "settled" else "reconciled"
+                state["costUsd"] = float(cost)
+            else:
+                raise V2TransportError("V2 transport blocked: unknown reservation event kind")
+        return states
+
+    def reservation_for_key(self, invocation_key: str) -> dict[str, Any] | None:
+        matches = [state for state in self.reservations().values() if state.get("invocationKey") == invocation_key]
+        if len(matches) > 1:
+            raise V2TransportError("V2 transport blocked: duplicate invocation key in reservation journal")
+        return matches[0] if matches else None
+
+    def totals(self) -> dict[str, float]:
+        committed = 0.0
+        reserved = 0.0
+        for state in self.reservations().values():
+            if state["state"] in {"settled", "reconciled"}:
+                committed += float(state["costUsd"])
+            else:
+                reserved += float(state["maximumLiabilityUsd"])
+        return {"committedUsd": committed, "reservedUsd": reserved, "totalCommittedAndReservedUsd": committed + reserved}
+
+    def reserve(self, *, invocation_key: str, maximum_liability_usd: float, metadata: dict[str, Any]) -> dict[str, Any]:
+        if not _finite_nonnegative(maximum_liability_usd) or maximum_liability_usd <= 0:
+            raise V2TransportError("V2 transport blocked: reservation maximum liability is invalid")
+        if self.reservation_for_key(invocation_key) is not None:
+            raise V2TransportError("V2 transport blocked: duplicate invocation key requires manual reconciliation")
+        totals = self.totals()
+        cap = float(self.binding["budgetCapUsd"])
+        if totals["totalCommittedAndReservedUsd"] + maximum_liability_usd > cap:
+            raise V2TransportError("next transport reservation would exceed the configured current budget")
+        reservation_id = uuid.uuid4().hex
+        event = self._append(
+            "reserved",
+            {
+                "reservationId": reservation_id,
+                "invocationKey": invocation_key,
+                "maximumLiabilityUsd": maximum_liability_usd,
+                "metadata": metadata,
+            },
+        )
+        return {**event, "state": "reserved"}
+
+    def mark_invocation_started(self, reservation_id: str) -> None:
+        state = self.reservations().get(reservation_id)
+        if state is None or state["state"] != "reserved":
+            raise V2TransportError("V2 transport blocked: invocation can start only from a reservation")
+        self._append("invocation_started", {"reservationId": reservation_id})
+
+    def require_reconciliation(self, reservation_id: str, reason: str) -> None:
+        state = self.reservations().get(reservation_id)
+        if state is None or state["state"] not in {"reserved", "in_flight"}:
+            raise V2TransportError("V2 transport blocked: reconciliation transition is invalid")
+        self._append("requires_reconciliation", {"reservationId": reservation_id, "reason": reason})
+
+    def settle(self, reservation_id: str, cost_usd: float, *, source: str) -> None:
+        if not _finite_nonnegative(cost_usd):
+            raise V2TransportError("V2 transport blocked: settlement cost is invalid")
+        state = self.reservations().get(reservation_id)
+        if state is None or state["state"] not in {"reserved", "in_flight", "requires_reconciliation"}:
+            raise V2TransportError("V2 transport blocked: settlement transition is invalid")
+        self._append("settled", {"reservationId": reservation_id, "costUsd": cost_usd, "source": source})
+
+    def reconcile(self, reservation_id: str, cost_usd: float, *, operator_note: str) -> None:
+        if not operator_note.strip():
+            raise V2TransportError("V2 transport reconciliation requires a nonempty operator note")
+        if not _finite_nonnegative(cost_usd):
+            raise V2TransportError("V2 transport reconciliation cost is invalid")
+        state = self.reservations().get(reservation_id)
+        if state is None or state["state"] != "requires_reconciliation":
+            raise V2TransportError("V2 transport reconciliation requires an unresolved reservation")
+        self._append(
+            "reconciled",
+            {"reservationId": reservation_id, "costUsd": cost_usd, "operatorNote": operator_note},
+        )
+
+
 class V2AttemptStore:
     """V2-only append-only attempt store; it cannot read V1 cache records."""
 
-    def __init__(self, root: Path, spec_hash: str):
+    def __init__(self, root: Path, spec_hash: str, *, control_root: Path | None = None):
         self.root = root
         self.spec_hash = spec_hash
+        self.control_root = control_root or ROOT / ".v2_transport_control"
 
     def _attempt_dir(self, model_id: str, case_index: int, input_hash: str) -> Path:
         return self.root / _record_key(model_id, case_index, input_hash, self.spec_hash)
@@ -214,7 +456,7 @@ def replay_attempt_inventory(store: V2AttemptStore, spec: dict[str, Any]) -> dic
     return {
         "schemaVersion": 1,
         "mode": "v2_cache_inventory_not_measured",
-        "externalCallsMade": False,
+        "externalCallsMade": bool(records),
         "interpretation": "Attempt provenance inventory only. It does not compute V2 quality, latency, or cost metrics.",
         "benchmarkNamespace": spec["benchmarkNamespace"],
         "specSha256": store.spec_hash,
@@ -238,6 +480,10 @@ def _attempt_record(
     text: str,
     prompt_hash: str,
     attempt: int,
+    reservation_id: str,
+    invocation_key: str,
+    maximum_liability_usd: float,
+    adapter_estimate_usd: float,
     response: TransportResponse | None,
     error: Exception | None,
 ) -> dict[str, Any]:
@@ -248,6 +494,10 @@ def _attempt_record(
         "benchmarkNamespace": spec["benchmarkNamespace"],
         "runId": f"prepared-{spec_hash[:12]}",
         "attempt": attempt,
+        "reservationId": reservation_id,
+        "invocationKey": invocation_key,
+        "maximumLiabilityUsd": maximum_liability_usd,
+        "adapterEstimateUsd": adapter_estimate_usd,
         "caseIndex": case_index,
         "inputSha256": sha256(text.encode("utf-8")),
         "testSha256": spec["testSha256"],
@@ -270,11 +520,11 @@ def _attempt_record(
     }
 
 
-def _validate_response(response: TransportResponse, model_id: str, budget_remaining: float) -> None:
+def _validate_response(response: TransportResponse, model_id: str, maximum_liability_usd: float) -> None:
     if response.resolved_model_id != model_id:
         raise V2TransportError("transport resolved a model outside the pinned identity")
-    if not _finite_nonnegative(response.cost_usd) or response.cost_usd > budget_remaining:
-        raise V2TransportError("transport response cost is outside the remaining budget")
+    if not _finite_nonnegative(response.cost_usd) or response.cost_usd > maximum_liability_usd:
+        raise V2TransportError("transport response cost exceeds the configured maximum liability")
     if not _finite_nonnegative(response.latency_ms):
         raise V2TransportError("transport response latency is invalid")
     if not isinstance(response.usage, dict) or any(
@@ -282,6 +532,29 @@ def _validate_response(response: TransportResponse, model_id: str, budget_remain
         for value in response.usage.values()
     ):
         raise V2TransportError("transport response usage is invalid")
+
+
+def _recover_persisted_results(store: V2AttemptStore, journal: V2ReservationJournal) -> None:
+    """Settle only attempts already immutably persisted; never re-invoke on recovery."""
+    for state in journal.reservations().values():
+        if state["state"] not in {"reserved", "in_flight"}:
+            continue
+        metadata = state.get("metadata")
+        if not isinstance(metadata, dict):
+            raise V2TransportError("V2 transport blocked: reservation metadata is invalid")
+        attempts = store.attempts(
+            str(metadata.get("modelId")), int(metadata.get("caseIndex")), str(metadata.get("inputSha256"))
+        )
+        matching = [attempt for attempt in attempts if attempt.get("reservationId") == state["reservationId"]]
+        if not matching:
+            continue
+        if len(matching) != 1:
+            raise V2TransportError("V2 transport blocked: reservation has multiple persisted attempt records")
+        record = matching[0]
+        if record.get("costKnown") is not True or not _finite_nonnegative(record.get("costUsd")):
+            journal.require_reconciliation(state["reservationId"], "persisted_attempt_has_unknown_cost")
+            continue
+        journal.settle(state["reservationId"], float(record["costUsd"]), source="recovered_persisted_attempt")
 
 
 def execute_prepared(
@@ -304,56 +577,90 @@ def execute_prepared(
     allowed_models = set(spec["systems"].values())
     if not set(model_ids).issubset(allowed_models):
         raise V2AccessDenied("V2 transport blocked: requested model is not pinned by the V2 spec")
-    budget_cap = float(context["budgetCapUsd"])
     rows = load_pinned_test_rows(corpus_path)
     spec_hash = sha256(canonical_json(spec).encode("utf-8"))
     if store.spec_hash != spec_hash:
         raise V2TransportError("attempt store spec identity does not match the V2 spec")
-    prior_spend = store.accounted_spend_usd()
-    if prior_spend > budget_cap:
-        raise V2TransportError("V2 transport blocked: prior recorded spend exceeds the current budget cap")
-    budget_remaining = budget_cap - prior_spend
     prompt = shared_action_prompt()
     written: list[Path] = []
-    for model_id in model_ids:
-        transport = transports.get(model_id)
-        if transport is None:
-            raise V2TransportError(f"missing injected transport for {model_id}")
-        completed = 0
-        for case_index, row in enumerate(rows):
-            if completed >= max_cases_per_model:
-                break
-            text = row["Post Content"]
-            input_hash = sha256(text.encode("utf-8"))
-            prior = store.attempts(model_id, case_index, input_hash)
-            if prior and prior[-1]["status"] == "completed":
-                continue
-            estimated = transport.estimate_cost_usd(text=text, model_id=model_id)
-            if not _finite_nonnegative(estimated) or estimated > budget_remaining:
-                raise V2TransportError("next transport attempt would exceed the current budget")
-            response: TransportResponse | None = None
-            try:
-                response = transport.invoke(text=text, model_id=model_id, prompt=prompt)
-                _validate_response(response, model_id, budget_remaining)
-                record = _attempt_record(
-                    spec=spec, spec_hash=spec_hash, model_id=model_id, case_index=case_index,
-                    text=text, prompt_hash=prompt_hash, attempt=len(prior) + 1,
-                    response=response, error=None,
+    journal = V2ReservationJournal.for_context(context, spec_hash, store.control_root)
+    maximum_liability = float(context["maxInvocationLiabilityUsd"])
+    with V2ProcessLock(journal.lock_path):
+        journal.initialize()
+        _recover_persisted_results(store, journal)
+        totals = journal.totals()
+        if totals["totalCommittedAndReservedUsd"] > float(context["budgetCapUsd"]):
+            raise V2TransportError("V2 transport blocked: committed and reserved liability exceeds the configured cap")
+        for model_id in model_ids:
+            transport = transports.get(model_id)
+            if transport is None:
+                raise V2TransportError(f"missing injected transport for {model_id}")
+            completed = 0
+            for case_index, row in enumerate(rows):
+                if completed >= max_cases_per_model:
+                    break
+                text = row["Post Content"]
+                input_hash = sha256(text.encode("utf-8"))
+                invocation_key = _record_key(model_id, case_index, input_hash, spec_hash)
+                prior = store.attempts(model_id, case_index, input_hash)
+                if prior:
+                    if prior[-1].get("status") == "completed":
+                        continue
+                    raise V2TransportError("previous transport attempt requires manual reconciliation; automatic retry blocked")
+                existing_reservation = journal.reservation_for_key(invocation_key)
+                if existing_reservation is not None:
+                    raise V2TransportError("prior reserved or in-flight invocation requires manual reconciliation")
+                estimated = transport.estimate_cost_usd(text=text, model_id=model_id)
+                if not _finite_nonnegative(estimated) or estimated > maximum_liability:
+                    raise V2TransportError(
+                        "adapter estimate is invalid or exceeds the configured maximum invocation liability"
+                    )
+                reservation = journal.reserve(
+                    invocation_key=invocation_key,
+                    maximum_liability_usd=maximum_liability,
+                    metadata={"modelId": model_id, "caseIndex": case_index, "inputSha256": input_hash},
                 )
-                budget_remaining -= response.cost_usd
-            except Exception as exc:
+                journal.mark_invocation_started(reservation["reservationId"])
+                response: TransportResponse | None = None
+                operation_error: Exception | None = None
+                try:
+                    response = transport.invoke(text=text, model_id=model_id, prompt=prompt)
+                    _validate_response(response, model_id, maximum_liability)
+                except Exception as exc:
+                    operation_error = exc
                 record = _attempt_record(
-                    spec=spec, spec_hash=spec_hash, model_id=model_id, case_index=case_index,
-                    text=text, prompt_hash=prompt_hash, attempt=len(prior) + 1,
-                    response=response, error=exc,
+                    spec=spec,
+                    spec_hash=spec_hash,
+                    model_id=model_id,
+                    case_index=case_index,
+                    text=text,
+                    prompt_hash=prompt_hash,
+                    attempt=len(prior) + 1,
+                    reservation_id=reservation["reservationId"],
+                    invocation_key=invocation_key,
+                    maximum_liability_usd=maximum_liability,
+                    adapter_estimate_usd=float(estimated),
+                    response=response,
+                    error=operation_error,
                 )
-            written.append(store.write(record))
-            if record["status"] == "transport_error":
+                try:
+                    written.append(store.write(record))
+                except Exception as exc:
+                    journal.require_reconciliation(reservation["reservationId"], "attempt_persistence_failed")
+                    raise V2TransportError(
+                        "transport result could not be persisted; manual reconciliation is required before resume"
+                    ) from exc
                 if record["costKnown"]:
-                    budget_remaining -= float(record["costUsd"])
-                    raise V2TransportError("transport attempt failed after recorded billed cost")
-                raise V2TransportError(
-                    "transport attempt failed with unknown billed cost; manual reconciliation is required before resume"
-                )
-            completed += 1
+                    journal.settle(reservation["reservationId"], float(record["costUsd"]), source="persisted_attempt")
+                else:
+                    journal.require_reconciliation(
+                        reservation["reservationId"], "response_or_transport_error_has_unknown_cost"
+                    )
+                if operation_error is not None:
+                    if record["costKnown"]:
+                        raise V2TransportError("transport attempt failed after recorded billed cost") from operation_error
+                    raise V2TransportError(
+                        "transport attempt failed with unknown billed cost; manual reconciliation is required before resume"
+                    ) from operation_error
+                completed += 1
     return written
